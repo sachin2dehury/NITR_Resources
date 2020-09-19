@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.fragment_rename.*
 
 class RenameFragment(
     private val file: String,
-    private val rename: Boolean,
-    private val index: Int
+    private val rename: Boolean = false,
+    private val index: Int = 0
 ) : Fragment(R.layout.fragment_rename) {
 
     lateinit var doc: DocDetails

@@ -16,11 +16,7 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.activity.NavActivity
-import github.sachin2dehury.nitrresources.fragment.AboutFragment
-import github.sachin2dehury.nitrresources.fragment.ListFragment
-import github.sachin2dehury.nitrresources.fragment.LoginFragment
-import github.sachin2dehury.nitrresources.fragment.SettingsFragment
+import github.sachin2dehury.nitrresources.fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -138,21 +134,21 @@ object Core {
         }
     }
 
-    fun changeActivity(
-        context: Context,
-        login: Boolean = false,
-        file: String = "",
-        rename: Boolean = false,
-        pageIndex: Int = 0
-    ) {
-        val intent = Intent(context, NavActivity::class.java).apply {
-            putExtra("Login", login)
-            putExtra("File", file)
-            putExtra("Rename", rename)
-            putExtra("PageIndex", pageIndex)
-        }
-        context.startActivity(intent)
-    }
+//    fun changeActivity(
+//        context: Context,
+//        login: Boolean = false,
+//        file: String = "",
+//        rename: Boolean = false,
+//        pageIndex: Int = 0
+//    ) {
+//        val intent = Intent(context, NavActivity::class.java).apply {
+//            putExtra("Login", login)
+//            putExtra("File", file)
+//            putExtra("Rename", rename)
+//            putExtra("PageIndex", pageIndex)
+//        }
+//        context.startActivity(intent)
+//    }
 
     fun navDrawerMenu(item: MenuItem, context: Context) {
         when (item.itemId) {
@@ -185,13 +181,13 @@ object Core {
         item: MenuItem,
         context: Context,
         current: String,
-        page: Int,
+        index: Int,
     ) {
         when (item.itemId) {
-            R.id.rename -> changeActivity(context, false, current, true)
-            R.id.delete -> deleteDoc(current, page)
-            R.id.download -> deleteDoc(current, page)
-            R.id.share -> shareDoc(context, current, page)
+            R.id.rename -> changeFragment(RenameFragment(current, true, index))
+            R.id.delete -> deleteDoc(current, index)
+            R.id.download -> deleteDoc(current, index)
+            R.id.share -> shareDoc(context, current, index)
         }
     }
 
