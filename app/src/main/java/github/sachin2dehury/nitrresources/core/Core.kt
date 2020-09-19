@@ -85,6 +85,9 @@ object Core {
             MSC_LIST -> branch = msc[position]
             INT_MSC_LIST -> branch = intMsc[position]
         }
+        if (stream == streams[1] && year == years[0]) {
+            stream = "All"
+        }
     }
 
     fun openLink(link: String, context: Context) {
