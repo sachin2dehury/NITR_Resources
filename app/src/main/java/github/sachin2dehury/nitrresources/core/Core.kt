@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.activity.NavActivity
-import github.sachin2dehury.nitrresources.activity.PageActivity
 import github.sachin2dehury.nitrresources.fragment.AboutFragment
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
@@ -34,7 +33,7 @@ object Core {
     var streamYr = 0
 
     private var branch = "Trash"
-    var year = "Trash"
+    private var year = "Trash"
     var stream = "Trash"
 
     val firebaseAuth = FirebaseAuth.getInstance()
@@ -48,6 +47,7 @@ object Core {
     private val lab = mutableMapOf<String, DocDetails>()
 
     fun changeFragment(fragment: Fragment) {
+        clearList()
         fragmentManager.beginTransaction().apply {
             replace(R.id.navFragment, fragment)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -145,18 +145,11 @@ object Core {
         rename: Boolean = false,
         pageIndex: Int = 0
     ) {
-        clearList()
-        val intent = when (context) {
-            is NavActivity ->
-                Intent(context, PageActivity::class.java)
-            else -> {
-                Intent(context, NavActivity::class.java).apply {
-                    putExtra("Login", login)
-                    putExtra("File", file)
-                    putExtra("Rename", rename)
-                    putExtra("PageIndex", pageIndex)
-                }
-            }
+        val intent = Intent(context, NavActivity::class.java).apply {
+            putExtra("Login", login)
+            putExtra("File", file)
+            putExtra("Rename", rename)
+            putExtra("PageIndex", pageIndex)
         }
         context.startActivity(intent)
     }
@@ -223,25 +216,26 @@ object Core {
         }
     }
 
-    fun uploadDoc(file: Uri, doc: DocDetails, item: Int) = CoroutineScope(Dispatchers.IO).launch {
-        val path = "$college/$stream/$year/$branch/${pages[item]}"
-        val list = pageSelector(item)
-        val docId = firebaseFireStore.collection(path).add(doc).await()!!.id
-        val storeReference = firebaseStorage.child("$path/$docId.pdf")
-        val docRef = firebaseFireStore.collection(path).document(docId)
-        storeReference.putFile(file).await()
+    fun uploadDoc(file: Uri, doc: DocDetails, item: Int) =
+        CoroutineScope(Dispatchers.IO).launch {
+            val path = "$college/$stream/$year/$branch/${pages[item]}"
+            val list = pageSelector(item)
+            val docId = firebaseFireStore.collection(path).add(doc).await()!!.id
+            val storeReference = firebaseStorage.child("$path/$docId.pdf")
+            val docRef = firebaseFireStore.collection(path).document(docId)
+            storeReference.putFile(file).await()
 
-        doc.url = storeReference.downloadUrl.await().toString()
-        doc.contributor = firebaseAuth.currentUser.toString()
-        storeReference.metadata.await().apply {
-            doc.size = sizeBytes.toDouble() / MB
-            doc.time = updatedTimeMillis
+            doc.url = storeReference.downloadUrl.await().toString()
+            doc.contributor = firebaseAuth.currentUser.toString()
+            storeReference.metadata.await().apply {
+                doc.size = sizeBytes.toDouble() / MB
+                doc.time = updatedTimeMillis
+            }
+            firebaseFireStore.runBatch { batch ->
+                batch.set(docRef, doc)
+            }
+            list[docId] = doc
         }
-        firebaseFireStore.runBatch { batch ->
-            batch.set(docRef, doc)
-        }
-        list[docId] = doc
-    }
 
     fun updateDocList(item: Int) = CoroutineScope(Dispatchers.Main).launch {
         val list = pageSelector(item)
@@ -297,12 +291,5 @@ object Core {
             stream = getString("Stream", "Trash")!!
             streamYr = streams.indexOf(stream)
         }
-    }
-
-    fun jobs() = CoroutineScope(Dispatchers.IO).launch {
-        getList(NOTES_LIST)
-        getList(ASSIGNMENT_LIST)
-        getList(SLIDES_LIST)
-        getList(LAB_LIST)
     }
 }

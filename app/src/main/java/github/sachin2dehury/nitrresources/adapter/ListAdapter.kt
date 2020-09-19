@@ -10,7 +10,8 @@ import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.NO_LIST
 import github.sachin2dehury.nitrresources.core.YEAR_LIST
 import github.sachin2dehury.nitrresources.fragment.ListFragment
-import kotlinx.android.synthetic.main.list_item.view.*
+import github.sachin2dehury.nitrresources.fragment.TabFragment
+import kotlinx.android.synthetic.main.items.view.*
 
 class ListAdapter(private val item: Int) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
@@ -19,7 +20,7 @@ class ListAdapter(private val item: Int) :
     private val list = Core.listSelector(item)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.items, parent, false)
         return ListViewHolder(view)
     }
 
@@ -38,7 +39,7 @@ class ListAdapter(private val item: Int) :
             setOnClickListener {
                 Core.dataSetter(item, position)
                 when (item) {
-                    YEAR_LIST -> Core.changeActivity(context)
+                    YEAR_LIST -> Core.changeFragment(TabFragment())
                     else -> Core.changeFragment(ListFragment(newItem))
                 }
             }

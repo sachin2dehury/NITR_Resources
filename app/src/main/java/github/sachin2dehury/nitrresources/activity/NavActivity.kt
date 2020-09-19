@@ -11,7 +11,7 @@ import github.sachin2dehury.nitrresources.core.STREAM_LIST
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import github.sachin2dehury.nitrresources.fragment.RenameFragment
-import kotlinx.android.synthetic.main.activity_page.*
+import kotlinx.android.synthetic.main.activity_navigation.*
 
 open class NavActivity : AppCompatActivity() {
 
@@ -59,6 +59,23 @@ open class NavActivity : AppCompatActivity() {
             true
         }
     }
+
+    //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.search_menu, menu)
+//        val search = menu!!.findItem(R.id.searchBar).actionView as SearchView
+//        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+////                val adapter = listView.adapter as ListPageAdapter
+////                adapter.filter.filter(newText)
+//                return false
+//            }
+//        })
+//        return super.onCreateOptionsMenu(menu)
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_menu, menu)
