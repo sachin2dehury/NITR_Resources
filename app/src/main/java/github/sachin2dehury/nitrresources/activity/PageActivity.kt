@@ -12,7 +12,7 @@ import androidx.appcompat.widget.SearchView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.adapter.ListAdapter
+import github.sachin2dehury.nitrresources.adapter.ListPageAdapter
 import github.sachin2dehury.nitrresources.adapter.PageAdapter
 import github.sachin2dehury.nitrresources.core.ALL
 import github.sachin2dehury.nitrresources.core.Core
@@ -100,7 +100,7 @@ class PageActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val adapter = listView.adapter as ListAdapter
+                val adapter = listView.adapter as ListPageAdapter
                 adapter.filter.filter(newText)
                 return false
             }

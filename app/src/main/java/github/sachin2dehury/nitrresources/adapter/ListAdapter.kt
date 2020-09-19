@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
@@ -15,7 +13,7 @@ import github.sachin2dehury.nitrresources.fragment.ListFragment
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListAdapter(private val item: Int) :
-    RecyclerView.Adapter<ListAdapter.ListViewHolder>(), Filterable {
+    RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     private val list = Core.listSelector(item)
@@ -52,26 +50,5 @@ class ListAdapter(private val item: Int) :
             return Core.streamYr
         }
         return list.size
-    }
-
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(value: CharSequence?): FilterResults {
-                val search = value.toString()
-                val filterResults = FilterResults()
-                filterResults.values = if (search.isEmpty())
-                    list
-                else
-                    list.filter {
-                        it.contentEquals(search)
-                    }
-                return filterResults
-            }
-
-            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
-                filterResults!!.values as List<*>
-                notifyDataSetChanged()
-            }
-        }
     }
 }
