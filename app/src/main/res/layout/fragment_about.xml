@@ -6,12 +6,11 @@
 
     <ImageView
         android:id="@+id/aboutImage"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="144dp"
+        android:layout_height="144dp"
         android:layout_marginTop="64dp"
-        android:background="@drawable/gradient"
         android:contentDescription="@string/person"
-        android:src="@drawable/ic_baseline_account_circle_24"
+        android:src="@drawable/icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
-        android:src="@color/grey"
+        android:src="@drawable/icon"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
