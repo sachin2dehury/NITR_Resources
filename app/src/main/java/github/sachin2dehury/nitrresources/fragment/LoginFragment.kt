@@ -109,15 +109,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 val account = GoogleSignIn.getSignedInAccountFromIntent(data).result!!
                 account.let {
                     val credentials = GoogleAuthProvider.getCredential(account.idToken, null)
-                    Core.firebaseAuth.signInWithCredential(credentials).apply {
-                        addOnCompleteListener {
-                            Core.fragmentManager.popBackStack()
-                            Core.changeFragment(ListFragment(STREAM_LIST))
-                        }
-                        addOnFailureListener {
-                            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
-                        }
-                    }
+                    Core.firebaseAuth.signInWithCredential(credentials)
+                    Core.fragmentManager.popBackStack()
+                    Core.changeFragment(ListFragment(STREAM_LIST))
                 }
             }
         }
