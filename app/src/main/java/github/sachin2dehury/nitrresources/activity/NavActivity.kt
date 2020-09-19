@@ -7,8 +7,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.STREAM_LIST
-import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import github.sachin2dehury.nitrresources.fragment.RenameFragment
 import kotlinx.android.synthetic.main.activity_page.*
@@ -30,12 +28,9 @@ open class NavActivity : AppCompatActivity() {
         Core.fragmentManager = supportFragmentManager
 
         val login = intent.getBooleanExtra("Login", true)
-        if (login) {
-            if (Core.firebaseAuth.currentUser == null) {
-                Core.changeFragment(LoginFragment())
-            } else {
-                Core.changeFragment(ListFragment(STREAM_LIST))
-            }
+        if (login && Core.firebaseAuth.currentUser == null) {
+            supportFragmentManager.popBackStack()
+            Core.changeFragment(LoginFragment())
         } else {
             val file = intent.getStringExtra("File")!!
             val rename = intent.getBooleanExtra("Rename", false)
