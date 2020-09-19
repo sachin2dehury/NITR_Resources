@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/book"
+        android:icon="@drawable/ic_baseline_book_24"
+        android:title="@string/books" />
+    <item
+        android:id="@+id/nitris"
+        android:icon="@drawable/ic_baseline_chrome_reader_mode_24"
+        android:title="@string/questions" />
+    <item
+        android:id="@+id/mail"
+        android:icon="@drawable/ic_baseline_mail_24"
+        android:title="@string/zimbra" />
+    <item
+        android:id="@+id/news"
+        android:icon="@drawable/ic_baseline_dashboard_24"
+        android:title="@string/news" />
+</menu>

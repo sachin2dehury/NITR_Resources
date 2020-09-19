@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_account_circle_24"
+        app:title="User Details">
+
+        <Preference
+            app:icon="@drawable/ic_baseline_mail_24"
+            app:key="email"
+            app:title="Email" />
+
+        <EditTextPreference
+            app:dialogIcon="@drawable/ic_baseline_edit_24"
+            app:dialogMessage="Password Should be at least 8 Character long."
+            app:dialogTitle="Change Password"
+            app:icon="@drawable/ic_baseline_edit_24"
+            app:key="password"
+            app:positiveButtonText="Change"
+            app:title="Password" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">NITR Resources</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="person">person</string>
+    <string name="download">Download</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="books">Books</string>
+    <string name="questions">Questions</string>
+    <string name="zimbra">Zimbra</string>
+    <string name="news">News</string>
+    <string name="user">User</string>
+    <string name="my_docs">My Docs</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
+    <string name="enter_subject_code">Enter Subject Code</string>
+    <string name="enter_file_name">Enter File Name</string>
+    <string name="save_file">Save File</string>
+    <string name="cancel">Cancel</string>
+    <string name="share">Share</string>
+</resources>

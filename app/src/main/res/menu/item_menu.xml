@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/download"
+        android:icon="@drawable/ic_baseline_cloud_download_24"
+        android:title="@string/download" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_baseline_share_24"
+        android:title="@string/share" />
+    <item
+        android:id="@+id/rename"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="@string/rename" />
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_baseline_delete_sweep_24"
+        android:title="@string/delete" />
+</menu>
