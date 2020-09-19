@@ -1,7 +1,6 @@
 package github.sachin2dehury.nitrresources.adapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.activity.PageActivity
 import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.NO_LIST
 import github.sachin2dehury.nitrresources.core.YEAR_LIST
@@ -42,10 +40,7 @@ class ListAdapter(private val item: Int) :
             setOnClickListener {
                 Core.dataSetter(item, position)
                 when (item) {
-                    YEAR_LIST -> {
-                        val intent = Intent(context, PageActivity::class.java)
-                        context.startActivity(intent)
-                    }
+                    YEAR_LIST -> Core.changeActivity(context)
                     else -> Core.changeFragment(ListFragment(newItem))
                 }
             }

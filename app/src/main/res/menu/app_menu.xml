@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/user"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="@string/user"

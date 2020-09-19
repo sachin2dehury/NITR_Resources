@@ -17,6 +17,16 @@ open class NavActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
+    override fun onPause() {
+        super.onPause()
+        Core.saveAppData(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Core.loadAppData(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)

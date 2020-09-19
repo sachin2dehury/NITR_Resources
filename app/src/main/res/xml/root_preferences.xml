@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         app:icon="@drawable/ic_baseline_account_circle_24"
@@ -6,7 +7,7 @@
 
         <Preference
             app:icon="@drawable/ic_baseline_mail_24"
-            app:key="email"
+            app:key="Email"
             app:title="Email" />
 
         <EditTextPreference
@@ -14,9 +15,23 @@
             app:dialogMessage="Password Should be at least 8 Character long."
             app:dialogTitle="Change Password"
             app:icon="@drawable/ic_baseline_edit_24"
-            app:key="password"
+            app:key="Password"
             app:positiveButtonText="Change"
             app:title="Password" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_home_24"
+        app:title="Academics">
+
+        <ListPreference
+            android:key="Stream"
+            android:title="Stream" />
+
+        <ListPreference
+            android:key="Year"
+            android:title="Year" />
 
     </PreferenceCategory>
 

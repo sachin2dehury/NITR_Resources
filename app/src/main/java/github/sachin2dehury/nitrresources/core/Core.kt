@@ -1,5 +1,6 @@
 package github.sachin2dehury.nitrresources.core
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,6 +21,7 @@ import github.sachin2dehury.nitrresources.activity.PageActivity
 import github.sachin2dehury.nitrresources.fragment.AboutFragment
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
+import github.sachin2dehury.nitrresources.fragment.SettingsFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +56,13 @@ object Core {
         }
     }
 
+    private fun clearList() {
+        notes.clear()
+        assignment.clear()
+        slides.clear()
+        lab.clear()
+    }
+
     fun listSelector(item: Int): List<String> {
         return when (item) {
             STREAM_LIST -> streams
@@ -80,15 +90,20 @@ object Core {
                 streamYr = streamYears[position]
                 stream = streams[position]
             }
-            YEAR_LIST -> year = years[position]
+            YEAR_LIST -> {
+                if (position == 0) {
+                    when (stream) {
+                        streams[1] -> branch = "All"
+                        streams[2] -> branch = "All"
+                    }
+                }
+                year = years[position]
+            }
             B_ARCH_LIST -> branch = bArch[position]
             B_TECH_LIST -> branch = bTech[position]
             M_TECH_LIST -> branch = mTech[position]
             MSC_LIST -> branch = msc[position]
             INT_MSC_LIST -> branch = intMsc[position]
-        }
-        if ((stream == streams[1] || stream == streams[2]) && year == years[0]) {
-            branch = "All"
         }
     }
 
@@ -130,10 +145,10 @@ object Core {
         rename: Boolean = false,
         pageIndex: Int = 0
     ) {
+        clearList()
         val intent = when (context) {
-            is NavActivity -> {
+            is NavActivity ->
                 Intent(context, PageActivity::class.java)
-            }
             else -> {
                 Intent(context, NavActivity::class.java).apply {
                     putExtra("Login", login)
@@ -158,8 +173,9 @@ object Core {
 
     fun optionMenu(item: MenuItem) {
         when (item.itemId) {
+            R.id.settings -> changeFragment(SettingsFragment())
             R.id.myDocs -> changeFragment(LoginFragment())
-            R.id.user -> changeFragment(LoginFragment())
+            R.id.user -> firebaseAuth.signOut()
             R.id.about -> changeFragment(AboutFragment())
             R.id.exit -> exitProcess(0)
         }
@@ -259,4 +275,20 @@ object Core {
                 list.remove(docId)
             }
         }
+
+    @SuppressLint("CommitPrefEdits")
+    fun saveAppData(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
+            putString("Stream", stream)
+            putString("Year", year)
+            apply()
+        }
+    }
+
+    fun loadAppData(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).apply {
+            stream = getString("Stream", "Trash")!!
+            year = getString("Year", "Trash")!!
+        }
+    }
 }

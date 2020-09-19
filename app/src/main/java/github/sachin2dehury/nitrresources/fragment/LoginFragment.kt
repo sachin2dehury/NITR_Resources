@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.GoogleAuthProvider
@@ -91,6 +92,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 false
             }
             else -> {
+                PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
+                    putString("Email", email)
+                    putString("Password", password)
+                    apply()
+                }
                 true
             }
         }

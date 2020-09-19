@@ -3,7 +3,6 @@ package github.sachin2dehury.nitrresources.fragment
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -53,11 +52,7 @@ class RenameFragment(
 
         saveButton.setOnClickListener {
             if (isValidFile()) {
-                try {
-                    save()
-                } catch (e: Exception) {
-                    Log.w("Test", "Save")
-                }
+                save()
             }
         }
     }
@@ -73,7 +68,7 @@ class RenameFragment(
             Toast.makeText(context, "${doc.name} File being Uploaded.", Toast.LENGTH_SHORT).show()
         }
         Core.fragmentManager.popBackStack()
-        requireActivity().finish()
+//        Core.changeActivity(requireContext())
     }
 
     private fun isValidFile(): Boolean {

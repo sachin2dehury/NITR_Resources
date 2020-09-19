@@ -12,5 +12,5 @@
         android:id="@+id/myDocs"
         android:icon="@drawable/ic_baseline_folder_shared_24"
         android:title="@string/my_docs"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

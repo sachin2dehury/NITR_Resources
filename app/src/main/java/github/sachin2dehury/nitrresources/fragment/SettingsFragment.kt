@@ -3,10 +3,12 @@ package github.sachin2dehury.nitrresources.fragment
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
+import github.sachin2dehury.nitrresources.core.streams
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -18,6 +20,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             summary = email
         }
         findPreference<EditTextPreference>("password")!!.apply {
+
+        }
+        findPreference<ListPreference>("Stream")!!.apply {
+            entries = streams.toTypedArray()
+        }
+        findPreference<ListPreference>("Year")!!.apply {
 
         }
     }
