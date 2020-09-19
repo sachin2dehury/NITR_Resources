@@ -177,9 +177,17 @@ object Core {
         context.startActivity(Intent.createChooser(intent, "Share link!"))
     }
 
+    private fun getPath(item: Int): String {
+        return if (year == years[0] && stream == streams[1]) {
+            "$college/$stream/$year/All/${pages[item - NOTES_LIST]}"
+        } else {
+            "$college/$stream/$year/$branch/${pages[item - NOTES_LIST]}"
+        }
+    }
+
     fun getList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
         val list = pageSelector(item)
-        val path = "$college/$stream/$year/$branch/${pages[item - NOTES_LIST]}"
+        val path = getPath(item)
         val documents = firebaseFireStore.collection(path).get().await()!!.documents
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
@@ -188,7 +196,7 @@ object Core {
     }
 
     fun uploadDoc(file: Uri, doc: DocDetails, item: Int) = CoroutineScope(Dispatchers.IO).launch {
-        val path = "$college/$stream/$year/$branch/${pages[item]}"
+        val path = getPath(item)
         val list = pageSelector(item)
         val docId = firebaseFireStore.collection(path).add(doc).await()!!.id
         val storeReference = firebaseStorage.child("$path/$docId.pdf")
@@ -209,7 +217,7 @@ object Core {
 
     fun updateDocList(item: Int) = CoroutineScope(Dispatchers.Main).launch {
         val list = pageSelector(item)
-        val path = "$college/$stream/$year/$branch/${pages[item]}"
+        val path = getPath(item)
         firebaseFireStore.collection(path).addSnapshotListener { querySnapshot, _ ->
             for (change in querySnapshot!!.documentChanges) {
                 val doc = (change.document.toObject(DocDetails::class.java))
@@ -227,7 +235,7 @@ object Core {
     fun renameDoc(docId: String, doc: DocDetails, item: Int) =
         CoroutineScope(Dispatchers.IO).launch {
             val list = pageSelector(item)
-            val path = "$college/$stream/$year/$branch/${pages[item]}"
+            val path = getPath(item)
             val docRef = firebaseFireStore.collection(path).document(docId)
             firebaseFireStore.runTransaction { batch ->
                 batch.set(docRef, doc)
@@ -238,7 +246,7 @@ object Core {
     private fun deleteDoc(docId: String, item: Int) =
         CoroutineScope(Dispatchers.IO).launch {
             val list = pageSelector(item)
-            val path = "$college/$stream/$year/$branch/${pages[item]}"
+            val path = getPath(item)
             if (list[docId]!!.contributor == firebaseAuth.currentUser.toString()) {
                 firebaseFireStore.collection(path).document(docId).delete().await()
                 firebaseFireStore.collection("Trash").add(list[docId]!!)
