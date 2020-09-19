@@ -120,4 +120,9 @@ class PageActivity : AppCompatActivity() {
         Core.optionMenu(item)
         return true
     }
+
+    override fun onStop() {
+        super.onStop()
+        Core.loadAppData(this)
+    }
 }

@@ -18,19 +18,23 @@ open class NavActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         Core.saveAppData(this)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         Core.loadAppData(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
+
+        if (Core.stream == "Trash") {
+            Core.loadAppData(this)
+        }
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
         drawerLayout.addDrawerListener(toggle)
@@ -47,10 +51,10 @@ open class NavActivity : AppCompatActivity() {
                     Core.changeFragment(LoginFragment())
                 Core.stream == "Trash" ->
                     Core.changeFragment(ListFragment(STREAM_LIST))
-                else ->
-                    Core.changeFragment(
-                        ListFragment(Core.listPredictor(STREAM_LIST, streams.indexOf(Core.stream)))
-                    )
+                else -> {
+                    val index = Core.listPredictor(STREAM_LIST, streams.indexOf(Core.stream))
+                    Core.changeFragment(ListFragment(index))
+                }
             }
         } else {
             val file = intent.getStringExtra("File")!!

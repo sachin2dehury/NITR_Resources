@@ -171,11 +171,18 @@ object Core {
         }
     }
 
+    private fun signOut() {
+        when (firebaseAuth.currentUser) {
+            null -> changeFragment(LoginFragment())
+            else -> firebaseAuth.signOut()
+        }
+    }
+
     fun optionMenu(item: MenuItem) {
         when (item.itemId) {
             R.id.settings -> changeFragment(SettingsFragment())
             R.id.myDocs -> changeFragment(LoginFragment())
-            R.id.user -> firebaseAuth.signOut()
+            R.id.user -> signOut()
             R.id.about -> changeFragment(AboutFragment())
             R.id.exit -> exitProcess(0)
         }

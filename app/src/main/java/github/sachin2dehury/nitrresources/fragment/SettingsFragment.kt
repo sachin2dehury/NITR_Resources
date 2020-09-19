@@ -19,7 +19,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             summary = email
         }
         findPreference<EditTextPreference>("Password")!!.apply {
-            summary = password
+            summary = "********"
             text = password
         }
         findPreference<ListPreference>("Stream")!!.apply {
@@ -30,8 +30,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         Core.saveAppData(requireContext())
     }
 }
