@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.STREAM_LIST
+import github.sachin2dehury.nitrresources.core.streams
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import github.sachin2dehury.nitrresources.fragment.RenameFragment
@@ -41,10 +42,15 @@ open class NavActivity : AppCompatActivity() {
 
         val login = intent.getBooleanExtra("Login", true)
         if (login) {
-            if (Core.firebaseAuth.currentUser == null) {
-                Core.changeFragment(LoginFragment())
-            } else {
-                Core.changeFragment(ListFragment(STREAM_LIST))
+            when {
+                Core.firebaseAuth.currentUser == null ->
+                    Core.changeFragment(LoginFragment())
+                Core.stream == "Trash" ->
+                    Core.changeFragment(ListFragment(STREAM_LIST))
+                else ->
+                    Core.changeFragment(
+                        ListFragment(Core.listPredictor(STREAM_LIST, streams.indexOf(Core.stream)))
+                    )
             }
         } else {
             val file = intent.getStringExtra("File")!!

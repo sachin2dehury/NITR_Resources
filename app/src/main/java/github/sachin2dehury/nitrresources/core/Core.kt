@@ -34,8 +34,8 @@ object Core {
     var streamYr = 0
 
     private var branch = "Trash"
-    private var year = "Trash"
-    private var stream = "Trash"
+    var year = "Trash"
+    var stream = "Trash"
 
     val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseFireStore = FirebaseFirestore.getInstance()
@@ -280,7 +280,7 @@ object Core {
     fun saveAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
             putString("Stream", stream)
-            putString("Year", year)
+            putString("Email", firebaseAuth.currentUser!!.email!!)
             apply()
         }
     }
@@ -288,7 +288,7 @@ object Core {
     fun loadAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).apply {
             stream = getString("Stream", "Trash")!!
-            year = getString("Year", "Trash")!!
+            streamYr = streams.indexOf(stream)
         }
     }
 }

@@ -29,10 +29,6 @@
             android:key="Stream"
             android:title="Stream" />
 
-        <ListPreference
-            android:key="Year"
-            android:title="Year" />
-
     </PreferenceCategory>
 
 </PreferenceScreen>

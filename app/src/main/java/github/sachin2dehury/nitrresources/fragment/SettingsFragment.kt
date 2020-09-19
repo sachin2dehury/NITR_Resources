@@ -1,11 +1,7 @@
 package github.sachin2dehury.nitrresources.fragment
 
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.preference.EditTextPreference
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.*
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.streams
@@ -16,24 +12,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
         val email = Core.firebaseAuth.currentUser!!.email!!
-        findPreference<Preference>("email")!!.apply {
+        val streamsArray = streams.toTypedArray()
+        val password =
+            PreferenceManager.getDefaultSharedPreferences(context).getString("Password", "Trash")!!
+        findPreference<Preference>("Email")!!.apply {
             summary = email
         }
-        findPreference<EditTextPreference>("password")!!.apply {
-
+        findPreference<EditTextPreference>("Password")!!.apply {
+            summary = password
+            text = password
         }
         findPreference<ListPreference>("Stream")!!.apply {
-            entries = streams.toTypedArray()
-        }
-        findPreference<ListPreference>("Year")!!.apply {
-
+            summary = Core.stream
+            entries = streamsArray
+            entryValues = streamsArray
+            setValueIndex(Core.streamYr)
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.user -> Core.firebaseAuth.signOut()
-        }
-        return true
+    override fun onPause() {
+        super.onPause()
+        Core.saveAppData(requireContext())
     }
 }
