@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.appcompat.widget.PopupMenu
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
@@ -17,7 +18,7 @@ import github.sachin2dehury.nitrresources.core.PDF
 import github.sachin2dehury.nitrresources.core.format
 import kotlinx.android.synthetic.main.items.view.*
 
-class ListPageAdapter(private val item: Int) :
+class ListPageAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<ListPageAdapter.ListPageViewHolder>(), Filterable {
     inner class ListPageViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -57,7 +58,7 @@ class ListPageAdapter(private val item: Int) :
                     show()
                 }
                 menu.setOnMenuItemClickListener { menuItem ->
-                    Core.popUpMenu(menuItem, context, current, item)
+                    Core.popUpMenu(menuItem, context, current, item, fragmentManager)
                     true
                 }
                 true

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
@@ -13,7 +14,7 @@ import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.TabFragment
 import kotlinx.android.synthetic.main.items.view.*
 
-class ListAdapter(private val item: Int) :
+class ListAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -35,12 +36,12 @@ class ListAdapter(private val item: Int) :
                 size.text = "No Data Available!"
                 subject.text = "No Data Available!"
             }
-            val newItem = Core.listPredictor(item, position)
             setOnClickListener {
+                val newItem = Core.listPredictor(item, position)
                 Core.dataSetter(item, position)
                 when (item) {
-                    YEAR_LIST -> Core.changeFragment(TabFragment())
-                    else -> Core.changeFragment(ListFragment(newItem))
+                    YEAR_LIST -> Core.changeFragment(TabFragment(), fragmentManager)
+                    else -> Core.changeFragment(ListFragment(newItem), fragmentManager)
                 }
             }
         }

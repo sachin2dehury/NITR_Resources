@@ -53,8 +53,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun signUp() = CoroutineScope(Dispatchers.IO).apply {
         Core.firebaseAuth.createUserWithEmailAndPassword(email, password).apply {
             addOnCompleteListener {
-                Core.fragmentManager.popBackStack()
-                Core.changeFragment(ListFragment(STREAM_LIST))
+                loggedIn()
             }
             addOnFailureListener {
                 Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
@@ -65,8 +64,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun signIn() = CoroutineScope(Dispatchers.IO).apply {
         Core.firebaseAuth.signInWithEmailAndPassword(email, password).apply {
             addOnCompleteListener {
-                Core.fragmentManager.popBackStack()
-                Core.changeFragment(ListFragment(STREAM_LIST))
+                loggedIn()
             }
             addOnFailureListener {
                 Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
@@ -110,10 +108,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 account.let {
                     val credentials = GoogleAuthProvider.getCredential(account.idToken, null)
                     Core.firebaseAuth.signInWithCredential(credentials)
-                    Core.fragmentManager.popBackStack()
-                    Core.changeFragment(ListFragment(STREAM_LIST))
+                    loggedIn()
                 }
             }
         }
+    }
+
+    private fun loggedIn() {
+        childFragmentManager.popBackStack()
+        Core.changeFragment(ListFragment(STREAM_LIST), childFragmentManager)
     }
 }

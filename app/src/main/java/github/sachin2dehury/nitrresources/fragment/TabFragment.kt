@@ -45,18 +45,19 @@ class TabFragment : Fragment(R.layout.activity_page) {
                 Core.updateDocList(tab!!.position)
             }
         })
-
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
-            Core.changeFragment(RenameFragment(data!!.data.toString()))
+            Core.changeFragment(RenameFragment(data!!.data.toString()),childFragmentManager)
         }
     }
 
     override fun onStop() {
         super.onStop()
+        Core.clearList()
         Core.loadAppData(requireContext())
     }
 }

@@ -24,13 +24,12 @@ import kotlinx.coroutines.tasks.await
 import kotlin.system.exitProcess
 
 object Core {
-    lateinit var fragmentManager: FragmentManager
 
     var streamYr = 0
+    var stream = "Trash"
 
     private var branch = "Trash"
     private var year = "Trash"
-    var stream = "Trash"
 
     val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseFireStore = FirebaseFirestore.getInstance()
@@ -42,21 +41,13 @@ object Core {
     private val slides = mutableMapOf<String, DocDetails>()
     private val lab = mutableMapOf<String, DocDetails>()
 
-    fun changeFragment(fragment: Fragment) {
-        clearList()
+    fun changeFragment(fragment: Fragment, fragmentManager: FragmentManager) {
         fragmentManager.beginTransaction().apply {
             replace(R.id.navFragment, fragment)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(fragment.javaClass.simpleName)
             commit()
         }
-    }
-
-    private fun clearList() {
-        notes.clear()
-        assignment.clear()
-        slides.clear()
-        lab.clear()
     }
 
     fun listSelector(item: Int): List<String> {
@@ -76,7 +67,7 @@ object Core {
         return when (item) {
             STREAM_LIST -> B_ARCH_LIST + position
             in B_ARCH_LIST..M_TECH_LIST -> YEAR_LIST
-            else -> 0
+            else -> NO_LIST
         }
     }
 
@@ -103,12 +94,21 @@ object Core {
         }
     }
 
-    fun openLink(link: String, context: Context) {
-        val url = Uri.parse(link)!!
-        val intent = Intent(Intent.ACTION_VIEW, url)
-        if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
+    fun pageSelector(position: Int): MutableMap<String, DocDetails> {
+        return when (NOTES_LIST + position) {
+            NOTES_LIST -> notes
+            ASSIGNMENT_LIST -> assignment
+            SLIDES_LIST -> slides
+            LAB_LIST -> lab
+            else -> trash
         }
+    }
+
+    fun clearList() {
+        notes.clear()
+        assignment.clear()
+        slides.clear()
+        lab.clear()
     }
 
     fun getMenuIcon(menu: PopupMenu) {
@@ -124,35 +124,9 @@ object Core {
         }
     }
 
-    fun pageSelector(position: Int): MutableMap<String, DocDetails> {
-        return when (NOTES_LIST + position) {
-            NOTES_LIST -> notes
-            ASSIGNMENT_LIST -> assignment
-            SLIDES_LIST -> slides
-            LAB_LIST -> lab
-            else -> trash
-        }
-    }
-
-//    fun changeActivity(
-//        context: Context,
-//        login: Boolean = false,
-//        file: String = "",
-//        rename: Boolean = false,
-//        pageIndex: Int = 0
-//    ) {
-//        val intent = Intent(context, NavActivity::class.java).apply {
-//            putExtra("Login", login)
-//            putExtra("File", file)
-//            putExtra("Rename", rename)
-//            putExtra("PageIndex", pageIndex)
-//        }
-//        context.startActivity(intent)
-//    }
-
-    fun navDrawerMenu(item: MenuItem, context: Context) {
+    fun navDrawerMenu(item: MenuItem, context: Context, fragmentManager: FragmentManager) {
         when (item.itemId) {
-            R.id.home -> changeFragment(ListFragment(STREAM_LIST))
+            R.id.home -> changeFragment(ListFragment(STREAM_LIST), fragmentManager)
             R.id.book -> openLink(BOOK_LINK, context)
             R.id.nitris -> openLink(QUESTION_LINK, context)
             R.id.mail -> openLink(MAIL_LINK, context)
@@ -160,19 +134,12 @@ object Core {
         }
     }
 
-    private fun signOut() {
-        when (firebaseAuth.currentUser) {
-            null -> changeFragment(LoginFragment())
-            else -> firebaseAuth.signOut()
-        }
-    }
-
-    fun optionMenu(item: MenuItem) {
+    fun optionMenu(item: MenuItem, fragmentManager: FragmentManager) {
         when (item.itemId) {
-            R.id.settings -> changeFragment(SettingsFragment())
-            R.id.myDocs -> changeFragment(LoginFragment())
-            R.id.user -> signOut()
-            R.id.about -> changeFragment(AboutFragment())
+            R.id.settings -> changeFragment(SettingsFragment(), fragmentManager)
+            R.id.myDocs -> changeFragment(LoginFragment(), fragmentManager)
+            R.id.user -> signOut(fragmentManager)
+            R.id.about -> changeFragment(AboutFragment(), fragmentManager)
             R.id.exit -> exitProcess(0)
         }
     }
@@ -182,24 +149,21 @@ object Core {
         context: Context,
         current: String,
         index: Int,
+        fragmentManager: FragmentManager
     ) {
         when (item.itemId) {
-            R.id.rename -> changeFragment(RenameFragment(current, true, index))
+            R.id.rename -> changeFragment(RenameFragment(current, true, index), fragmentManager)
             R.id.delete -> deleteDoc(current, index)
             R.id.download -> deleteDoc(current, index)
             R.id.share -> shareDoc(context, current, index)
         }
     }
 
-    private fun shareDoc(context: Context, current: String, item: Int) {
-        val list = pageSelector(item)
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_SUBJECT, "Check Out This : ${list[current]!!.name}")
-            putExtra(Intent.EXTRA_TEXT, list[current]!!.url)
+    private fun signOut(fragmentManager: FragmentManager) {
+        when (firebaseAuth.currentUser) {
+            null -> changeFragment(LoginFragment(), fragmentManager)
+            else -> firebaseAuth.signOut()
         }
-        context.startActivity(Intent.createChooser(intent, "Share link!"))
     }
 
     fun getList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
@@ -244,11 +208,28 @@ object Core {
                     DocumentChange.Type.MODIFIED -> list[change.document.id] = doc
                     DocumentChange.Type.REMOVED -> list.remove(change.document.id)
                 }
-
             }
         }
     }
 
+    fun openLink(link: String, context: Context) {
+        val url = Uri.parse(link)!!
+        val intent = Intent(Intent.ACTION_VIEW, url)
+        if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+        }
+    }
+
+    private fun shareDoc(context: Context, current: String, item: Int) {
+        val list = pageSelector(item)
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Check Out This : ${list[current]!!.name}")
+            putExtra(Intent.EXTRA_TEXT, list[current]!!.url)
+        }
+        context.startActivity(Intent.createChooser(intent, "Share link!"))
+    }
 
     fun renameDoc(docId: String, doc: DocDetails, item: Int) =
         CoroutineScope(Dispatchers.IO).launch {

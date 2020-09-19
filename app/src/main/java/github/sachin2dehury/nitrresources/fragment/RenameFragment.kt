@@ -46,7 +46,7 @@ class RenameFragment(
         }
 
         cancelButton.setOnClickListener {
-            Core.fragmentManager.popBackStack()
+            childFragmentManager.popBackStack()
         }
 
         saveButton.setOnClickListener {
@@ -66,7 +66,7 @@ class RenameFragment(
             Core.uploadDoc(Uri.parse(file), doc, item)
             Toast.makeText(context, "${doc.name} File being Uploaded.", Toast.LENGTH_SHORT).show()
         }
-        Core.fragmentManager.popBackStack()
+        childFragmentManager.popBackStack()
     }
 
     private fun isValidFile(): Boolean {

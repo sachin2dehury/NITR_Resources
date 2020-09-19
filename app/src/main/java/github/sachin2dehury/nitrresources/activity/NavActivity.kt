@@ -37,25 +37,23 @@ open class NavActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        Core.fragmentManager = supportFragmentManager
-
         val login = intent.getBooleanExtra("Login", true)
         if (login) {
             when (Core.firebaseAuth.currentUser) {
                 null ->
-                    Core.changeFragment(LoginFragment())
-                else -> Core.changeFragment(ListFragment(STREAM_LIST))
+                    Core.changeFragment(LoginFragment(), supportFragmentManager)
+                else -> Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager)
             }
         } else {
             val file = intent.getStringExtra("File")!!
             val rename = intent.getBooleanExtra("Rename", false)
             val index = intent.getIntExtra("PageIndex", 0)
-            Core.changeFragment(RenameFragment(file, rename, index))
+            Core.changeFragment(RenameFragment(file, rename, index), supportFragmentManager)
         }
 
 
         navigationDrawer.setNavigationItemSelectedListener { item ->
-            Core.navDrawerMenu(item, this)
+            Core.navDrawerMenu(item, this, supportFragmentManager)
             true
         }
     }
@@ -85,7 +83,7 @@ open class NavActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item))
             return true
-        Core.optionMenu(item)
+        Core.optionMenu(item, supportFragmentManager)
         return true
     }
 }

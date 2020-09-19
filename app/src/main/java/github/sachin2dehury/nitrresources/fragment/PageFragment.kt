@@ -20,7 +20,7 @@ class PageFragment(private val position: Int) : Fragment(R.layout.page) {
 
         progressBar.visibility = View.VISIBLE
         listView.apply {
-            adapter = ListPageAdapter(position)
+            adapter = ListPageAdapter(position, childFragmentManager)
             layoutManager = LinearLayoutManager(context)
         }
         Core.getList(NOTES_LIST + position).invokeOnCompletion {

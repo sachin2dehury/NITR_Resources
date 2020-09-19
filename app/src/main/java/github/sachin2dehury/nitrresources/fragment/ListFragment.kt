@@ -13,7 +13,7 @@ class ListFragment(private val item: Int) : Fragment(R.layout.page) {
         super.onViewCreated(view, savedInstanceState)
 
         listView.apply {
-            adapter = ListAdapter(item)
+            adapter = ListAdapter(item,childFragmentManager)
             layoutManager = LinearLayoutManager(context)
         }
     }
