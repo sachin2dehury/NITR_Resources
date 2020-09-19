@@ -12,7 +12,7 @@ import github.sachin2dehury.nitrresources.core.NO_LIST
 import github.sachin2dehury.nitrresources.core.YEAR_LIST
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.TabFragment
-import kotlinx.android.synthetic.main.items.view.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
@@ -21,7 +21,7 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
     private val list = Core.listSelector(item)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.items, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return ListViewHolder(view)
     }
 

@@ -9,18 +9,18 @@ import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.ListPageAdapter
 import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.NOTES_LIST
-import kotlinx.android.synthetic.main.page.*
+import kotlinx.android.synthetic.main.fragment_page.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PageFragment(private val position: Int) : Fragment(R.layout.page) {
+class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         progressBar.visibility = View.VISIBLE
         listView.apply {
-            adapter = ListPageAdapter(position, childFragmentManager)
+            adapter = ListPageAdapter(position, parentFragmentManager)
             layoutManager = LinearLayoutManager(context)
         }
         Core.getList(NOTES_LIST + position).invokeOnCompletion {

@@ -16,7 +16,7 @@ import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.IMG
 import github.sachin2dehury.nitrresources.core.PDF
 import github.sachin2dehury.nitrresources.core.format
-import kotlinx.android.synthetic.main.items.view.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListPageAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<ListPageAdapter.ListPageViewHolder>(), Filterable {
@@ -26,7 +26,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
     private val keys = list.keys
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.items, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return ListPageViewHolder(view)
     }
 

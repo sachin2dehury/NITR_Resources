@@ -115,7 +115,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun loggedIn() {
-        childFragmentManager.popBackStack()
+        parentFragmentManager.popBackStack()
         Core.changeFragment(ListFragment(STREAM_LIST), childFragmentManager)
     }
 }

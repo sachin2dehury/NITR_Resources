@@ -7,11 +7,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.STREAM_LIST
-import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
-import github.sachin2dehury.nitrresources.fragment.RenameFragment
-import kotlinx.android.synthetic.main.activity_navigation.*
+import kotlinx.android.synthetic.main.activity_nav.*
 
 open class NavActivity : AppCompatActivity() {
 
@@ -29,7 +26,7 @@ open class NavActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_navigation)
+        setContentView(R.layout.activity_nav)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
         drawerLayout.addDrawerListener(toggle)
@@ -37,20 +34,9 @@ open class NavActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val login = intent.getBooleanExtra("Login", true)
-        if (login) {
-            when (Core.firebaseAuth.currentUser) {
-                null ->
-                    Core.changeFragment(LoginFragment(), supportFragmentManager)
-                else -> Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager)
-            }
-        } else {
-            val file = intent.getStringExtra("File")!!
-            val rename = intent.getBooleanExtra("Rename", false)
-            val index = intent.getIntExtra("PageIndex", 0)
-            Core.changeFragment(RenameFragment(file, rename, index), supportFragmentManager)
+        if (Core.firebaseAuth.currentUser != null) {
+            Core.changeFragment(LoginFragment(), supportFragmentManager)
         }
-
 
         navigationDrawer.setNavigationItemSelectedListener { item ->
             Core.navDrawerMenu(item, this, supportFragmentManager)

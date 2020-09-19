@@ -6,7 +6,7 @@ import github.sachin2dehury.nitrresources.core.pages
 import github.sachin2dehury.nitrresources.fragment.PageFragment
 import github.sachin2dehury.nitrresources.fragment.TabFragment
 
-class PageAdapter(fragment: TabFragment) : FragmentStateAdapter(fragment) {
+class TabAdapter(fragment: TabFragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
         return pages.size
     }
