@@ -87,7 +87,7 @@ object Core {
             MSC_LIST -> branch = msc[position]
             INT_MSC_LIST -> branch = intMsc[position]
         }
-        if (stream == streams[1] && year == years[0]) {
+        if ((stream == streams[1] || stream == streams[2]) && year == years[0]) {
             branch = "All"
         }
     }
