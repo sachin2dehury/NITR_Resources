@@ -34,7 +34,9 @@ const val ALL = "*/*"
 val format = DecimalFormat("#.##")
 
 val branch = listOf(
-    "AR", "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN"
+    "AR",
+    "CY", "ER", "LS", "MA", "PH",
+    "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN"
 )
 val streamYears = listOf(5, 4, 3, 2, 2)
 val noList = listOf("No Data Available!")

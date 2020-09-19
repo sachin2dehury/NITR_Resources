@@ -15,7 +15,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.activity.NavActivity
+import github.sachin2dehury.nitrresources.activity.PageActivity
 import github.sachin2dehury.nitrresources.fragment.AboutFragment
+import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -86,7 +88,7 @@ object Core {
             INT_MSC_LIST -> branch = intMsc[position]
         }
         if (stream == streams[1] && year == years[0]) {
-            stream = "All"
+            branch = "All"
         }
     }
 
@@ -128,17 +130,25 @@ object Core {
         rename: Boolean = false,
         pageIndex: Int = 0
     ) {
-        val intent = Intent(context, NavActivity::class.java)
-        intent.putExtra("Login", login)
-        intent.putExtra("File", file)
-        intent.putExtra("Rename", rename)
-        intent.putExtra("PageIndex", pageIndex)
+        val intent = when (context) {
+            is NavActivity -> {
+                Intent(context, PageActivity::class.java)
+            }
+            else -> {
+                Intent(context, NavActivity::class.java).apply {
+                    putExtra("Login", login)
+                    putExtra("File", file)
+                    putExtra("Rename", rename)
+                    putExtra("PageIndex", pageIndex)
+                }
+            }
+        }
         context.startActivity(intent)
     }
 
     fun navDrawerMenu(item: MenuItem, context: Context) {
         when (item.itemId) {
-            R.id.home -> changeActivity(context, true)
+            R.id.home -> changeFragment(ListFragment(STREAM_LIST))
             R.id.book -> openLink(BOOK_LINK, context)
             R.id.nitris -> openLink(QUESTION_LINK, context)
             R.id.mail -> openLink(MAIL_LINK, context)
