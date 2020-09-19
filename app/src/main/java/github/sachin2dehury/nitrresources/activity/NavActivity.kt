@@ -7,6 +7,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
+import github.sachin2dehury.nitrresources.core.STREAM_LIST
+import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import kotlinx.android.synthetic.main.activity_nav.*
 
@@ -34,8 +36,10 @@ open class NavActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        if (Core.firebaseAuth.currentUser != null) {
+        if (Core.firebaseAuth.currentUser == null) {
             Core.changeFragment(LoginFragment(), supportFragmentManager)
+        } else {
+            Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager)
         }
 
         navigationDrawer.setNavigationItemSelectedListener { item ->

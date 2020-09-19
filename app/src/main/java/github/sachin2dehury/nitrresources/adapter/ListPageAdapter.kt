@@ -77,12 +77,13 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                 val search = value.toString()
                 val filterResults = FilterResults()
                 Log.w("Test", "2")
-                filterResults.values = if (search.isEmpty())
+                filterResults.values = if (search.isEmpty()) {
                     keys
-                else
+                } else {
                     keys.filter {
                         list[it]!!.name.contentEquals(search)
                     }
+                }
                 Log.w("Test", "3")
                 return filterResults
             }
