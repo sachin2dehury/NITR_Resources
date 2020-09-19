@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/navActivity">
 
     <fragment
         android:id="@+id/aboutFragment"
@@ -45,4 +45,8 @@
             android:id="@+id/action_settingsFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
+    <activity
+        android:id="@+id/navActivity"
+        android:name="github.sachin2dehury.nitrresources.activity.NavActivity"
+        android:label="NavActivity" />
 </navigation>
