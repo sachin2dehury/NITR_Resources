@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.STREAM_LIST
-import github.sachin2dehury.nitrresources.core.streams
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import github.sachin2dehury.nitrresources.fragment.RenameFragment
@@ -32,10 +31,6 @@ open class NavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
 
-        if (Core.stream == "Trash") {
-            Core.loadAppData(this)
-        }
-
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -46,15 +41,10 @@ open class NavActivity : AppCompatActivity() {
 
         val login = intent.getBooleanExtra("Login", true)
         if (login) {
-            when {
-                Core.firebaseAuth.currentUser == null ->
+            when (Core.firebaseAuth.currentUser) {
+                null ->
                     Core.changeFragment(LoginFragment())
-                Core.stream == "Trash" ->
-                    Core.changeFragment(ListFragment(STREAM_LIST))
-                else -> {
-                    val index = Core.listPredictor(STREAM_LIST, streams.indexOf(Core.stream))
-                    Core.changeFragment(ListFragment(index))
-                }
+                else -> Core.changeFragment(ListFragment(STREAM_LIST))
             }
         } else {
             val file = intent.getStringExtra("File")!!

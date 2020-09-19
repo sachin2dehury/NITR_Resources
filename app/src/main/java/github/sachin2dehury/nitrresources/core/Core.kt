@@ -298,4 +298,11 @@ object Core {
             streamYr = streams.indexOf(stream)
         }
     }
+
+    fun jobs() = CoroutineScope(Dispatchers.IO).launch {
+        getList(NOTES_LIST)
+        getList(ASSIGNMENT_LIST)
+        getList(SLIDES_LIST)
+        getList(LAB_LIST)
+    }
 }

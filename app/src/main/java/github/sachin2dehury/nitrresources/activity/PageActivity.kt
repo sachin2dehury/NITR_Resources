@@ -2,7 +2,6 @@ package github.sachin2dehury.nitrresources.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,7 +14,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.ListAdapter
 import github.sachin2dehury.nitrresources.adapter.PageAdapter
-import github.sachin2dehury.nitrresources.core.*
+import github.sachin2dehury.nitrresources.core.ALL
+import github.sachin2dehury.nitrresources.core.Core
+import github.sachin2dehury.nitrresources.core.REQUEST_CODE_OPEN_FILE
+import github.sachin2dehury.nitrresources.core.pages
 import kotlinx.android.synthetic.main.activity_page.*
 import kotlinx.android.synthetic.main.page.*
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +32,7 @@ class PageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page)
 
-        jobs().invokeOnCompletion {
+        Core.jobs().invokeOnCompletion {
             jobValidator(it)
         }
 
@@ -79,15 +81,7 @@ class PageActivity : AppCompatActivity() {
             errorText.visibility = View.VISIBLE
             errorText.text = throwable.toString()
             Toast.makeText(this@PageActivity, throwable.toString(), Toast.LENGTH_SHORT).show()
-            Log.w("jobValidator", "Failed")
         }
-    }
-
-    private fun jobs() = CoroutineScope(Dispatchers.IO).launch {
-        Core.getList(NOTES_LIST)
-        Core.getList(ASSIGNMENT_LIST)
-        Core.getList(SLIDES_LIST)
-        Core.getList(LAB_LIST)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
