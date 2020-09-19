@@ -5,8 +5,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
@@ -17,7 +15,7 @@ import github.sachin2dehury.nitrresources.core.format
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListPageAdapter(private val item: Int) :
-    RecyclerView.Adapter<ListPageAdapter.ListPageViewHolder>(), Filterable {
+    RecyclerView.Adapter<ListPageAdapter.ListPageViewHolder>() {
     inner class ListPageViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     private val list = Core.pageSelector(item)
@@ -66,28 +64,5 @@ class ListPageAdapter(private val item: Int) :
 
     override fun getItemCount(): Int {
         return keys.size
-    }
-
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(value: CharSequence?): FilterResults {
-                val search = value.toString()
-                val filterResults = FilterResults()
-                filterResults.values = if (search.isEmpty())
-                    keys
-                else
-                    keys.filter {
-                        list[it]!!.name.contentEquals(search) ||
-                                list[it]!!.subName.contentEquals(search) ||
-                                list[it]!!.subCode.toString().contentEquals(search)
-                    }
-                return filterResults
-            }
-
-            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
-                filterResults!!.values as MutableSet<*>
-                notifyDataSetChanged()
-            }
-        }
     }
 }

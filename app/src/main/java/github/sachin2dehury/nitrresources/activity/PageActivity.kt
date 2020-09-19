@@ -34,10 +34,6 @@ class PageActivity : AppCompatActivity() {
 
         Core.jobs().invokeOnCompletion {
             jobValidator(it)
-            viewPager.adapter = PageAdapter()
-            TabLayoutMediator(tabView, viewPager) { tab, position ->
-                tab.text = pages[position]
-            }.attach()
         }
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
@@ -45,6 +41,11 @@ class PageActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        viewPager.adapter = PageAdapter()
+        TabLayoutMediator(tabView, viewPager) { tab, position ->
+            tab.text = pages[position]
+        }.attach()
 
         navigationDrawer.setNavigationItemSelectedListener { item ->
             Core.navDrawerMenu(item, this)
