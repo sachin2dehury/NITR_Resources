@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import github.sachin2dehury.nitrresources.R
@@ -25,6 +27,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PageActivity : AppCompatActivity() {
+
+    inner class Adapter : FragmentStateAdapter(this) {
+        override fun getItemCount(): Int {
+            TODO("Not yet implemented")
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            TODO("Not yet implemented")
+        }
+
+    }
 
     private lateinit var toggle: ActionBarDrawerToggle
 

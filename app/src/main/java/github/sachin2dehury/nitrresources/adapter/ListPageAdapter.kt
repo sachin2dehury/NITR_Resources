@@ -1,6 +1,7 @@
 package github.sachin2dehury.nitrresources.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -71,21 +72,24 @@ class ListPageAdapter(private val item: Int) :
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(value: CharSequence?): FilterResults {
+                Log.w("Test", "1")
                 val search = value.toString()
                 val filterResults = FilterResults()
+                Log.w("Test", "2")
                 filterResults.values = if (search.isEmpty())
                     keys
                 else
                     keys.filter {
-                        list[it]!!.name.contentEquals(search) ||
-                                list[it]!!.subName.contentEquals(search) ||
-                                list[it]!!.subCode.toString().contentEquals(search)
+                        list[it]!!.name.contentEquals(search)
                     }
+                Log.w("Test", "3")
                 return filterResults
             }
 
             override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
+                Log.w("Test", "4")
                 filterResults!!.values as MutableSet<*>
+                Log.w("Test", "5")
                 notifyDataSetChanged()
             }
         }
