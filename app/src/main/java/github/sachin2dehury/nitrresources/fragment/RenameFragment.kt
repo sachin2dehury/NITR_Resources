@@ -47,8 +47,6 @@ class RenameFragment(
 
         cancelButton.setOnClickListener {
             Core.fragmentManager.popBackStack()
-            requireActivity().finish()
-            Core.changeActivity(requireContext())
         }
 
         saveButton.setOnClickListener {
