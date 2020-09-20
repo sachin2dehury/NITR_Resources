@@ -57,7 +57,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                     show()
                 }
                 menu.setOnMenuItemClickListener { menuItem ->
-                    Core.popUpMenu(menuItem, context, current, item, fragmentManager)
+                    Core.popUpMenu(menuItem, context, current, item)
                     true
                 }
                 true

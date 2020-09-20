@@ -20,10 +20,9 @@ class RenameFragment(
     private val index: Int = 0
 ) : Fragment(R.layout.fragment_rename) {
 
-    lateinit var doc: DocDetails
+    private lateinit var doc: DocDetails
 
     @SuppressLint("SetTextI18n")
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -33,7 +32,6 @@ class RenameFragment(
             spinnerPages.visibility = View.GONE
             spinnerBranch.visibility = View.GONE
         }
-        renameHeader.text = "Save File"
 
         spinnerPages.apply {
             animate()
@@ -46,7 +44,7 @@ class RenameFragment(
         }
 
         cancelButton.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            closeActivity()
         }
 
         saveButton.setOnClickListener {
@@ -60,26 +58,35 @@ class RenameFragment(
         val item = spinnerPages.selectedItemPosition
         if (rename) {
             Core.renameDoc(file, doc, index)
-            Toast.makeText(context, "${doc.name} File Renamed.", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "${doc.name} File being Renamed.", Toast.LENGTH_SHORT)
                 .show()
         } else {
             Core.uploadDoc(Uri.parse(file), doc, item)
             Toast.makeText(context, "${doc.name} File being Uploaded.", Toast.LENGTH_SHORT).show()
         }
+        closeActivity()
+    }
+
+    private fun closeActivity() {
         parentFragmentManager.popBackStack()
+        requireActivity().finish()
     }
 
     private fun isValidFile(): Boolean {
         val fileName = fileName.text.toString()
         val subCode = subCode.text.toString().toInt()
-        val subName = spinnerBranch.selectedItem.toString()
         return when {
             fileName.isBlank() && fileName.length < 5 -> {
                 Toast.makeText(context, "Please Enter Valid File Name", Toast.LENGTH_LONG).show()
                 false
             }
             subCode in 1000..7000 -> {
-                doc = DocDetails(fileName, subCode, subName)
+                doc = if (rename) {
+                    Core.pageSelector(index)[file]!!.copy(name = fileName, subCode = subCode)
+                } else {
+                    val subName = spinnerBranch.selectedItem.toString()
+                    DocDetails(fileName, subCode, subName)
+                }
                 true
             }
             else -> {

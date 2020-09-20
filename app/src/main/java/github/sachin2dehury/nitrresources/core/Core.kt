@@ -16,7 +16,11 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.fragment.*
+import github.sachin2dehury.nitrresources.activity.NavActivity
+import github.sachin2dehury.nitrresources.fragment.AboutFragment
+import github.sachin2dehury.nitrresources.fragment.ListFragment
+import github.sachin2dehury.nitrresources.fragment.LoginFragment
+import github.sachin2dehury.nitrresources.fragment.SettingsFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +29,7 @@ import kotlin.system.exitProcess
 
 object Core {
 
-    var streamYr = 0
+    var streamYrs = 0
     var stream = "Trash"
 
     private var branch = "Trash"
@@ -40,6 +44,22 @@ object Core {
     private val assignment = mutableMapOf<String, DocDetails>()
     private val slides = mutableMapOf<String, DocDetails>()
     private val lab = mutableMapOf<String, DocDetails>()
+
+
+    fun changeActivity(
+        context: Context,
+        file: String,
+        rename: Boolean,
+        pageIndex: Int = 0
+    ) {
+        val intent = Intent(context, NavActivity::class.java).apply {
+            putExtra("Login", false)
+            putExtra("File", file)
+            putExtra("Rename", rename)
+            putExtra("PageIndex", pageIndex)
+        }
+        context.startActivity(intent)
+    }
 
     fun changeFragment(fragment: Fragment, fragmentManager: FragmentManager) {
         fragmentManager.beginTransaction().apply {
@@ -74,7 +94,7 @@ object Core {
     fun dataSetter(item: Int, position: Int) {
         when (item) {
             STREAM_LIST -> {
-                streamYr = streamYears[position]
+                streamYrs = streamYears[position]
                 stream = streams[position]
             }
             YEAR_LIST -> {
@@ -148,11 +168,10 @@ object Core {
         item: MenuItem,
         context: Context,
         current: String,
-        index: Int,
-        fragmentManager: FragmentManager
+        index: Int
     ) {
         when (item.itemId) {
-            R.id.rename -> changeFragment(RenameFragment(current, true, index), fragmentManager)
+            R.id.rename -> changeActivity(context, current, true, index)
             R.id.delete -> deleteDoc(current, index)
             R.id.download -> deleteDoc(current, index)
             R.id.share -> shareDoc(context, current, index)
@@ -266,8 +285,10 @@ object Core {
 
     fun loadAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).apply {
-            stream = getString("Stream", streams[0])!!
-//            streamYr = streamYears[streams.indexOf(stream)]
+            stream = getString("Stream", "Trash")!!
+            if (stream != "Trash") {
+                streamYrs = streamYears[streams.indexOf(stream)]
+            }
         }
     }
 }

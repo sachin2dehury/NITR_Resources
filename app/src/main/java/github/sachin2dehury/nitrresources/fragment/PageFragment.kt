@@ -12,6 +12,7 @@ import com.google.android.gms.ads.AdRequest
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.ListPageAdapter
 import github.sachin2dehury.nitrresources.core.Core
+import github.sachin2dehury.nitrresources.core.noList
 import kotlinx.android.synthetic.main.fragment_page.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,7 +49,20 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
             errorText.visibility = View.VISIBLE
             errorText.text = throwable.toString()
             Toast.makeText(context, throwable.toString(), Toast.LENGTH_SHORT).show()
+        } else {
+            isEmpty()
+            listView.adapter!!.notifyDataSetChanged()
         }
+    }
+
+    private fun isEmpty() {
+        if (listView.adapter!!.itemCount == 0) {
+            Toast.makeText(context, noList.first(), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         listView.adapter!!.notifyDataSetChanged()
     }
 

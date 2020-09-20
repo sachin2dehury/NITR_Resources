@@ -49,13 +49,12 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
-            Core.changeFragment(RenameFragment(data!!.data.toString()), parentFragmentManager)
+            Core.changeActivity(requireContext(), data!!.data.toString(), false)
         }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         Core.clearList()
-        Core.loadAppData(requireContext())
     }
 }

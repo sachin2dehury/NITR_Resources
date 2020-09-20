@@ -11,14 +11,15 @@ import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.STREAM_LIST
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
+import github.sachin2dehury.nitrresources.fragment.RenameFragment
 import kotlinx.android.synthetic.main.activity_nav.*
 
 open class NavActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         Core.saveAppData(this)
     }
 
@@ -31,17 +32,26 @@ open class NavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
 
+        val login = intent.getBooleanExtra("Login", true)
+        if (login) {
+            if (Core.firebaseAuth.currentUser == null) {
+                Core.changeFragment(LoginFragment(), supportFragmentManager)
+            } else {
+                Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager)
+            }
+        } else {
+            val file = intent.getStringExtra("File")!!
+            val rename = intent.getBooleanExtra("Rename", false)
+            val index = intent.getIntExtra("PageIndex", 0)
+            Core.changeFragment(RenameFragment(file, rename, index), supportFragmentManager)
+        }
+
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        if (Core.firebaseAuth.currentUser == null) {
-            Core.changeFragment(LoginFragment(), supportFragmentManager)
-        } else {
-            Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager)
-        }
 
         navigationDrawer.setNavigationItemSelectedListener { item ->
             Core.navDrawerMenu(item, this, supportFragmentManager)

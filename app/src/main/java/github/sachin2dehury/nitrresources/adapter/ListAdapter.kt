@@ -52,7 +52,7 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
 
     override fun getItemCount(): Int {
         if (item == YEAR_LIST) {
-            return Core.streamYr
+            return Core.streamYrs
         }
         return listData.size
     }

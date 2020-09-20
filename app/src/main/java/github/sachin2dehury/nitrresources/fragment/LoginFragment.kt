@@ -29,13 +29,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         signInButton.setOnClickListener {
             if (isValidInput()) {
-                progressBar.visibility = View.VISIBLE
                 signIn()
             }
         }
         signUpButton.setOnClickListener {
             if (isValidInput()) {
-                progressBar.visibility = View.VISIBLE
                 signUp()
             }
         }
@@ -90,6 +88,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 false
             }
             else -> {
+                progressBar.visibility = View.VISIBLE
                 PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
                     putString("Email", email)
                     putString("Password", password)
