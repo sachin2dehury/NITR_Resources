@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.MobileAds
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.STREAM_LIST
@@ -46,24 +47,9 @@ open class NavActivity : AppCompatActivity() {
             Core.navDrawerMenu(item, this, supportFragmentManager)
             true
         }
-    }
 
-    //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.search_menu, menu)
-//        val search = menu!!.findItem(R.id.searchBar).actionView as SearchView
-//        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-////                val adapter = listView.adapter as ListPageAdapter
-////                adapter.filter.filter(newText)
-//                return false
-//            }
-//        })
-//        return super.onCreateOptionsMenu(menu)
-//    }
+        MobileAds.initialize(this) {}
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_menu, menu)

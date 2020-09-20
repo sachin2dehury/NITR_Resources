@@ -8,8 +8,8 @@
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/myDocs"
-        android:icon="@drawable/ic_baseline_folder_shared_24"
-        android:title="@string/my_docs" />
+<!--    <item-->
+<!--        android:id="@+id/myDocs"-->
+<!--        android:icon="@drawable/ic_baseline_folder_shared_24"-->
+<!--        android:title="@string/my_docs" />-->
 </menu>

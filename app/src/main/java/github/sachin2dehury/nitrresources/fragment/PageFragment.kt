@@ -3,16 +3,15 @@ package github.sachin2dehury.nitrresources.fragment
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.ListPageAdapter
 import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.NOTES_LIST
 import kotlinx.android.synthetic.main.fragment_page.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +21,12 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            Core.getList(position).invokeOnCompletion {
+                jobValidator(it)
+            }
+        }
         setHasOptionsMenu(true)
     }
 
@@ -33,12 +38,8 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
             adapter = ListPageAdapter(position, parentFragmentManager)
             layoutManager = LinearLayoutManager(context)
         }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            Core.getList(NOTES_LIST + position).invokeOnCompletion {
-                jobValidator(it)
-            }
-        }
+        val adRequest = AdRequest.Builder().build()!!
+        adView.loadAd(adRequest)
     }
 
     private fun jobValidator(throwable: Throwable?) = CoroutineScope(Dispatchers.Main).launch {
@@ -48,6 +49,7 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
             errorText.text = throwable.toString()
             Toast.makeText(context, throwable.toString(), Toast.LENGTH_SHORT).show()
         }
+        listView.adapter!!.notifyDataSetChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -65,10 +67,5 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
             }
         })
         super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Core.optionMenu(item, parentFragmentManager)
-        return super.onOptionsItemSelected(item)
     }
 }

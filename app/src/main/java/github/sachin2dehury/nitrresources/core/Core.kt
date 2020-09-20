@@ -168,14 +168,13 @@ object Core {
 
     fun getList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
         val list = pageSelector(item)
-        val path = "$college/$stream/$year/$branch/${pages[item - NOTES_LIST]}"
+        val path = "$college/$stream/$year/$branch/${pages[item]}"
         Log.w("Test", path)
         val documents = firebaseFireStore.collection(path).get().await()!!.documents
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
             list[document.id] = doc
         }
-        Log.w("Test", "Done")
     }
 
     fun uploadDoc(file: Uri, doc: DocDetails, item: Int) =
@@ -270,24 +269,5 @@ object Core {
             stream = getString("Stream", streams[0])!!
 //            streamYr = streamYears[streams.indexOf(stream)]
         }
-    }
-
-    fun myDocs(item: Int) = CoroutineScope(Dispatchers.IO).launch {
-        val path = "NITR/$stream/$year/$branch/${pages[item]}"
-        val list = pageSelector(item)
-        list.clear()
-        val search =
-            firebaseFireStore.collection(path)
-                .whereEqualTo("contributor", firebaseAuth.currentUser.toString()).get()
-                .await()!!.documents
-        for (document in search) {
-            val doc = document.toObject(DocDetails::class.java)!!
-            list[document.id] = doc
-        }
-    }
-
-    fun searchMenu(item: Int) {
-//        R.id.myDocs ->
-        myDocs(item)
     }
 }

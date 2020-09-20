@@ -15,7 +15,7 @@
     <string name="questions">Questions</string>
     <string name="zimbra">Zimbra</string>
     <string name="news">News</string>
-    <string name="user">User</string>
+    <string name="user">Log Out</string>
     <string name="my_docs">My Docs</string>
     <string name="sign_out">Sign Out</string>
     <string name="about">About</string>
@@ -26,4 +26,6 @@
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
     <string name="settings">Settings</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
