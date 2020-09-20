@@ -5,22 +5,22 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.IMG
-import github.sachin2dehury.nitrresources.core.PDF
-import github.sachin2dehury.nitrresources.core.format
+import github.sachin2dehury.nitrresources.core.*
 import github.sachin2dehury.nitrresources.viewholder.ListPageViewHolder
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListPageAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
-    RecyclerView.Adapter<ListPageViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val list = Core.pageSelector(item)
-    private val keys = list.keys
+    private var listData = list
+    private val keys = listData.keys
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -28,7 +28,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ListPageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val current = keys.elementAt(position)
         val doc = list[current]!!
         val img = when (doc.type) {
@@ -67,30 +67,25 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
         return keys.size
     }
 
-//    override fun getFilter(): Filter {
-//        return object : Filter() {
-//            override fun performFiltering(value: CharSequence?): FilterResults {
-//                val search = value.toString().toLowerCase()
-//                val filterResults = FilterResults()
-//                filterResults.values = if (search.isEmpty()) {
-//                    keys
-//                } else {
-//                    keys.filter {
-//                        list[it]!!.name.toLowerCase().contentEquals(search)
-//                    }
-//                }
-//                return filterResults
-//            }
-//
-//            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
-//                keys.clear()
-//                val array = ArrayList<String>()
-//                for (x in filterResults!!.values as ArrayList<*>) {
-//                    array.add(x.toString())
-//                }
-//                keys.addAll(array)
-//                notifyDataSetChanged()
-//            }
-//        }
-//    }
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(value: CharSequence?): FilterResults {
+                val search = value.toString().toLowerCase()
+                val filterResults = FilterResults()
+                filterResults.values = if (search.isEmpty()) {
+                    list
+                } else {
+                    list.filter {
+                        it.value.name.toLowerCase().contains(search)
+                    }
+                }
+                return filterResults
+            }
+
+            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
+                listData = (filterResults!!.values as LinkedHashMap<String, DocDetails>)
+                notifyDataSetChanged()
+            }
+        }
+    }
 }

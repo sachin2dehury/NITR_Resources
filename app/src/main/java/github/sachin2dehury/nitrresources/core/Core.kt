@@ -72,7 +72,6 @@ object Core {
     }
 
     fun dataSetter(item: Int, position: Int) {
-        Log.w("Test", "$item $position")
         when (item) {
             STREAM_LIST -> {
                 streamYr = streamYears[position]
@@ -96,6 +95,7 @@ object Core {
     }
 
     fun pageSelector(position: Int): MutableMap<String, DocDetails> {
+        Log.w("Test", position.toString())
         return when (NOTES_LIST + position) {
             NOTES_LIST -> notes
             ASSIGNMENT_LIST -> assignment
@@ -175,7 +175,7 @@ object Core {
             val doc = document.toObject(DocDetails::class.java)!!
             list[document.id] = doc
         }
-        Log.w("Test", list.toString())
+        Log.w("Test", "Done")
     }
 
     fun uploadDoc(file: Uri, doc: DocDetails, item: Int) =
@@ -267,8 +267,8 @@ object Core {
 
     fun loadAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).apply {
-            stream = getString("Stream", "Trash")!!
-            streamYr = streamYears[streams.indexOf(stream)]
+            stream = getString("Stream", streams[0])!!
+//            streamYr = streamYears[streams.indexOf(stream)]
         }
     }
 

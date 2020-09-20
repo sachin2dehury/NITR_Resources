@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
@@ -16,9 +18,10 @@ import github.sachin2dehury.nitrresources.viewholder.ListViewHolder
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
-    RecyclerView.Adapter<ListViewHolder>() {
+    RecyclerView.Adapter<ListViewHolder>(), Filterable {
 
     private val list = Core.listSelector(item)
+    private var listData = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -28,7 +31,7 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.itemView.apply {
-            name.text = list[position]
+            name.text = listData[position]
             if (item == NO_LIST) {
                 subject.visibility = View.VISIBLE
                 size.visibility = View.VISIBLE
@@ -51,28 +54,28 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
         if (item == YEAR_LIST) {
             return Core.streamYr
         }
-        return list.size
+        return listData.size
     }
 
-//    override fun getFilter(): Filter {
-//        return object : Filter() {
-//            override fun performFiltering(value: CharSequence?): FilterResults {
-//                val search = value.toString().toLowerCase()
-//                val filterResults = FilterResults()
-//                filterResults.values = if (search.isEmpty()) {
-//                    list
-//                } else {
-//                    list.filter {
-//                        it.toLowerCase().contentEquals(search)
-//                    }
-//                }
-//                return filterResults
-//            }
-//
-//            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
-//                list = filterResults!!.values as List<String>
-//                notifyDataSetChanged()
-//            }
-//        }
-//    }
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(value: CharSequence?): FilterResults {
+                val search = value.toString().toLowerCase()
+                val filterResults = FilterResults()
+                filterResults.values = if (search.isEmpty()) {
+                    list
+                } else {
+                    list.filter {
+                        it.toLowerCase().contains(search)
+                    }
+                }
+                return filterResults
+            }
+
+            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
+                listData = filterResults!!.values as List<String>
+                notifyDataSetChanged()
+            }
+        }
+    }
 }
