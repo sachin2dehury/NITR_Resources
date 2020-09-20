@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.MenuItem
+import android.webkit.MimeTypeMap
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -45,6 +46,7 @@ object Core {
     private val slides = mutableMapOf<String, DocDetails>()
     private val lab = mutableMapOf<String, DocDetails>()
 
+    private val mime = MimeTypeMap.getSingleton()!!
 
     fun changeActivity(
         context: Context,
@@ -115,7 +117,6 @@ object Core {
     }
 
     fun pageSelector(position: Int): MutableMap<String, DocDetails> {
-        Log.w("Test", position.toString())
         return when (NOTES_LIST + position) {
             NOTES_LIST -> notes
             ASSIGNMENT_LIST -> assignment
@@ -168,13 +169,14 @@ object Core {
         item: MenuItem,
         context: Context,
         current: String,
-        index: Int
+        index: Int,
+        doc: DocDetails
     ) {
         when (item.itemId) {
             R.id.rename -> changeActivity(context, current, true, index)
             R.id.delete -> deleteDoc(current, index)
-            R.id.download -> deleteDoc(current, index)
-            R.id.share -> shareDoc(context, current, index)
+            R.id.download -> openLink(doc.url, context)
+            R.id.share -> shareDoc(doc, context)
         }
     }
 
@@ -188,7 +190,6 @@ object Core {
     fun getList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
         val list = pageSelector(item)
         val path = "$college/$stream/$year/$branch/${pages[item]}"
-        Log.w("Test", path)
         val documents = firebaseFireStore.collection(path).get().await()!!.documents
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
@@ -205,12 +206,12 @@ object Core {
             val docRef = firebaseFireStore.collection(path).document(docId)
             storeReference.putFile(file).await()
 
+            doc.type = fileType(file)
             doc.url = storeReference.downloadUrl.await().toString()
             doc.contributor = firebaseAuth.currentUser!!.email!!
             storeReference.metadata.await().apply {
                 doc.size = sizeBytes.toDouble() / MB
                 doc.time = updatedTimeMillis
-                doc.type = contentType.toString()
             }
             firebaseFireStore.runBatch { batch ->
                 batch.set(docRef, doc)
@@ -241,13 +242,12 @@ object Core {
         }
     }
 
-    private fun shareDoc(context: Context, current: String, item: Int) {
-        val list = pageSelector(item)
+    private fun shareDoc(doc: DocDetails, context: Context) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_SUBJECT, "Check Out This : ${list[current]!!.name}")
-            putExtra(Intent.EXTRA_TEXT, list[current]!!.url)
+            putExtra(Intent.EXTRA_SUBJECT, "Check Out This : ${doc.name}")
+            putExtra(Intent.EXTRA_TEXT, doc.url)
         }
         context.startActivity(Intent.createChooser(intent, "Share link!"))
     }
@@ -293,5 +293,10 @@ object Core {
                 streamYrs = streamYears[streams.indexOf(stream)]
             }
         }
+    }
+
+    private fun fileType(file: Uri): String {
+        val extension = MimeTypeMap.getFileExtensionFromUrl(file.toString())!!
+        return mime.getMimeTypeFromExtension(extension)!!
     }
 }

@@ -2,6 +2,7 @@ package github.sachin2dehury.nitrresources.adapter
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,14 +54,15 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                 Core.openLink(doc.url, context)
             }
             menuButton.setOnClickListener {
-                val menu = PopupMenu(context, it).apply {
+                notifyDataSetChanged()
+                val menu = PopupMenu(context, it, Gravity.END).apply {
                     menuInflater.inflate(R.menu.item_menu, menu)
                     animate()
                     Core.getMenuIcon(this)
                     show()
                 }
                 menu.setOnMenuItemClickListener { menuItem ->
-                    Core.popUpMenu(menuItem, context, current, item)
+                    Core.popUpMenu(menuItem, context, current, item, doc)
                     true
                 }
             }
