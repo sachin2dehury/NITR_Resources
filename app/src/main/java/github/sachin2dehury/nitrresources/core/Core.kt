@@ -206,7 +206,7 @@ object Core {
             storeReference.putFile(file).await()
 
             doc.url = storeReference.downloadUrl.await().toString()
-            doc.contributor = firebaseAuth.currentUser.toString()
+            doc.contributor = firebaseAuth.currentUser!!.email!!
             storeReference.metadata.await().apply {
                 doc.size = sizeBytes.toDouble() / MB
                 doc.time = updatedTimeMillis
