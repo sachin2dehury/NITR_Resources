@@ -1,13 +1,10 @@
 package github.sachin2dehury.nitrresources.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +13,11 @@ import github.sachin2dehury.nitrresources.core.Core
 import github.sachin2dehury.nitrresources.core.IMG
 import github.sachin2dehury.nitrresources.core.PDF
 import github.sachin2dehury.nitrresources.core.format
+import github.sachin2dehury.nitrresources.viewholder.ListPageViewHolder
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListPageAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
-    RecyclerView.Adapter<ListPageAdapter.ListPageViewHolder>(), Filterable {
-    inner class ListPageViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    RecyclerView.Adapter<ListPageViewHolder>() {
 
     private val list = Core.pageSelector(item)
     private val keys = list.keys
@@ -70,30 +67,30 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
         return keys.size
     }
 
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(value: CharSequence?): FilterResults {
-                Log.w("Test", "1")
-                val search = value.toString()
-                val filterResults = FilterResults()
-                Log.w("Test", "2")
-                filterResults.values = if (search.isEmpty()) {
-                    keys
-                } else {
-                    keys.filter {
-                        list[it]!!.name.contentEquals(search)
-                    }
-                }
-                Log.w("Test", "3")
-                return filterResults
-            }
-
-            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
-                Log.w("Test", "4")
-                filterResults!!.values as MutableSet<*>
-                Log.w("Test", "5")
-                notifyDataSetChanged()
-            }
-        }
-    }
+//    override fun getFilter(): Filter {
+//        return object : Filter() {
+//            override fun performFiltering(value: CharSequence?): FilterResults {
+//                val search = value.toString().toLowerCase()
+//                val filterResults = FilterResults()
+//                filterResults.values = if (search.isEmpty()) {
+//                    keys
+//                } else {
+//                    keys.filter {
+//                        list[it]!!.name.toLowerCase().contentEquals(search)
+//                    }
+//                }
+//                return filterResults
+//            }
+//
+//            override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
+//                keys.clear()
+//                val array = ArrayList<String>()
+//                for (x in filterResults!!.values as ArrayList<*>) {
+//                    array.add(x.toString())
+//                }
+//                keys.addAll(array)
+//                notifyDataSetChanged()
+//            }
+//        }
+//    }
 }

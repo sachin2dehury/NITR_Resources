@@ -26,7 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             summary = Core.stream
             entries = streamsArray
             entryValues = streamsArray
-            setValueIndex(Core.streamYr)
+            setValueIndex(streams.indexOf(Core.stream))
         }
     }
 

@@ -67,11 +67,12 @@ object Core {
         return when (item) {
             STREAM_LIST -> B_ARCH_LIST + position
             in B_ARCH_LIST..M_TECH_LIST -> YEAR_LIST
-            else -> NO_LIST
+            else -> YEAR_LIST
         }
     }
 
     fun dataSetter(item: Int, position: Int) {
+        Log.w("Test", "$item $position")
         when (item) {
             STREAM_LIST -> {
                 streamYr = streamYears[position]
@@ -137,7 +138,6 @@ object Core {
     fun optionMenu(item: MenuItem, fragmentManager: FragmentManager) {
         when (item.itemId) {
             R.id.settings -> changeFragment(SettingsFragment(), fragmentManager)
-            R.id.myDocs -> changeFragment(LoginFragment(), fragmentManager)
             R.id.user -> signOut(fragmentManager)
             R.id.about -> changeFragment(AboutFragment(), fragmentManager)
             R.id.exit -> exitProcess(0)
@@ -169,11 +169,13 @@ object Core {
     fun getList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
         val list = pageSelector(item)
         val path = "$college/$stream/$year/$branch/${pages[item - NOTES_LIST]}"
+        Log.w("Test", path)
         val documents = firebaseFireStore.collection(path).get().await()!!.documents
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
             list[document.id] = doc
         }
+        Log.w("Test", list.toString())
     }
 
     fun uploadDoc(file: Uri, doc: DocDetails, item: Int) =
@@ -266,7 +268,26 @@ object Core {
     fun loadAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).apply {
             stream = getString("Stream", "Trash")!!
-            streamYr = streams.indexOf(stream)
+            streamYr = streamYears[streams.indexOf(stream)]
         }
+    }
+
+    fun myDocs(item: Int) = CoroutineScope(Dispatchers.IO).launch {
+        val path = "NITR/$stream/$year/$branch/${pages[item]}"
+        val list = pageSelector(item)
+        list.clear()
+        val search =
+            firebaseFireStore.collection(path)
+                .whereEqualTo("contributor", firebaseAuth.currentUser.toString()).get()
+                .await()!!.documents
+        for (document in search) {
+            val doc = document.toObject(DocDetails::class.java)!!
+            list[document.id] = doc
+        }
+    }
+
+    fun searchMenu(item: Int) {
+//        R.id.myDocs ->
+        myDocs(item)
     }
 }

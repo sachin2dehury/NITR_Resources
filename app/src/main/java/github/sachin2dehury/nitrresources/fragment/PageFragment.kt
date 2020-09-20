@@ -15,6 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page) {
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setHasOptionsMenu(true)
+//    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,4 +43,26 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
             Toast.makeText(context, throwable.toString(), Toast.LENGTH_SHORT).show()
         }
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.search_menu, menu)
+//        val search = menu.findItem(R.id.searchBar).actionView as SearchView
+//        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                val adapter = listView.adapter as ListPageAdapter
+//                adapter.filter.filter(newText)
+//                return false
+//            }
+//        })
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        Core.optionMenu(item, parentFragmentManager)
+//        return super.onOptionsItemSelected(item)
+//    }
 }
