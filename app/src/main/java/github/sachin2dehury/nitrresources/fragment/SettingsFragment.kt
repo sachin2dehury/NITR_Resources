@@ -11,7 +11,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        val email = Core.firebaseAuth.currentUser!!.email!!
+        val email =
+            PreferenceManager.getDefaultSharedPreferences(context).getString("Email", "Trash")!!
         val streamsArray = streams.toTypedArray()
         val password =
             PreferenceManager.getDefaultSharedPreferences(context).getString("Password", "Trash")!!

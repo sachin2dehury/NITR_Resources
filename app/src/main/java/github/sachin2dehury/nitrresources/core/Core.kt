@@ -278,7 +278,9 @@ object Core {
     fun saveAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
             putString("Stream", stream)
-            putString("Email", firebaseAuth.currentUser!!.email!!)
+            if (firebaseAuth.currentUser != null) {
+                putString("Email", firebaseAuth.currentUser!!.email!!)
+            }
             apply()
         }
     }
