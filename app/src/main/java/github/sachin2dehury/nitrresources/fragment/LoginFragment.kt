@@ -39,6 +39,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
         googleSignInButton.setOnClickListener {
             val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
             val signInClient = GoogleSignIn.getClient(requireActivity(), options)
