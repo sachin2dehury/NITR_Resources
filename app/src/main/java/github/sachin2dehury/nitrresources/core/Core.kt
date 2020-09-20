@@ -210,6 +210,7 @@ object Core {
             storeReference.metadata.await().apply {
                 doc.size = sizeBytes.toDouble() / MB
                 doc.time = updatedTimeMillis
+                doc.type = contentType.toString()
             }
             firebaseFireStore.runBatch { batch ->
                 batch.set(docRef, doc)

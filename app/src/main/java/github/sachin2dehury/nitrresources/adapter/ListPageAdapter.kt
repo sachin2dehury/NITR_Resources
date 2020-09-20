@@ -2,7 +2,6 @@ package github.sachin2dehury.nitrresources.adapter
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +42,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             name.text = doc.name
             subject.visibility = View.VISIBLE
             size.visibility = View.VISIBLE
+            menuButton.visibility = View.VISIBLE
             name.setLines(1)
             size.text = "${format.format(doc.size)} MB"
             subject.text = doc.subName + doc.subCode
@@ -52,8 +52,8 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             setOnClickListener {
                 Core.openLink(doc.url, context)
             }
-            setOnLongClickListener {
-                val menu = PopupMenu(context, holder.itemView, Gravity.END).apply {
+            menuButton.setOnClickListener {
+                val menu = PopupMenu(context, it).apply {
                     menuInflater.inflate(R.menu.item_menu, menu)
                     animate()
                     Core.getMenuIcon(this)
@@ -63,7 +63,6 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                     Core.popUpMenu(menuItem, context, current, item)
                     true
                 }
-                true
             }
         }
     }

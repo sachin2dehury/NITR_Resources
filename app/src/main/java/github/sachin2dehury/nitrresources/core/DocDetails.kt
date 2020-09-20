@@ -8,5 +8,5 @@ data class DocDetails(
     var time: Long = 0,
     var size: Double = 0.0,
     var url: String = "url",
-    var type: String = "type"
+    var type: String = PDF
 )
