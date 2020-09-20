@@ -272,10 +272,9 @@ object Core {
         CoroutineScope(Dispatchers.IO).launch {
             val list = pageSelector(item)
             val path = "$college/$stream/$year/$branch/${pages[item]}"
-            if (list[docId]!!.contributor == firebaseAuth.currentUser.toString()) {
+            if (list[docId]!!.contributor == firebaseAuth.currentUser!!.email!!) {
+                firebaseFireStore.collection("Trash").add(list[docId]!!).await()
                 firebaseFireStore.collection(path).document(docId).delete().await()
-                firebaseFireStore.collection("Trash").add(list[docId]!!)
-                    .await().id
                 list.remove(docId)
             }
         }

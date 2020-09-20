@@ -1,7 +1,6 @@
 package github.sachin2dehury.nitrresources.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +23,6 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
     private val keys = listData.keys
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPageViewHolder {
-        Log.w("Test", keys.toString())
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return ListPageViewHolder(view)
     }
