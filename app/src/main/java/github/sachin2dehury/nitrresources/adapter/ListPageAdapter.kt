@@ -16,7 +16,7 @@ import github.sachin2dehury.nitrresources.viewholder.ListPageViewHolder
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListPageAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+    RecyclerView.Adapter<ListPageViewHolder>(), Filterable {
 
     private val list = Core.pageSelector(item)
     private var listData = list
@@ -28,7 +28,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListPageViewHolder, position: Int) {
         val current = keys.elementAt(position)
         val doc = list[current]!!
         val img = when (doc.type) {
