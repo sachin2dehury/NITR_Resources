@@ -26,7 +26,6 @@ const val QUESTION_LINK = "https://eapplication.nitrkl.ac.in/nitris/Login.aspx"
 const val MAIL_LINK = "https://mail.nitrkl.ac.in/"
 const val TELEGRAM_NEWS_LINK = "https://t.me/s/nitrkl"
 const val PDF = "application/pdf"
-const val PPT = "application/ppt"
 const val IMG = "image/*"
 const val MB = 1024 * 1024
 const val ALL = "*/*"
@@ -35,8 +34,8 @@ val format = DecimalFormat("#.##")
 
 val branch = listOf(
     "AR",
-    "CY", "ER", "LS", "MA", "PH",
-    "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN"
+    "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN",
+    "CY", "ER", "LS", "MA", "PH"
 )
 val streamYears = listOf(5, 4, 3, 2, 2)
 val noList = listOf("No Data Available!")

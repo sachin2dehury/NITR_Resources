@@ -197,6 +197,11 @@ object Core {
         }
     }
 
+    private fun fileType(file: Uri): String {
+        val extension = MimeTypeMap.getFileExtensionFromUrl(file.toString())!!
+        return mime.getMimeTypeFromExtension(extension)!!
+    }
+
     fun uploadDoc(file: Uri, doc: DocDetails, item: Int) =
         CoroutineScope(Dispatchers.IO).launch {
             val path = "$college/$stream/$year/$branch/${pages[item]}"
@@ -293,10 +298,5 @@ object Core {
                 streamYrs = streamYears[streams.indexOf(stream)]
             }
         }
-    }
-
-    private fun fileType(file: Uri): String {
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.toString())!!
-        return mime.getMimeTypeFromExtension(extension)!!
     }
 }

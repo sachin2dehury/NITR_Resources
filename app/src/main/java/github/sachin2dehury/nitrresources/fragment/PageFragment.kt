@@ -22,7 +22,6 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         CoroutineScope(Dispatchers.IO).launch {
             Core.getList(position).invokeOnCompletion {
                 jobValidator(it)
@@ -63,6 +62,7 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
 
     override fun onResume() {
         super.onResume()
+        Core.updateDocList(position)
         listView.adapter!!.notifyDataSetChanged()
     }
 
