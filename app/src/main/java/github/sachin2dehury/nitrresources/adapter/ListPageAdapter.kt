@@ -46,6 +46,9 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             name.setLines(1)
             size.text = "${format.format(doc.size)} MB"
             subject.text = doc.subName + doc.subCode
+            if (doc.contributor == Core.firebaseAuth.currentUser.toString()) {
+                isMine.visibility = View.VISIBLE
+            }
             setOnClickListener {
                 Core.openLink(doc.url, context)
             }

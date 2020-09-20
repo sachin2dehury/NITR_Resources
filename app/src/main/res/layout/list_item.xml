@@ -14,6 +14,18 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
+        android:id="@+id/isMine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/size"
+        app:layout_constraintTop_toTopOf="@+id/size"
+        app:srcCompat="@drawable/ic_baseline_folder_shared_24"
+        app:tint="@color/white" />
+
+
+    <ImageView
         android:id="@+id/image"
         android:layout_width="72dp"
         android:layout_height="72dp"
