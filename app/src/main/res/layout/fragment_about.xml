@@ -2,29 +2,64 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lightBrown">
 
     <ImageView
         android:id="@+id/aboutImage"
         android:layout_width="144dp"
         android:layout_height="144dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="144dp"
         android:contentDescription="@string/person"
         android:src="@drawable/icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/aboutText"
+    <TextView
+        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
-        android:src="@drawable/stroke"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/about"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/devName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/devName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aboutImage" />
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="64dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/gradient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/devName" />
+
+    <TextView
+        android:id="@+id/dev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/developer"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/lightDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
