@@ -63,11 +63,15 @@ object Core {
         context.startActivity(intent)
     }
 
-    fun changeFragment(fragment: Fragment, fragmentManager: FragmentManager) {
+    fun changeFragment(
+        fragment: Fragment,
+        fragmentManager: FragmentManager,
+        nonEmpty: Boolean = true
+    ) {
         fragmentManager.beginTransaction().apply {
             replace(R.id.navFragment, fragment)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            if (fragmentManager.backStackEntryCount > 0) {
+            if (nonEmpty) {
                 addToBackStack(fragment.javaClass.simpleName)
             }
             commit()

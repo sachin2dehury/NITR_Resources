@@ -35,9 +35,9 @@ open class NavActivity : AppCompatActivity() {
         val login = intent.getBooleanExtra("Login", true)
         if (login) {
             if (Core.firebaseAuth.currentUser == null) {
-                Core.changeFragment(LoginFragment(), supportFragmentManager)
+                Core.changeFragment(LoginFragment(), supportFragmentManager, false)
             } else {
-                Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager)
+                Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager, false)
             }
         } else {
             val file = intent.getStringExtra("File")!!
