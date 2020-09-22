@@ -213,7 +213,7 @@ object Core {
             val path = "$college/$stream/$year/$branch/${pages[item]}"
             val list = pageSelector(item)
             val docId = firebaseFireStore.collection(path).add(doc).await()!!.id
-            val storeReference = firebaseStorage.child("$path/$docId.pdf")
+            val storeReference = firebaseStorage.child("$path/$docId")
             val docRef = firebaseFireStore.collection(path).document(docId)
             storeReference.putFile(file).await()
 
