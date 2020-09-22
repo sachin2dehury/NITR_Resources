@@ -67,7 +67,9 @@ object Core {
         fragmentManager.beginTransaction().apply {
             replace(R.id.navFragment, fragment)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            addToBackStack(fragment.javaClass.simpleName)
+            if (fragmentManager.backStackEntryCount > 0) {
+                addToBackStack(fragment.javaClass.simpleName)
+            }
             commit()
         }
     }
