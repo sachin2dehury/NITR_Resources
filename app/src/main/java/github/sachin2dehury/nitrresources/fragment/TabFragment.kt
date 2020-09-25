@@ -9,10 +9,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.TabAdapter
-import github.sachin2dehury.nitrresources.core.ALL
-import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.REQUEST_CODE_OPEN_FILE
-import github.sachin2dehury.nitrresources.core.pages
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppJobs
+import github.sachin2dehury.nitrresources.component.AppScreen
 import kotlinx.android.synthetic.main.fragment_tab.*
 
 class TabFragment : Fragment(R.layout.fragment_tab) {
@@ -22,14 +21,14 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
 
         viewPager.adapter = TabAdapter(this)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = pages[position]
+            tab.text = AppCore.pageList[position]
         }.attach()
 
         uploadButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                type = ALL
+                type = AppCore.ALL
             }
-            startActivityForResult(intent, REQUEST_CODE_OPEN_FILE)
+            startActivityForResult(intent, AppCore.REQUEST_CODE_OPEN_FILE)
         }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -40,7 +39,7 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                Core.updateDocList(tab!!.position)
+                AppJobs.updateDocList(tab!!.position)
             }
         })
     }
@@ -48,13 +47,13 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
-            Core.changeActivity(requireContext(), data!!.data.toString(), false)
+        if (requestCode == AppCore.REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
+            AppScreen.changeActivity(requireContext(), data!!.data.toString(), false)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Core.clearList()
+        AppJobs.clearList()
     }
 }

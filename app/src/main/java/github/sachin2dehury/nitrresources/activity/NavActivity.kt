@@ -7,8 +7,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.MobileAds
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.STREAM_LIST
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppMenu
+import github.sachin2dehury.nitrresources.component.AppPreference
+import github.sachin2dehury.nitrresources.component.AppScreen
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import github.sachin2dehury.nitrresources.fragment.RenameFragment
@@ -20,12 +22,12 @@ open class NavActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        Core.saveAppData(this)
+        AppPreference.saveAppData(this)
     }
 
     override fun onStart() {
         super.onStart()
-        Core.loadAppData(this)
+        AppPreference.loadAppData(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,16 +36,20 @@ open class NavActivity : AppCompatActivity() {
 
         val login = intent.getBooleanExtra("Login", true)
         if (login) {
-            if (Core.firebaseAuth.currentUser == null) {
-                Core.changeFragment(LoginFragment(), supportFragmentManager, false)
+            if (AppCore.firebaseAuth.currentUser == null) {
+                AppScreen.changeFragment(LoginFragment(), supportFragmentManager, false)
             } else {
-                Core.changeFragment(ListFragment(STREAM_LIST), supportFragmentManager, false)
+                AppScreen.changeFragment(
+                    ListFragment(AppCore.STREAM_LIST),
+                    supportFragmentManager,
+                    false
+                )
             }
         } else {
             val file = intent.getStringExtra("File")!!
             val rename = intent.getBooleanExtra("Rename", false)
             val index = intent.getIntExtra("PageIndex", 0)
-            Core.changeFragment(RenameFragment(file, rename, index), supportFragmentManager)
+            AppScreen.changeFragment(RenameFragment(file, rename, index), supportFragmentManager)
         }
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
@@ -54,7 +60,7 @@ open class NavActivity : AppCompatActivity() {
 
 
         navigationDrawer.setNavigationItemSelectedListener { item ->
-            Core.navDrawerMenu(item, this, supportFragmentManager)
+            AppMenu.navDrawerMenu(item, this, supportFragmentManager)
             true
         }
 
@@ -69,7 +75,7 @@ open class NavActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item))
             return true
-        Core.optionMenu(item, supportFragmentManager)
+        AppMenu.optionMenu(item, supportFragmentManager)
         return true
     }
 }

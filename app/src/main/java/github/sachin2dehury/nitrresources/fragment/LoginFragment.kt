@@ -11,9 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.GoogleAuthProvider
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.REQUEST_CODE_SIGN_IN
-import github.sachin2dehury.nitrresources.core.STREAM_LIST
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppScreen
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,33 +43,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 .build()
             val signInClient = GoogleSignIn.getClient(requireActivity(), options)
             signInClient.signInIntent.also { intent ->
-                requireActivity().startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
+                requireActivity().startActivityForResult(intent, AppCore.REQUEST_CODE_SIGN_IN)
             }
         }
     }
-
-    private fun signUp() = CoroutineScope(Dispatchers.IO).apply {
-        Core.firebaseAuth.createUserWithEmailAndPassword(email, password).apply {
-            addOnCompleteListener {
-                loggedIn()
-            }
-            addOnFailureListener {
-                Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun signIn() = CoroutineScope(Dispatchers.IO).apply {
-        Core.firebaseAuth.signInWithEmailAndPassword(email, password).apply {
-            addOnCompleteListener {
-                loggedIn()
-            }
-            addOnFailureListener {
-                Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
 
     private fun isValidInput(): Boolean {
         email = userEmail.text.toString()
@@ -102,20 +78,42 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SIGN_IN) {
+        if (requestCode == AppCore.REQUEST_CODE_SIGN_IN) {
             CoroutineScope(Dispatchers.IO).apply {
                 val account = GoogleSignIn.getSignedInAccountFromIntent(data).result!!
                 account.let {
                     val credentials = GoogleAuthProvider.getCredential(account.idToken, null)
-                    Core.firebaseAuth.signInWithCredential(credentials)
+                    AppCore.firebaseAuth.signInWithCredential(credentials)
                     loggedIn()
                 }
             }
         }
     }
 
+    fun signUp() = CoroutineScope(Dispatchers.IO).apply {
+        AppCore.firebaseAuth.createUserWithEmailAndPassword(email, password).apply {
+            addOnCompleteListener {
+                loggedIn()
+            }
+            addOnFailureListener {
+                Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun signIn() = CoroutineScope(Dispatchers.IO).apply {
+        AppCore.firebaseAuth.signInWithEmailAndPassword(email, password).apply {
+            addOnCompleteListener {
+                loggedIn()
+            }
+            addOnFailureListener {
+                Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     private fun loggedIn() {
         parentFragmentManager.popBackStack()
-        Core.changeFragment(ListFragment(STREAM_LIST), parentFragmentManager)
+        AppScreen.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager)
     }
 }

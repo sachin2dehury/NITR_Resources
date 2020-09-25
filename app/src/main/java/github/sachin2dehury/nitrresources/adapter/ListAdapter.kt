@@ -9,9 +9,9 @@ import android.widget.Filterable
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.NO_LIST
-import github.sachin2dehury.nitrresources.core.YEAR_LIST
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppLogic
+import github.sachin2dehury.nitrresources.component.AppScreen
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.TabFragment
 import github.sachin2dehury.nitrresources.viewholder.ListViewHolder
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.list_item.view.*
 class ListAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<ListViewHolder>(), Filterable {
 
-    private val list = Core.listSelector(item)
+    private val list = AppLogic.listSelector(item)
     private var listData = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -32,7 +32,7 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.itemView.apply {
             name.text = listData[position]
-            if (item == NO_LIST) {
+            if (item == AppCore.NO_LIST) {
                 subject.visibility = View.VISIBLE
                 size.visibility = View.VISIBLE
                 name.setLines(1)
@@ -40,19 +40,19 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
                 subject.text = "No Data Available!"
             }
             setOnClickListener {
-                val newItem = Core.listPredictor(item, position)
-                Core.dataSetter(item, position)
+                val newItem = AppLogic.listPredictor(item, position)
+                AppLogic.dataSetter(item, position)
                 when (item) {
-                    YEAR_LIST -> Core.changeFragment(TabFragment(), fragmentManager)
-                    else -> Core.changeFragment(ListFragment(newItem), fragmentManager)
+                    AppCore.YEAR_LIST -> AppScreen.changeFragment(TabFragment(), fragmentManager)
+                    else -> AppScreen.changeFragment(ListFragment(newItem), fragmentManager)
                 }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        if (item == YEAR_LIST) {
-            return Core.streamYrs
+        if (item == AppCore.YEAR_LIST) {
+            return AppCore.streamYrs
         }
         return listData.size
     }

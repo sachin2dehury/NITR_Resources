@@ -3,8 +3,8 @@ package github.sachin2dehury.nitrresources.fragment
 import android.os.Bundle
 import androidx.preference.*
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.streams
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppPreference
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -13,7 +13,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val email =
             PreferenceManager.getDefaultSharedPreferences(context).getString("Email", "Trash")!!
-        val streamsArray = streams.toTypedArray()
+        val streamArray = AppCore.streamList.toTypedArray()
         val password =
             PreferenceManager.getDefaultSharedPreferences(context).getString("Password", "Trash")!!
         findPreference<Preference>("Email")!!.apply {
@@ -24,15 +24,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
             text = password
         }
         findPreference<ListPreference>("Stream")!!.apply {
-            summary = Core.stream
-            entries = streamsArray
-            entryValues = streamsArray
-            setValueIndex(streams.indexOf(Core.stream))
+            summary = AppCore.stream
+            entries = streamArray
+            entryValues = streamArray
+            setValueIndex(AppCore.streamList.indexOf(AppCore.stream))
         }
     }
 
     override fun onStop() {
         super.onStop()
-        Core.saveAppData(requireContext())
+        AppPreference.saveAppData(requireContext())
     }
 }

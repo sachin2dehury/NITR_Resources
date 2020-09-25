@@ -11,14 +11,18 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.core.*
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppItemAction
+import github.sachin2dehury.nitrresources.component.AppLogic
+import github.sachin2dehury.nitrresources.component.AppMenu
+import github.sachin2dehury.nitrresources.core.DocDetails
 import github.sachin2dehury.nitrresources.viewholder.ListPageViewHolder
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class ListPageAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<ListPageViewHolder>(), Filterable {
 
-    private val list = Core.pageSelector(item)
+    private val list = AppLogic.pageSelector(item)
     private var listData = list
     private val keys = listData.keys
 
@@ -32,8 +36,8 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
         val current = keys.elementAt(position)
         val doc = list[current]!!
         val img = when (doc.type) {
-            PDF -> R.drawable.ic_baseline_picture_as_pdf_24
-            IMG -> R.drawable.ic_baseline_image_24
+            AppCore.PDF -> R.drawable.ic_baseline_picture_as_pdf_24
+            AppCore.IMG -> R.drawable.ic_baseline_image_24
             else -> R.drawable.ic_baseline_warning_24
         }
         holder.itemView.apply {
@@ -43,24 +47,24 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             size.visibility = View.VISIBLE
             menuButton.visibility = View.VISIBLE
             name.setLines(1)
-            size.text = "${format.format(doc.size)} MB"
+            size.text = "${AppCore.format.format(doc.size)} MB"
             subject.text = doc.subName + doc.subCode
-            if (doc.contributor == Core.firebaseAuth.currentUser!!.email!!) {
+            if (doc.contributor == AppCore.firebaseAuth.currentUser!!.email!!) {
                 isMine.visibility = View.VISIBLE
             }
             setOnClickListener {
-                Core.openLink(doc.url, context)
+                AppItemAction.openLink(doc.url, context)
             }
             menuButton.setOnClickListener {
                 notifyDataSetChanged()
                 val menu = PopupMenu(context, it, Gravity.END).apply {
                     menuInflater.inflate(R.menu.item_menu, menu)
                     animate()
-                    Core.getMenuIcon(this)
+                    AppMenu.getMenuIcon(this)
                     show()
                 }
                 menu.setOnMenuItemClickListener { menuItem ->
-                    Core.popUpMenu(menuItem, context, current, item, doc)
+                    AppMenu.popUpMenu(menuItem, context, current, item, doc)
                     true
                 }
             }
@@ -82,8 +86,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                     list.filter {
                         it.value.name.toLowerCase()
                             .contains(search) || "${it.value.subName} ${it.value.subCode}".toLowerCase()
-                            .contains(search) ||
-                                it.value.contributor.toLowerCase().contains(search)
+                            .contains(search)
                     }
                 }
                 return filterResults

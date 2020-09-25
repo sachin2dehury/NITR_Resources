@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.ListPageAdapter
-import github.sachin2dehury.nitrresources.core.Core
-import github.sachin2dehury.nitrresources.core.noList
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppJobs
 import kotlinx.android.synthetic.main.fragment_page.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +23,7 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         CoroutineScope(Dispatchers.IO).launch {
-            Core.getList(position).invokeOnCompletion {
+            AppJobs.getList(position).invokeOnCompletion {
                 jobValidator(it)
             }
         }
@@ -56,13 +56,13 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
 
     private fun isEmpty() {
         if (listView.adapter!!.itemCount == 0) {
-            Toast.makeText(context, noList.first(), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, AppCore.noList.first(), Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        Core.updateDocList(position)
+        AppJobs.updateDocList(position)
         listView.adapter!!.notifyDataSetChanged()
     }
 

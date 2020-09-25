@@ -8,10 +8,11 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import github.sachin2dehury.nitrresources.R
-import github.sachin2dehury.nitrresources.core.Core
+import github.sachin2dehury.nitrresources.component.AppCore
+import github.sachin2dehury.nitrresources.component.AppItemAction
+import github.sachin2dehury.nitrresources.component.AppLogic
+import github.sachin2dehury.nitrresources.component.Upload
 import github.sachin2dehury.nitrresources.core.DocDetails
-import github.sachin2dehury.nitrresources.core.branch
-import github.sachin2dehury.nitrresources.core.pages
 import kotlinx.android.synthetic.main.fragment_rename.*
 
 class RenameFragment(
@@ -35,12 +36,22 @@ class RenameFragment(
 
         spinnerPages.apply {
             animate()
-            adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, pages)
+            adapter =
+                ArrayAdapter(
+                    context,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    AppCore.pageList
+                )
         }
 
         spinnerBranch.apply {
             animate()
-            adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, branch)
+            adapter =
+                ArrayAdapter(
+                    context,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    AppCore.branchList
+                )
         }
 
         cancelButton.setOnClickListener {
@@ -57,11 +68,11 @@ class RenameFragment(
     private fun save() {
         val item = spinnerPages.selectedItemPosition
         if (rename) {
-            Core.renameDoc(file, doc, index)
+            AppItemAction.renameDoc(file, doc, index)
             Toast.makeText(context, "${doc.name} File being Renamed.", Toast.LENGTH_SHORT)
                 .show()
         } else {
-            Core.uploadDoc(Uri.parse(file), doc, item)
+            Upload.uploadDoc(Uri.parse(file), doc, item)
             Toast.makeText(context, "${doc.name} File being Uploaded.", Toast.LENGTH_SHORT).show()
         }
         closeActivity()
@@ -82,7 +93,7 @@ class RenameFragment(
             }
             subCode in 1000..7000 -> {
                 doc = if (rename) {
-                    Core.pageSelector(index)[file]!!.copy(name = fileName, subCode = subCode)
+                    AppLogic.pageSelector(index)[file]!!.copy(name = fileName, subCode = subCode)
                 } else {
                     val subName = spinnerBranch.selectedItem.toString()
                     DocDetails(fileName, subCode, subName)
