@@ -90,7 +90,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    fun signUp() = CoroutineScope(Dispatchers.IO).apply {
+    private fun signUp() = CoroutineScope(Dispatchers.IO).apply {
         AppCore.firebaseAuth.createUserWithEmailAndPassword(email, password).apply {
             addOnCompleteListener {
                 loggedIn()
@@ -101,7 +101,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    fun signIn() = CoroutineScope(Dispatchers.IO).apply {
+    private fun signIn() = CoroutineScope(Dispatchers.IO).apply {
         AppCore.firebaseAuth.signInWithEmailAndPassword(email, password).apply {
             addOnCompleteListener {
                 loggedIn()

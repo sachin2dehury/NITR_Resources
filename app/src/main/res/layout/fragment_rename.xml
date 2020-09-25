@@ -4,18 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/saveIcon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        app:layout_constraintBottom_toTopOf="@+id/fileName"
+        app:layout_constraintEnd_toStartOf="@+id/renameHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_folder_shared_24"
+        app:tint="@color/pink" />
 
     <TextView
         android:id="@+id/renameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/save_file"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/pink"
-        android:text="@string/save_file"
         app:layout_constraintBottom_toTopOf="@+id/fileName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/saveIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -31,11 +40,14 @@
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/save_file"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cancelButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subCode" />
+        app:layout_constraintTop_toBottomOf="@+id/subCode"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/fileName"
