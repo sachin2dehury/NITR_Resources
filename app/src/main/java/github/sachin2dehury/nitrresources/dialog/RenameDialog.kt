@@ -29,7 +29,7 @@ class RenameDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportRequestWindowFeature((Window.FEATURE_NO_TITLE))
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.dialog_rename)
 
         if (rename) {
