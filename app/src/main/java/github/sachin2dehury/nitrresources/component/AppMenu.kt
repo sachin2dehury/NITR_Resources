@@ -45,7 +45,7 @@ object AppMenu {
     fun optionMenu(item: MenuItem, context: Context, fragmentManager: FragmentManager) {
         when (item.itemId) {
             R.id.settings -> AppNav.changeFragment(SettingsFragment(), fragmentManager)
-            R.id.user -> LogOutDialog(context, fragmentManager)
+            R.id.user -> LogOutDialog(context, fragmentManager).show()
             R.id.about -> AboutDialog(context).show()
             R.id.exit -> exitProcess(0)
         }
@@ -60,7 +60,7 @@ object AppMenu {
     ) {
         when (item.itemId) {
             R.id.rename -> RenameDialog(context, current, true, index).show()
-            R.id.delete -> ActionDialog(context, "Delete", current, index)
+            R.id.delete -> ActionDialog(context, "Delete", current, index).show()
             R.id.download -> AppItemAction.openLink(doc.url, context)
             R.id.share -> AppItemAction.shareDoc(doc, context)
         }

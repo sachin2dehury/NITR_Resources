@@ -20,7 +20,7 @@ class ActionDialog(
         supportRequestWindowFeature((Window.FEATURE_NO_TITLE))
         setContentView(R.layout.dialog_action)
         actionHeader.text = action
-        actionCancelButton.text = action
+        actionButton.text = action
 
         when (action) {
             "Delete" -> {

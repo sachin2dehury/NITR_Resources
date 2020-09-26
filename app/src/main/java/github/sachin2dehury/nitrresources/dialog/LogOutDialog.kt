@@ -21,9 +21,12 @@ class LogOutDialog(
         val action = "Log Out"
         supportRequestWindowFeature((Window.FEATURE_NO_TITLE))
         setContentView(R.layout.dialog_action)
+
         actionHeader.text = action
-        actionCancelButton.text = action
-        actionIcon.setImageResource(R.drawable.ic_baseline_delete_sweep_24)
+        actionButton.text = action
+
+        actionIcon.setImageResource(R.drawable.ic_baseline_account_circle_24)
+
         actionCancelButton.setOnClickListener {
             dismiss()
         }

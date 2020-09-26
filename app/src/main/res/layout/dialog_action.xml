@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/actionIcon"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toStartOf="@+id/actionHeader"
