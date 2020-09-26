@@ -2,7 +2,6 @@ package github.sachin2dehury.nitrresources.dialog
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -12,18 +11,20 @@ import androidx.appcompat.app.AppCompatDialog
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppItemAction
+import github.sachin2dehury.nitrresources.component.AppJobs
 import github.sachin2dehury.nitrresources.component.AppLogic
-import github.sachin2dehury.nitrresources.component.Upload
 import github.sachin2dehury.nitrresources.core.DocDetails
 import kotlinx.android.synthetic.main.dialog_rename.*
 
 class RenameDialog(
-    context: Context, private val file: String,
+    context: Context, private val files: ArrayList<String>,
     private val rename: Boolean = false,
     private val index: Int = 0
 ) : AppCompatDialog(context) {
 
-    private lateinit var doc: DocDetails
+    companion object {
+        lateinit var doc: DocDetails
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,19 +65,25 @@ class RenameDialog(
         cancelButton.setOnClickListener {
             dismiss()
         }
-
         setCancelable(false)
     }
 
     private fun save() {
         val item = spinnerPages.selectedItemPosition
         if (rename) {
-            AppItemAction.renameDoc(file, doc, index)
+            AppItemAction.renameDoc(files.first(), doc, index)
             Toast.makeText(context, "${doc.name} File being Renamed.", Toast.LENGTH_SHORT)
                 .show()
         } else {
-            Upload.uploadDoc(Uri.parse(file), doc, item)
-            Toast.makeText(context, "${doc.name} File being Uploaded.", Toast.LENGTH_SHORT).show()
+//            val intent = Intent(context, AppUploadService::class.java).apply {
+//                putStringArrayListExtra("Files", files)
+//                putExtra("Document", doc.toString())
+//                putExtra("Index", item)
+//            }
+//            context.startService(intent)
+            AppJobs.uploadDoc(files, doc, item)
+            Toast.makeText(context, "${doc.name} File(s) being Uploaded.", Toast.LENGTH_SHORT)
+                .show()
         }
         dismiss()
     }
@@ -91,7 +98,10 @@ class RenameDialog(
             }
             subCode in 1000..7000 -> {
                 doc = if (rename) {
-                    AppLogic.pageSelector(index)[file]!!.copy(name = fileName, subCode = subCode)
+                    AppLogic.pageSelector(index)[files.first()]!!.copy(
+                        name = fileName,
+                        subCode = subCode
+                    )
                 } else {
                     val subName = spinnerBranch.selectedItem.toString()
                     DocDetails(fileName, subCode, subName)

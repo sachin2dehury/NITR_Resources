@@ -28,6 +28,7 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
         uploadButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 type = AppCore.ALL
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             }
             startActivityForResult(intent, AppCore.REQUEST_CODE_OPEN_FILE)
         }
@@ -45,11 +46,19 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
         })
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppCore.REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
-            RenameDialog(requireContext(), data!!.data.toString(), false).show()
+            val list = data!!.clipData
+            val files = ArrayList<String>()
+            if (list != null) {
+                for (item in 0 until list.itemCount) {
+                    files.add(list.getItemAt(item).uri.toString())
+                }
+            } else {
+                files.add(data.data.toString())
+            }
+            RenameDialog(requireContext(), files, false).show()
         }
     }
 
