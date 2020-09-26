@@ -66,7 +66,6 @@ class RenameDialog(
         }
 
         setCancelable(false)
-        show()
     }
 
     private fun save() {
