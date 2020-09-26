@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppLogic
-import github.sachin2dehury.nitrresources.component.AppScreen
+import github.sachin2dehury.nitrresources.component.AppNav
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.TabFragment
 import github.sachin2dehury.nitrresources.viewholder.ListViewHolder
@@ -43,8 +43,8 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
                 val newItem = AppLogic.listPredictor(item, position)
                 AppLogic.dataSetter(item, position)
                 when (item) {
-                    AppCore.YEAR_LIST -> AppScreen.changeFragment(TabFragment(), fragmentManager)
-                    else -> AppScreen.changeFragment(ListFragment(newItem), fragmentManager)
+                    AppCore.YEAR_LIST -> AppNav.changeFragment(TabFragment(), fragmentManager)
+                    else -> AppNav.changeFragment(ListFragment(newItem), fragmentManager)
                 }
             }
         }

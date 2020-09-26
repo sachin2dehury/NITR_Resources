@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import github.sachin2dehury.nitrresources.R
 
-object AppScreen {
+object AppNav {
     fun changeFragment(
         fragment: Fragment,
         fragmentManager: FragmentManager,

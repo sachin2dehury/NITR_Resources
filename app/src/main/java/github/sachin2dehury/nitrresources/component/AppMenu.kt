@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.DocDetails
 import github.sachin2dehury.nitrresources.dialog.AboutDialog
+import github.sachin2dehury.nitrresources.dialog.ActionDialog
+import github.sachin2dehury.nitrresources.dialog.LogOutDialog
 import github.sachin2dehury.nitrresources.dialog.RenameDialog
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.SettingsFragment
@@ -29,7 +31,7 @@ object AppMenu {
 
     fun navDrawerMenu(item: MenuItem, context: Context, fragmentManager: FragmentManager) {
         when (item.itemId) {
-            R.id.home -> AppScreen.changeFragment(
+            R.id.home -> AppNav.changeFragment(
                 ListFragment(AppCore.STREAM_LIST),
                 fragmentManager
             )
@@ -42,8 +44,8 @@ object AppMenu {
 
     fun optionMenu(item: MenuItem, context: Context, fragmentManager: FragmentManager) {
         when (item.itemId) {
-            R.id.settings -> AppScreen.changeFragment(SettingsFragment(), fragmentManager)
-            R.id.user -> AppDialog.logoutDialog(fragmentManager, context)
+            R.id.settings -> AppNav.changeFragment(SettingsFragment(), fragmentManager)
+            R.id.user -> LogOutDialog(context, fragmentManager)
             R.id.about -> AboutDialog(context).show()
             R.id.exit -> exitProcess(0)
         }
@@ -58,7 +60,7 @@ object AppMenu {
     ) {
         when (item.itemId) {
             R.id.rename -> RenameDialog(context, current, true, index).show()
-            R.id.delete -> AppDialog.deleteDialog(current, index, context)
+            R.id.delete -> ActionDialog(context, "Delete", current, index)
             R.id.download -> AppItemAction.openLink(doc.url, context)
             R.id.share -> AppItemAction.shareDoc(doc, context)
         }

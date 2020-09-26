@@ -12,7 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.GoogleAuthProvider
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
-import github.sachin2dehury.nitrresources.component.AppScreen
+import github.sachin2dehury.nitrresources.component.AppNav
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -114,6 +114,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun loggedIn() {
         parentFragmentManager.popBackStack()
-        AppScreen.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager)
+        AppNav.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager)
     }
 }

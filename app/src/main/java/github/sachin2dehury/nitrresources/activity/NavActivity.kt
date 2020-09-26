@@ -9,8 +9,8 @@ import com.google.android.gms.ads.MobileAds
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppMenu
+import github.sachin2dehury.nitrresources.component.AppNav
 import github.sachin2dehury.nitrresources.component.AppPreference
-import github.sachin2dehury.nitrresources.component.AppScreen
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import kotlinx.android.synthetic.main.activity_nav.*
@@ -34,9 +34,9 @@ open class NavActivity : AppCompatActivity() {
         setContentView(R.layout.activity_nav)
 
         if (AppCore.firebaseAuth.currentUser == null) {
-            AppScreen.changeFragment(LoginFragment(), supportFragmentManager, false)
+            AppNav.changeFragment(LoginFragment(), supportFragmentManager, false)
         } else {
-            AppScreen.changeFragment(
+            AppNav.changeFragment(
                 ListFragment(AppCore.STREAM_LIST),
                 supportFragmentManager,
                 false

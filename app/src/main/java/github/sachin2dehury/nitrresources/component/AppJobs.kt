@@ -19,13 +19,6 @@ object AppJobs {
         }
     }
 
-    fun clearList() {
-        AppCore.notes.clear()
-        AppCore.assignment.clear()
-        AppCore.slides.clear()
-        AppCore.lab.clear()
-    }
-
     fun updateDocList(item: Int) = CoroutineScope(Dispatchers.Main).launch {
         val list = AppLogic.pageSelector(item)
         val path =

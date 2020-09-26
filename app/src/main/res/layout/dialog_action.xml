@@ -28,22 +28,22 @@
         app:layout_constraintTop_toTopOf="@+id/actionIcon" />
 
     <Button
-        android:id="@+id/actionCancelButton"
+        android:id="@+id/actionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        app:layout_constraintBottom_toBottomOf="@+id/actionButton"
+        app:layout_constraintBottom_toBottomOf="@+id/actionCancelButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/actionButton" />
+        app:layout_constraintStart_toEndOf="@+id/actionCancelButton" />
 
     <Button
-        android:id="@+id/actionButton"
+        android:id="@+id/actionCancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:layout_marginBottom="48dp"
+        android:text="@string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/actionCancelButton"
+        app:layout_constraintEnd_toStartOf="@+id/actionButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionIcon" />
 

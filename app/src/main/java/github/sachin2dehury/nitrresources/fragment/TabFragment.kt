@@ -11,6 +11,7 @@ import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.TabAdapter
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppJobs
+import github.sachin2dehury.nitrresources.component.AppLogic
 import github.sachin2dehury.nitrresources.dialog.RenameDialog
 import kotlinx.android.synthetic.main.fragment_tab.*
 
@@ -54,6 +55,6 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
 
     override fun onDestroy() {
         super.onDestroy()
-        AppJobs.clearList()
+        AppLogic.clearList()
     }
 }
