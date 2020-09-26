@@ -17,7 +17,7 @@ object Upload {
     fun uploadDoc(file: Uri, doc: DocDetails, item: Int) =
         CoroutineScope(Dispatchers.IO).launch {
             val path =
-                "${AppCore.COLLEGE}/${AppCore.stream}/${AppCore.year}/${AppCore.branch}/${AppCore.pageList[item]}"
+                "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
             val list = AppLogic.pageSelector(item)
             val docId = AppCore.firebaseFireStore.collection(path).add(doc).await()!!.id
             val storeReference = AppCore.firebaseStorage.child("$path/$docId")

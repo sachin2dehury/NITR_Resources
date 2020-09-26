@@ -24,7 +24,7 @@ object AppItemAction {
         CoroutineScope(Dispatchers.IO).launch {
             val list = AppLogic.pageSelector(item)
             val path =
-                "${AppCore.COLLEGE}/${AppCore.stream}/${AppCore.year}/${AppCore.branch}/${AppCore.pageList[item]}"
+                "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
             val docRef = AppCore.firebaseFireStore.collection(path).document(docId)
             AppCore.firebaseFireStore.runTransaction { batch ->
                 batch.set(docRef, doc)
@@ -32,17 +32,16 @@ object AppItemAction {
             list[docId] = doc
         }
 
-    fun deleteDoc(docId: String, item: Int) =
-        CoroutineScope(Dispatchers.IO).launch {
-            val list = AppLogic.pageSelector(item)
-            val path =
-                "${AppCore.COLLEGE}/${AppCore.stream}/${AppCore.year}/${AppCore.branch}/${AppCore.pageList[item]}"
-            if (list[docId]!!.contributor == AppCore.firebaseAuth.currentUser!!.email!!) {
-                AppCore.firebaseFireStore.collection("Trash").add(list[docId]!!).await()
-                AppCore.firebaseFireStore.collection(path).document(docId).delete().await()
-                list.remove(docId)
-            }
+    fun deleteDoc(docId: String, item: Int) = CoroutineScope(Dispatchers.IO).launch {
+        val list = AppLogic.pageSelector(item)
+        val path =
+            "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
+        if (list[docId]!!.contributor == AppCore.firebaseAuth.currentUser!!.email!!) {
+            AppCore.firebaseFireStore.collection("Trash").add(list[docId]!!).await()
+            AppCore.firebaseFireStore.collection(path).document(docId).delete().await()
+            list.remove(docId)
         }
+    }
 
     fun openLink(link: String, context: Context) {
         val url = Uri.parse(link)!!

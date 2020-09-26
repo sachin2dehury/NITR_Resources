@@ -1,50 +1,70 @@
 package github.sachin2dehury.nitrresources.component
 
 import android.content.Context
-import android.content.DialogInterface
+import android.view.Window
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialog
+import androidx.fragment.app.FragmentManager
 import github.sachin2dehury.nitrresources.R
+import github.sachin2dehury.nitrresources.dialog.RenameDialog
 
 object AppDialog {
-    fun layoutDialog(context: Context, layOut: Int): AlertDialog.Builder {
-        AlertDialog.Builder(context).apply {
-            setView(layOut)
-            create()
-            show()
-            return this
-        }
-    }
-
-    fun logOutDialog(context: Context, action: String) {
-        AlertDialog.Builder(context).apply {
-            setView(R.layout.fragment_rename)
-            setTitle(action)
-            setMessage("Are you sure to Log Out?")
-            setIcon(R.drawable.ic_baseline_delete_sweep_24)
-            setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
-
-            }
-            setNeutralButton("No") { dialogInterface: DialogInterface, i: Int ->
-
-            }
-            create()
+    fun aboutDialog(context: Context) {
+        AppCompatDialog(context).apply {
+            supportRequestWindowFeature((Window.FEATURE_NO_TITLE))
+            setContentView(R.layout.dialog_about)
+            setCancelable(true)
             show()
         }
     }
 
-    fun defaultDialog(context: Context, action: String) {
+    fun logoutDialog(fragmentManager: FragmentManager, context: Context) {
         AlertDialog.Builder(context).apply {
-            setView(R.layout.fragment_rename)
-            setTitle(action)
-            setMessage("Are you sure to $action this item?")
+            setTitle("Log Out")
+            setMessage("Are you sure?")
             setIcon(R.drawable.ic_baseline_delete_sweep_24)
-            setPositiveButton(action) { dialogInterface: DialogInterface, i: Int ->
-
+            setPositiveButton("Log Out") { dialog, _ ->
+                AppAuth.signOut(fragmentManager)
+                dialog.dismiss()
             }
-            setNeutralButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
-
+            setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
             }
-            create()
+            setCancelable(true)
+            show()
+        }
+    }
+
+    fun renameDialog(docId: String, index: Int, context: Context) {
+        AlertDialog.Builder(context).apply {
+            setTitle("Rename Item")
+            setMessage("Are you sure?")
+            setIcon(R.drawable.ic_baseline_delete_sweep_24)
+            setPositiveButton("Rename") { dialog, _ ->
+                RenameDialog(context, docId, true, index)
+                dialog.dismiss()
+            }
+            setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            setCancelable(true)
+            show()
+        }
+    }
+
+    fun deleteDialog(docId: String, item: Int, context: Context) {
+        AlertDialog.Builder(context).apply {
+            setTitle("Delete Item")
+            setMessage("Are you sure?")
+            setIcon(R.drawable.ic_baseline_delete_sweep_24)
+            setPositiveButton("Delete") { dialog, _ ->
+                AppItemAction.deleteDoc(docId, item)
+                dialog.dismiss()
+            }
+            setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            setCancelable(true)
             show()
         }
     }

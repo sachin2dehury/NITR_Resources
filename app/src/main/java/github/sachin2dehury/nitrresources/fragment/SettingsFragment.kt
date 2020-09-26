@@ -1,6 +1,7 @@
 package github.sachin2dehury.nitrresources.fragment
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.preference.*
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
@@ -10,6 +11,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        setHasOptionsMenu(true)
 
         val email =
             PreferenceManager.getDefaultSharedPreferences(context).getString("Email", "Trash")!!
@@ -24,15 +26,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             text = password
         }
         findPreference<ListPreference>("Stream")!!.apply {
-            summary = AppCore.stream
+            summary = AppCore.currentStream
             entries = streamArray
             entryValues = streamArray
-            setValueIndex(AppCore.streamList.indexOf(AppCore.stream))
+            setValueIndex(AppCore.streamList.indexOf(AppCore.currentStream))
         }
     }
 
     override fun onStop() {
         super.onStop()
         AppPreference.saveAppData(requireContext())
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.removeItem(R.id.settings)
+        super.onPrepareOptionsMenu(menu)
     }
 }

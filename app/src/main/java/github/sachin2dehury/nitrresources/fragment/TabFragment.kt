@@ -11,7 +11,7 @@ import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.adapter.TabAdapter
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppJobs
-import github.sachin2dehury.nitrresources.component.AppScreen
+import github.sachin2dehury.nitrresources.dialog.RenameDialog
 import kotlinx.android.synthetic.main.fragment_tab.*
 
 class TabFragment : Fragment(R.layout.fragment_tab) {
@@ -48,7 +48,7 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppCore.REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
-            AppScreen.changeActivity(requireContext(), data!!.data.toString(), false)
+            RenameDialog(requireContext(), data!!.data.toString(), false)
         }
     }
 

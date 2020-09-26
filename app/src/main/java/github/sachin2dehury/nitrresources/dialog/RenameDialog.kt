@@ -1,31 +1,36 @@
-package github.sachin2dehury.nitrresources.fragment
+package github.sachin2dehury.nitrresources.dialog
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatDialog
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppItemAction
 import github.sachin2dehury.nitrresources.component.AppLogic
 import github.sachin2dehury.nitrresources.component.Upload
 import github.sachin2dehury.nitrresources.core.DocDetails
-import kotlinx.android.synthetic.main.fragment_rename.*
+import kotlinx.android.synthetic.main.dialog_rename.*
 
-class RenameFragment(
-    private val file: String,
+class RenameDialog(
+    context: Context, private val file: String,
     private val rename: Boolean = false,
     private val index: Int = 0
-) : Fragment(R.layout.fragment_rename) {
+) : AppCompatDialog(context) {
 
     private lateinit var doc: DocDetails
 
     @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        supportRequestWindowFeature((Window.FEATURE_NO_TITLE))
+        setContentView(R.layout.dialog_rename)
 
         if (rename) {
             saveButton.text = "Rename"
@@ -33,7 +38,6 @@ class RenameFragment(
             spinnerPages.visibility = View.GONE
             spinnerBranch.visibility = View.GONE
         }
-
         spinnerPages.apply {
             animate()
             adapter =
@@ -43,7 +47,6 @@ class RenameFragment(
                     AppCore.pageList
                 )
         }
-
         spinnerBranch.apply {
             animate()
             adapter =
@@ -53,16 +56,17 @@ class RenameFragment(
                     AppCore.branchList
                 )
         }
-
-        cancelButton.setOnClickListener {
-            closeActivity()
-        }
-
         saveButton.setOnClickListener {
             if (isValidFile()) {
                 save()
             }
         }
+        cancelButton.setOnClickListener {
+            dismiss()
+        }
+
+        setCancelable(false)
+        show()
     }
 
     private fun save() {
@@ -75,12 +79,7 @@ class RenameFragment(
             Upload.uploadDoc(Uri.parse(file), doc, item)
             Toast.makeText(context, "${doc.name} File being Uploaded.", Toast.LENGTH_SHORT).show()
         }
-        closeActivity()
-    }
-
-    private fun closeActivity() {
-        parentFragmentManager.popBackStack()
-        requireActivity().finish()
+        dismiss()
     }
 
     private fun isValidFile(): Boolean {

@@ -28,22 +28,22 @@ object AppLogic {
         when (item) {
             AppCore.STREAM_LIST -> {
                 AppCore.streamYrs = AppCore.streamWiseYearList[position]
-                AppCore.stream = AppCore.streamList[position]
+                AppCore.currentStream = AppCore.streamList[position]
             }
             AppCore.YEAR_LIST -> {
                 if (position == 0) {
-                    when (AppCore.stream) {
-                        AppCore.streamList[1] -> AppCore.branch = "All"
-                        AppCore.streamList[2] -> AppCore.branch = "All"
+                    when (AppCore.currentStream) {
+                        AppCore.streamList[1] -> AppCore.currentBranch = "All"
+                        AppCore.streamList[2] -> AppCore.currentBranch = "All"
                     }
                 }
-                AppCore.year = AppCore.yearList[position]
+                AppCore.currentYear = AppCore.yearList[position]
             }
-            AppCore.B_ARCH_LIST -> AppCore.branch = AppCore.bArchList[position]
-            AppCore.B_TECH_LIST -> AppCore.branch = AppCore.bTechList[position]
-            AppCore.M_TECH_LIST -> AppCore.branch = AppCore.mTechList[position]
-            AppCore.MSC_LIST -> AppCore.branch = AppCore.mscList[position]
-            AppCore.INT_MSC_LIST -> AppCore.branch = AppCore.intMscList[position]
+            AppCore.B_ARCH_LIST -> AppCore.currentBranch = AppCore.bArchList[position]
+            AppCore.B_TECH_LIST -> AppCore.currentBranch = AppCore.bTechList[position]
+            AppCore.M_TECH_LIST -> AppCore.currentBranch = AppCore.mTechList[position]
+            AppCore.MSC_LIST -> AppCore.currentBranch = AppCore.mscList[position]
+            AppCore.INT_MSC_LIST -> AppCore.currentBranch = AppCore.intMscList[position]
         }
     }
 

@@ -13,7 +13,6 @@ import github.sachin2dehury.nitrresources.component.AppPreference
 import github.sachin2dehury.nitrresources.component.AppScreen
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.LoginFragment
-import github.sachin2dehury.nitrresources.fragment.RenameFragment
 import kotlinx.android.synthetic.main.activity_nav.*
 
 open class NavActivity : AppCompatActivity() {
@@ -34,22 +33,14 @@ open class NavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
 
-        val login = intent.getBooleanExtra("Login", true)
-        if (login) {
-            if (AppCore.firebaseAuth.currentUser == null) {
-                AppScreen.changeFragment(LoginFragment(), supportFragmentManager, false)
-            } else {
-                AppScreen.changeFragment(
-                    ListFragment(AppCore.STREAM_LIST),
-                    supportFragmentManager,
-                    false
-                )
-            }
+        if (AppCore.firebaseAuth.currentUser == null) {
+            AppScreen.changeFragment(LoginFragment(), supportFragmentManager, false)
         } else {
-            val file = intent.getStringExtra("File")!!
-            val rename = intent.getBooleanExtra("Rename", false)
-            val index = intent.getIntExtra("PageIndex", 0)
-            AppScreen.changeFragment(RenameFragment(file, rename, index), supportFragmentManager)
+            AppScreen.changeFragment(
+                ListFragment(AppCore.STREAM_LIST),
+                supportFragmentManager,
+                false
+            )
         }
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
@@ -75,7 +66,7 @@ open class NavActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item))
             return true
-        AppMenu.optionMenu(item, supportFragmentManager)
+        AppMenu.optionMenu(item, this, supportFragmentManager)
         return true
     }
 }

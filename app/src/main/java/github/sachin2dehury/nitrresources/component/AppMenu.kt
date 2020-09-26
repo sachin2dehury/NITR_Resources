@@ -7,7 +7,6 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.DocDetails
-import github.sachin2dehury.nitrresources.fragment.AboutFragment
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.SettingsFragment
 import kotlin.system.exitProcess
@@ -39,11 +38,11 @@ object AppMenu {
         }
     }
 
-    fun optionMenu(item: MenuItem, fragmentManager: FragmentManager) {
+    fun optionMenu(item: MenuItem, context: Context, fragmentManager: FragmentManager) {
         when (item.itemId) {
             R.id.settings -> AppScreen.changeFragment(SettingsFragment(), fragmentManager)
-            R.id.user -> AppAuth.signOut(fragmentManager)
-            R.id.about -> AppScreen.changeFragment(AboutFragment(), fragmentManager)
+            R.id.user -> AppDialog.logoutDialog(fragmentManager, context)
+            R.id.about -> AppDialog.aboutDialog(context)
             R.id.exit -> exitProcess(0)
         }
     }
@@ -56,8 +55,8 @@ object AppMenu {
         doc: DocDetails
     ) {
         when (item.itemId) {
-            R.id.rename -> AppScreen.changeActivity(context, current, true, index)
-            R.id.delete -> AppItemAction.deleteDoc(current, index)
+            R.id.rename -> AppDialog.renameDialog(current, index, context)
+            R.id.delete -> AppDialog.deleteDialog(current, index, context)
             R.id.download -> AppItemAction.openLink(doc.url, context)
             R.id.share -> AppItemAction.shareDoc(doc, context)
         }

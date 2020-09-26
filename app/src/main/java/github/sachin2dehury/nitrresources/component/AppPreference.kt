@@ -8,7 +8,7 @@ object AppPreference {
     @SuppressLint("CommitPrefEdits")
     fun saveAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
-            putString("Stream", AppCore.stream)
+            putString("Stream", AppCore.currentStream)
             if (AppCore.firebaseAuth.currentUser != null) {
                 putString("Email", AppCore.firebaseAuth.currentUser!!.email!!)
             }
@@ -18,10 +18,10 @@ object AppPreference {
 
     fun loadAppData(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).apply {
-            AppCore.stream = getString("Stream", "Trash")!!
-            if (AppCore.stream != "Trash") {
+            AppCore.currentStream = getString("Stream", "Trash")!!
+            if (AppCore.currentStream != "Trash") {
                 AppCore.streamYrs =
-                    AppCore.streamWiseYearList[AppCore.streamList.indexOf(AppCore.stream)]
+                    AppCore.streamWiseYearList[AppCore.streamList.indexOf(AppCore.currentStream)]
             }
         }
     }

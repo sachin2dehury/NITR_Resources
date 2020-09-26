@@ -9,9 +9,9 @@ import java.text.DecimalFormat
 
 object AppCore {
     var streamYrs = 0
-    var stream = "Trash"
-    var branch = "Trash"
-    var year = "Trash"
+    var currentStream = "Trash"
+    var currentBranch = "Trash"
+    var currentYear = "Trash"
 
     val mime = MimeTypeMap.getSingleton()!!
 

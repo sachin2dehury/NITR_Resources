@@ -11,7 +11,7 @@ object AppJobs {
     fun getList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
         val list = AppLogic.pageSelector(item)
         val path =
-            "${AppCore.COLLEGE}/${AppCore.stream}/${AppCore.year}/${AppCore.branch}/${AppCore.pageList[item]}"
+            "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
         val documents = AppCore.firebaseFireStore.collection(path).get().await()!!.documents
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
@@ -29,7 +29,7 @@ object AppJobs {
     fun updateDocList(item: Int) = CoroutineScope(Dispatchers.Main).launch {
         val list = AppLogic.pageSelector(item)
         val path =
-            "${AppCore.COLLEGE}/${AppCore.stream}/${AppCore.year}/${AppCore.branch}/${AppCore.pageList[item]}"
+            "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
         AppCore.firebaseFireStore.collection(path).addSnapshotListener { querySnapshot, _ ->
             for (change in querySnapshot!!.documentChanges) {
                 val doc = (change.document.toObject(DocDetails::class.java))
