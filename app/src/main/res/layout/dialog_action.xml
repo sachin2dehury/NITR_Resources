@@ -2,23 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/lightBrown">
 
     <ImageView
         android:id="@+id/actionIcon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:background="@drawable/gradient"
+        android:padding="8dp"
         app:layout_constraintEnd_toStartOf="@+id/actionHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/pink" />
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/actionHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/pink"
