@@ -7,6 +7,8 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.core.DocDetails
+import github.sachin2dehury.nitrresources.dialog.AboutDialog
+import github.sachin2dehury.nitrresources.dialog.RenameDialog
 import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.SettingsFragment
 import kotlin.system.exitProcess
@@ -42,7 +44,7 @@ object AppMenu {
         when (item.itemId) {
             R.id.settings -> AppScreen.changeFragment(SettingsFragment(), fragmentManager)
             R.id.user -> AppDialog.logoutDialog(fragmentManager, context)
-            R.id.about -> AppDialog.aboutDialog(context)
+            R.id.about -> AboutDialog(context).show()
             R.id.exit -> exitProcess(0)
         }
     }
@@ -55,7 +57,7 @@ object AppMenu {
         doc: DocDetails
     ) {
         when (item.itemId) {
-            R.id.rename -> AppDialog.renameDialog(current, index, context)
+            R.id.rename -> RenameDialog(context, current, true, index).show()
             R.id.delete -> AppDialog.deleteDialog(current, index, context)
             R.id.download -> AppItemAction.openLink(doc.url, context)
             R.id.share -> AppItemAction.shareDoc(doc, context)

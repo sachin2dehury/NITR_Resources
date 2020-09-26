@@ -48,7 +48,7 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppCore.REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
-            RenameDialog(requireContext(), data!!.data.toString(), false)
+            RenameDialog(requireContext(), data!!.data.toString(), false).show()
         }
     }
 
