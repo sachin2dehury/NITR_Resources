@@ -42,13 +42,13 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
         }
         holder.itemView.apply {
             image.setImageResource(img)
-            name.text = doc.name
+            name.text = doc.subjectName
             subject.visibility = View.VISIBLE
             size.visibility = View.VISIBLE
             menuButton.visibility = View.VISIBLE
             name.setLines(1)
             size.text = "${AppCore.format.format(doc.size)} MB"
-            subject.text = doc.subName + doc.subCode
+            subject.text = doc.courseName
             if (doc.contributor == AppCore.firebaseAuth.currentUser!!.email!!) {
                 isMine.visibility = View.VISIBLE
             }
@@ -84,9 +84,8 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                     list
                 } else {
                     list.filter {
-                        it.value.name.toLowerCase()
-                            .contains(search) || "${it.value.subName} ${it.value.subCode}".toLowerCase()
-                            .contains(search)
+                        it.value.courseName.toLowerCase().contains(search) ||
+                                it.value.courseName.toLowerCase().contains(search)
                     }
                 }
                 return filterResults

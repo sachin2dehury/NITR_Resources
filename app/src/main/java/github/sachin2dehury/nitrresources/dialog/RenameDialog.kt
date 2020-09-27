@@ -2,6 +2,7 @@ package github.sachin2dehury.nitrresources.dialog
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -11,9 +12,9 @@ import androidx.appcompat.app.AppCompatDialog
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppItemAction
-import github.sachin2dehury.nitrresources.component.AppJobs
 import github.sachin2dehury.nitrresources.component.AppLogic
 import github.sachin2dehury.nitrresources.core.DocDetails
+import github.sachin2dehury.nitrresources.service.AppUploadService
 import kotlinx.android.synthetic.main.dialog_rename.*
 
 class RenameDialog(
@@ -37,7 +38,6 @@ class RenameDialog(
             saveButton.text = "Rename"
             renameHeader.text = "Rename File"
             spinnerPages.visibility = View.GONE
-            spinnerBranch.visibility = View.GONE
         }
         spinnerPages.apply {
             animate()
@@ -46,15 +46,6 @@ class RenameDialog(
                     context,
                     R.layout.support_simple_spinner_dropdown_item,
                     AppCore.pageList
-                )
-        }
-        spinnerBranch.apply {
-            animate()
-            adapter =
-                ArrayAdapter(
-                    context,
-                    R.layout.support_simple_spinner_dropdown_item,
-                    AppCore.branchList
                 )
         }
         saveButton.setOnClickListener {
@@ -72,45 +63,43 @@ class RenameDialog(
         val item = spinnerPages.selectedItemPosition
         if (rename) {
             AppItemAction.renameDoc(files.first(), doc, index)
-            Toast.makeText(context, "${doc.name} File being Renamed.", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "${doc.courseName} File being Renamed.", Toast.LENGTH_SHORT)
                 .show()
         } else {
-//            val intent = Intent(context, AppUploadService::class.java).apply {
-//                putStringArrayListExtra("Files", files)
-//                putExtra("Document", doc.toString())
-//                putExtra("Index", item)
-//            }
-//            context.startService(intent)
-            AppJobs.uploadDoc(files, doc, item)
-            Toast.makeText(context, "${doc.name} File(s) being Uploaded.", Toast.LENGTH_SHORT)
+            val intent = Intent(context, AppUploadService::class.java).apply {
+                putStringArrayListExtra("Files", files)
+                putExtra("Document", doc.toString())
+                putExtra("Index", item)
+            }
+            context.startService(intent)
+            Toast.makeText(context, "${doc.courseName} File(s) being Uploaded.", Toast.LENGTH_SHORT)
                 .show()
         }
         dismiss()
     }
 
     private fun isValidFile(): Boolean {
-        val fileName = fileName.text.toString()
-        val subCode = subCode.text.toString().toInt()
+        val subject = subjectName.text.toString()
+        val course = courseName.text.toString()
         return when {
-            fileName.isBlank() && fileName.length < 5 -> {
-                Toast.makeText(context, "Please Enter Valid File Name", Toast.LENGTH_LONG).show()
+            subject.isBlank() && subject.length < 5 -> {
+                Toast.makeText(context, "Please Enter Valid Subject Name", Toast.LENGTH_LONG).show()
                 false
             }
-            subCode in 1000..7000 -> {
-                doc = if (rename) {
-                    AppLogic.pageSelector(index)[files.first()]!!.copy(
-                        name = fileName,
-                        subCode = subCode
-                    )
-                } else {
-                    val subName = spinnerBranch.selectedItem.toString()
-                    DocDetails(fileName, subCode, subName)
-                }
-                true
+            course.isBlank() && course.length < 5 -> {
+                Toast.makeText(context, "Please Enter Valid Course Name", Toast.LENGTH_LONG).show()
+                false
             }
             else -> {
-                Toast.makeText(context, "Please Enter Valid Subject Code", Toast.LENGTH_LONG).show()
-                false
+                doc = if (rename) {
+                    AppLogic.pageSelector(index)[files.first()]!!.copy(
+                        subjectName = subject,
+                        courseName = course
+                    )
+                } else {
+                    DocDetails(subject, course)
+                }
+                true
             }
         }
     }

@@ -1,6 +1,5 @@
 package github.sachin2dehury.nitrresources.component
 
-import android.webkit.MimeTypeMap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -12,8 +11,6 @@ object AppCore {
     var currentStream = "Trash"
     var currentBranch = "Trash"
     var currentYear = "Trash"
-
-    val mime = MimeTypeMap.getSingleton()!!
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseFireStore = FirebaseFirestore.getInstance()
@@ -27,8 +24,8 @@ object AppCore {
 
     const val REQUEST_CODE_SIGN_IN = 9100
     const val REQUEST_CODE_OPEN_FILE = 9200
-    const val REQUEST_CODE_DOWNLOAD_LINK = 9300
-    const val REQUEST_CODE_OPEN_LINK = 9400
+    const val REQUEST_CODE_DOWNLOAD_SERVICE = 9300
+    const val REQUEST_CODE_UPLOAD_SERVICE = 9400
 
     const val STREAM_LIST = 100
     const val B_ARCH_LIST = 200
@@ -55,11 +52,6 @@ object AppCore {
 
     val format = DecimalFormat("#.##")
 
-    val branchList = listOf(
-        "AR",
-        "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN",
-        "CY", "ER", "LS", "MA", "PH"
-    )
     val streamWiseYearList = listOf(5, 4, 3, 2, 2)
     val noList = listOf("No Data Available!")
     val pageList = listOf("Notes", "Assignments", "Slides", "Labs")

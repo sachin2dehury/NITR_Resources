@@ -14,7 +14,7 @@ object AppItemAction {
         val intent = Intent(Intent.ACTION_SEND)
         intent.apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_SUBJECT, "Check Out This : ${doc.name}")
+            putExtra(Intent.EXTRA_SUBJECT, "Check Out This : ${doc.courseName}")
             putExtra(Intent.EXTRA_TEXT, doc.url)
         }
         context.startActivity(Intent.createChooser(intent, "Share link!"))

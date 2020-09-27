@@ -20,8 +20,8 @@
     <string name="sign_out">Sign Out</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>
-    <string name="enter_subject_code">Enter Subject Code</string>
-    <string name="enter_file_name">Enter File Name</string>
+    <string name="enter_course_name">Enter Course Name</string>
+    <string name="enter_subject_name">Enter Subject Name</string>
     <string name="save_file">Save File</string>
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
