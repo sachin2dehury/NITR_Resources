@@ -13,7 +13,7 @@ object AppCore {
     var currentBranch = "Trash"
     var currentYear = "Trash"
 
-    val mime = MimeTypeMap.getSingleton()
+    val mime = MimeTypeMap.getSingleton()!!
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseFireStore = FirebaseFirestore.getInstance()
@@ -27,8 +27,7 @@ object AppCore {
 
     const val REQUEST_CODE_SIGN_IN = 9100
     const val REQUEST_CODE_OPEN_FILE = 9200
-    const val REQUEST_CODE_DOWNLOAD_SERVICE = 9300
-    const val REQUEST_CODE_UPLOAD_SERVICE = 9400
+    const val REQUEST_CODE_UPLOAD_SERVICE = 9300
 
     const val STREAM_LIST = 100
     const val B_ARCH_LIST = 200
