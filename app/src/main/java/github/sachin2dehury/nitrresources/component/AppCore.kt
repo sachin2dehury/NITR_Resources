@@ -28,6 +28,7 @@ object AppCore {
     const val REQUEST_CODE_SIGN_IN = 9100
     const val REQUEST_CODE_OPEN_FILE = 9200
     const val REQUEST_CODE_UPLOAD_SERVICE = 9300
+    const val REQUEST_CODE_STORAGE = 9400
 
     const val STREAM_LIST = 100
     const val B_ARCH_LIST = 200
