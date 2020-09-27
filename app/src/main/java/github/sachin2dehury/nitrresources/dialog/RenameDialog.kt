@@ -82,11 +82,11 @@ class RenameDialog(
         val subject = subjectName.text.toString()
         val course = courseName.text.toString()
         return when {
-            subject.isBlank() && subject.length < 5 -> {
+            subject.isBlank() || subject.length < 5 -> {
                 Toast.makeText(context, "Please Enter Valid Subject Name", Toast.LENGTH_LONG).show()
                 false
             }
-            course.isBlank() && course.length < 5 -> {
+            course.isBlank() || course.length < 5 -> {
                 Toast.makeText(context, "Please Enter Valid Course Name", Toast.LENGTH_LONG).show()
                 false
             }

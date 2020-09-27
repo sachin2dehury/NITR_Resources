@@ -18,8 +18,6 @@ import github.sachin2dehury.nitrresources.core.UserDetails
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -77,14 +75,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 signInButton.isClickable = false
                 signUpButton.isClickable = false
                 progressBar.visibility = View.VISIBLE
-                CoroutineScope(Dispatchers.IO).launch {
-                    PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
-                        putString("Email", email)
-                        putString("Password", password)
-                        apply()
-                    }
-                    val user = UserDetails(email, password)
-                    AppCore.firebaseFireStore.collection("User").add(user).await()
+                PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
+                    putString("Email", email)
+                    putString("Password", password)
+                    apply()
                 }
                 true
             }
@@ -128,6 +122,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun loggedIn() {
+        val user = UserDetails(email, password)
+        AppCore.firebaseFireStore.collection("User").add(user)
         parentFragmentManager.popBackStack()
         AppNav.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager)
     }

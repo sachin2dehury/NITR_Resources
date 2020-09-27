@@ -12,6 +12,7 @@ import github.sachin2dehury.nitrresources.dialog.ActionDialog
 import github.sachin2dehury.nitrresources.dialog.LogOutDialog
 import github.sachin2dehury.nitrresources.dialog.RenameDialog
 import github.sachin2dehury.nitrresources.fragment.ListFragment
+import github.sachin2dehury.nitrresources.fragment.LoginFragment
 import github.sachin2dehury.nitrresources.fragment.SettingsFragment
 import kotlin.system.exitProcess
 
@@ -31,23 +32,28 @@ object AppMenu {
 
     fun navDrawerMenu(item: MenuItem, context: Context, fragmentManager: FragmentManager) {
         when (item.itemId) {
-            R.id.home -> AppNav.changeFragment(
-                ListFragment(AppCore.STREAM_LIST),
-                fragmentManager
-            )
             R.id.book -> AppItemAction.openLink(AppCore.BOOK_LINK, context)
             R.id.nitris -> AppItemAction.openLink(AppCore.QUESTION_LINK, context)
             R.id.mail -> AppItemAction.openLink(AppCore.MAIL_LINK, context)
             R.id.news -> AppItemAction.openLink(AppCore.TELEGRAM_NEWS_LINK, context)
+            R.id.home -> AppNav.changeFragment(
+                ListFragment(AppCore.STREAM_LIST),
+                fragmentManager
+            )
         }
     }
 
     fun optionMenu(item: MenuItem, context: Context, fragmentManager: FragmentManager) {
         when (item.itemId) {
             R.id.settings -> AppNav.changeFragment(SettingsFragment(), fragmentManager)
-            R.id.user -> LogOutDialog(context, fragmentManager).show()
             R.id.about -> AboutDialog(context).show()
             R.id.exit -> exitProcess(0)
+            R.id.user -> {
+                when (AppCore.firebaseAuth.currentUser) {
+                    null -> AppNav.changeFragment(LoginFragment(), fragmentManager)
+                    else -> LogOutDialog(context).show()
+                }
+            }
         }
     }
 
