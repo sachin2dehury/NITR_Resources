@@ -3,6 +3,7 @@ package github.sachin2dehury.nitrresources.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -21,6 +22,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var email: String
     private lateinit var password: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     @SuppressLint("ShowToast")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,6 +71,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 false
             }
             else -> {
+                signInButton.isClickable = false
+                signUpButton.isClickable = false
                 progressBar.visibility = View.VISIBLE
                 PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
                     putString("Email", email)
@@ -115,5 +123,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun loggedIn() {
         parentFragmentManager.popBackStack()
         AppNav.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.removeItem(R.id.user)
+        menu.removeItem(R.id.settings)
+        super.onPrepareOptionsMenu(menu)
     }
 }

@@ -9,7 +9,8 @@
     <item
         android:id="@+id/user"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="@string/user" />
+        android:title="@string/user"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/about"
         android:icon="@drawable/ic_baseline_thumbs_up_down_24"

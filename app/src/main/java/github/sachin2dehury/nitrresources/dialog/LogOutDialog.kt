@@ -15,8 +15,14 @@ class LogOutDialog(
     context: Context,
     private val fragmentManager: FragmentManager
 ) : AppCompatDialog(context) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (AppCore.firebaseAuth.currentUser == null) {
+            AppNav.changeFragment(LoginFragment(), fragmentManager)
+            dismiss()
+        }
 
         val action = "Log Out"
         supportRequestWindowFeature((Window.FEATURE_NO_TITLE))
@@ -31,16 +37,9 @@ class LogOutDialog(
             dismiss()
         }
         actionButton.setOnClickListener {
-            signOut()
+            AppCore.firebaseAuth.signOut()
             dismiss()
         }
         setCancelable(true)
-    }
-
-    private fun signOut() {
-        when (AppCore.firebaseAuth.currentUser) {
-            null -> AppNav.changeFragment(LoginFragment(), fragmentManager)
-            else -> AppCore.firebaseAuth.signOut()
-        }
     }
 }

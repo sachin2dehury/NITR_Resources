@@ -40,6 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         menu.removeItem(R.id.settings)
+        menu.removeItem(R.id.user)
         super.onPrepareOptionsMenu(menu)
     }
 }
