@@ -68,7 +68,6 @@ class RenameDialog(
         } else {
             val intent = Intent(context, AppUploadService::class.java).apply {
                 putStringArrayListExtra("Files", files)
-                putExtra("Document", doc.toString())
                 putExtra("Index", item)
             }
             context.startService(intent)

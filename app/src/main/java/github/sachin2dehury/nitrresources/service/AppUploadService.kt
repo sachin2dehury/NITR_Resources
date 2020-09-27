@@ -18,10 +18,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AppUploadService : Service() {
+
+    private lateinit var files: ArrayList<String>
+    private var item = 0
+
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         val channel = "NITR Resources Upload Service"
         val notificationManager = NotificationManagerCompat.from(this)
 
@@ -46,15 +49,24 @@ class AppUploadService : Service() {
 
         CoroutineScope(Dispatchers.IO).launch {
             intent!!.apply {
-                val files = getStringArrayListExtra("Files")!!
-                val item = getIntExtra("Index", 0)
-                AppJobs.uploadDoc(files, RenameDialog.doc, item).invokeOnCompletion {
-                    notificationManager.cancel(AppCore.REQUEST_CODE_UPLOAD_SERVICE)
-                }
+                files = getStringArrayListExtra("Files")!!
+                item = getIntExtra("Index", 0)
+            }
+            AppJobs.uploadDoc(files, RenameDialog.doc, item).invokeOnCompletion {
+                notificationManager.cancel(AppCore.REQUEST_CODE_UPLOAD_SERVICE)
             }
         }.invokeOnCompletion {
             stopSelf()
         }
         return super.onStartCommand(intent, flags, startId)
     }
+//    App on Destroy
+//    override fun onTaskRemoved(rootIntent: Intent?) {
+//        val intent = Intent(this, AppUploadService::class.java).apply {
+//            putStringArrayListExtra("Files", files)
+//            putExtra("Index", item)
+//        }
+//        startService(intent)
+//        super.onTaskRemoved(rootIntent)
+//    }
 }
