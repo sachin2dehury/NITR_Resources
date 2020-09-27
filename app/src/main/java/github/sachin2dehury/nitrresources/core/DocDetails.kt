@@ -1,7 +1,6 @@
 package github.sachin2dehury.nitrresources.core
 
 import github.sachin2dehury.nitrresources.component.AppCore
-import github.sachin2dehury.nitrresources.component.AppCore.PDF
 
 data class DocDetails(
     var subjectName: String = "temp",
@@ -10,5 +9,5 @@ data class DocDetails(
     var time: Long = 0,
     var size: Double = 0.0,
     var url: String = "url",
-    var type: String = PDF
+    var type: String = AppCore.ALL
 )

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,9 +36,10 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
     override fun onBindViewHolder(holder: ListPageViewHolder, position: Int) {
         val current = keys.elementAt(position)
         val doc = list[current]!!
-        val img = when (doc.type) {
-            AppCore.PDF -> R.drawable.ic_baseline_picture_as_pdf_24
-            AppCore.IMG -> R.drawable.ic_baseline_image_24
+        val img = when (AppCore.mime.getExtensionFromMimeType(doc.type)) {
+            "pdf" -> R.drawable.ic_baseline_picture_as_pdf_24
+            "jpg", "jpeg", "png" -> R.drawable.ic_baseline_image_24
+            "ppt", "doc" -> R.drawable.ic_baseline_slideshow_24
             else -> R.drawable.ic_baseline_warning_24
         }
         holder.itemView.apply {
@@ -53,7 +55,8 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                 isMine.visibility = View.VISIBLE
             }
             setOnClickListener {
-                AppItemAction.openLink(doc.url, context)
+                Toast.makeText(context, "Downloading ${doc.subjectName}", Toast.LENGTH_SHORT).show()
+                AppItemAction.downloadDoc(doc, context)
             }
             menuButton.setOnClickListener {
                 notifyDataSetChanged()

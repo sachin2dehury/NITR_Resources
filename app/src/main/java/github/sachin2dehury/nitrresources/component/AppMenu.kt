@@ -61,7 +61,7 @@ object AppMenu {
         when (item.itemId) {
             R.id.rename -> RenameDialog(context, arrayListOf(current), true, index).show()
             R.id.delete -> ActionDialog(context, "Delete", current, index).show()
-            R.id.download -> AppItemAction.openLink(doc.url, context)
+            R.id.download -> AppItemAction.downloadDoc(doc, context)
             R.id.share -> AppItemAction.shareDoc(doc, context)
         }
     }

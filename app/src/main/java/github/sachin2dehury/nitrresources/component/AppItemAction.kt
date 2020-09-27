@@ -1,8 +1,10 @@
 package github.sachin2dehury.nitrresources.component
 
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import github.sachin2dehury.nitrresources.core.DocDetails
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,5 +51,27 @@ object AppItemAction {
         if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
         }
+    }
+
+    fun downloadDoc(doc: DocDetails, context: Context) {
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val url = Uri.parse(doc.url)!!
+        val request = DownloadManager.Request(url).apply {
+            setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE).apply {
+                setAllowedOverRoaming(false)
+                setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_DOWNLOADS,
+                    "${doc.subjectName}_${doc.courseName}.${
+                        AppCore.mime.getExtensionFromMimeType(
+                            doc.type
+                        )
+                    }"
+                )
+                setTitle(doc.subjectName)
+                setMimeType(doc.type)
+                setDescription(doc.courseName)
+            }
+        }
+        downloadManager.enqueue(request)
     }
 }

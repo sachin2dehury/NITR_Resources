@@ -1,5 +1,6 @@
 package github.sachin2dehury.nitrresources.component
 
+import android.webkit.MimeTypeMap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -11,6 +12,8 @@ object AppCore {
     var currentStream = "Trash"
     var currentBranch = "Trash"
     var currentYear = "Trash"
+
+    val mime = MimeTypeMap.getSingleton()
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseFireStore = FirebaseFirestore.getInstance()
@@ -45,8 +48,6 @@ object AppCore {
     const val QUESTION_LINK = "https://eapplication.nitrkl.ac.in/nitris/Login.aspx"
     const val MAIL_LINK = "https://mail.nitrkl.ac.in/"
     const val TELEGRAM_NEWS_LINK = "https://t.me/s/nitrkl"
-    const val PDF = "application/pdf"
-    const val IMG = "image/*"
     const val MB = 1024 * 1024
     const val ALL = "*/*"
 
