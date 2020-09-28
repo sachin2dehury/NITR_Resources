@@ -53,6 +53,7 @@ object AppLogic {
             AppCore.ASSIGNMENT_LIST -> AppCore.assignment
             AppCore.SLIDES_LIST -> AppCore.slides
             AppCore.LAB_LIST -> AppCore.lab
+            AppCore.BOOK_LIST -> AppCore.books
             else -> AppCore.trash
         }
     }
@@ -62,5 +63,6 @@ object AppLogic {
         AppCore.assignment.clear()
         AppCore.slides.clear()
         AppCore.lab.clear()
+        AppCore.books.clear()
     }
 }

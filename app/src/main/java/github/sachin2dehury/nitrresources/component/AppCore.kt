@@ -24,6 +24,7 @@ object AppCore {
     val assignment = mutableMapOf<String, DocDetails>()
     val slides = mutableMapOf<String, DocDetails>()
     val lab = mutableMapOf<String, DocDetails>()
+    val books = mutableMapOf<String, DocDetails>()
 
     const val REQUEST_CODE_SIGN_IN = 9100
     const val REQUEST_CODE_OPEN_FILE = 9200
@@ -41,6 +42,7 @@ object AppCore {
     const val ASSIGNMENT_LIST = 401
     const val SLIDES_LIST = 402
     const val LAB_LIST = 403
+    const val BOOK_LIST = 404
     const val NO_LIST = 0
 
     const val COLLEGE = "NITR"
@@ -55,10 +57,11 @@ object AppCore {
 
     val streamWiseYearList = listOf(5, 4, 3, 2, 2)
     val noList = listOf("No Data Available!")
-    val pageList = listOf("Notes", "Assignments", "Slides", "Labs")
+    val pageList = listOf("Notes", "Assignments", "Slides", "Labs", "Books")
     val streamList = listOf("B. Arch", "B. Tech", "Int. M, Sc (Only B. Sc)", "M. Sc", "M. Tech")
     val yearList = listOf("First Year", "Second Year", "Third Year", "Fourth Year", "Fifth Year")
     val bArchList = listOf("Architecture")
+    val bArchMap = listOf("AR")
     val bTechList = listOf(
         "Biomedical Engineering",
         "Biotechnology",
@@ -74,6 +77,9 @@ object AppCore {
         "Mechanical Engineering",
         "Metallurgical and Materials Engineering",
         "Mining Engineering"
+    )
+    val bTechMap = listOf(
+        "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN",
     )
     val mTechList = listOf(
         "Biomedical Engineering",
@@ -116,6 +122,21 @@ object AppCore {
         "Steel Technology",
         "Mining Engineering"
     )
+    val mTechMap = listOf(
+        "BM",
+        "BT",
+        "CE", "CE", "CE", "CE",
+        "CH", "CH", "CH",
+        "CR", "CR",
+        "CS", "CS", "CS", "CS",
+        "EC", "EC", "EC", "EC", "EC", "EC", "EC",
+        "EE", "EE", "EE", "EE", "EE", "EE",
+        "FP",
+        "ID",
+        "ME", "ME", "ME", "ME", "ME",
+        "MM", "MM",
+        "MN",
+    )
     val mscList = listOf(
         "Chemistry",
         "Applied Geology",
@@ -124,11 +145,16 @@ object AppCore {
         "Mathematics",
         "Physics"
     )
+    val mscMap = listOf(
+        "CY", "ER", "ER", "LS", "MA", "PH"
+    )
     val intMscList = listOf(
         "Chemistry",
         "Life Science",
         "Mathematics",
         "Physics"
     )
+    val intMscMap = listOf(
+        "CY", "LS", "MA", "PH"
+    )
 }
-
