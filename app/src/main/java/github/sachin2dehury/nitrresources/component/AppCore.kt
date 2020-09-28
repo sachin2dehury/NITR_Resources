@@ -39,10 +39,10 @@ object AppCore {
     const val M_TECH_LIST = 204
     const val YEAR_LIST = 300
     const val NOTES_LIST = 400
-    const val ASSIGNMENT_LIST = 401
+    const val BOOK_LIST = 401
     const val SLIDES_LIST = 402
     const val LAB_LIST = 403
-    const val BOOK_LIST = 404
+    const val ASSIGNMENT_LIST = 404
     const val NO_LIST = 0
 
     const val COLLEGE = "NITR"
@@ -57,7 +57,7 @@ object AppCore {
 
     val streamWiseYearList = listOf(5, 4, 3, 2, 2)
     val noList = listOf("No Data Available!")
-    val pageList = listOf("Notes", "Assignments", "Slides", "Labs", "Books")
+    val pageList = listOf("Notes", "Books", "Slides", "Labs", "Assignments")
     val streamList = listOf("B. Arch", "B. Tech", "Int. M, Sc (Only B. Sc)", "M. Sc", "M. Tech")
     val yearList = listOf("First Year", "Second Year", "Third Year", "Fourth Year", "Fifth Year")
     val bArchList = listOf("Architecture")

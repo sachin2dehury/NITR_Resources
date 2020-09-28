@@ -50,10 +50,10 @@ object AppLogic {
     fun pageSelector(position: Int): MutableMap<String, DocDetails> {
         return when (AppCore.NOTES_LIST + position) {
             AppCore.NOTES_LIST -> AppCore.notes
-            AppCore.ASSIGNMENT_LIST -> AppCore.assignment
-            AppCore.SLIDES_LIST -> AppCore.slides
-            AppCore.LAB_LIST -> AppCore.lab
             AppCore.BOOK_LIST -> AppCore.books
+            AppCore.SLIDES_LIST -> AppCore.slides
+            AppCore.ASSIGNMENT_LIST -> AppCore.assignment
+            AppCore.LAB_LIST -> AppCore.lab
             else -> AppCore.trash
         }
     }

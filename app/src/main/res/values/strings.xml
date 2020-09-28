@@ -11,8 +11,8 @@
     <string name="delete">Delete</string>
     <string name="search">Search</string>
     <string name="home">Home</string>
-    <string name="books">Books</string>
-    <string name="questions">Questions</string>
+    <string name="books">Find Books</string>
+    <string name="questions">Find Questions</string>
     <string name="zimbra">Zimbra</string>
     <string name="news">News</string>
     <string name="user">Log Out</string>
