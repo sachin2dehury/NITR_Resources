@@ -1,10 +1,12 @@
 package github.sachin2dehury.nitrresources.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -122,6 +124,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun loggedIn() {
+        val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
         val user = UserDetails(email, password)
         AppCore.firebaseFireStore.collection("User").add(user)
         parentFragmentManager.popBackStack()

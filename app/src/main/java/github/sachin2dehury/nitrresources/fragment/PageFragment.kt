@@ -63,6 +63,8 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.removeItem(R.id.searchBar)
+        menu.removeItem(R.id.user)
         inflater.inflate(R.menu.search_menu, menu)
         val search = menu.findItem(R.id.searchBar).actionView as SearchView
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
