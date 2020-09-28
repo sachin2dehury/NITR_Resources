@@ -59,16 +59,15 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                 AppItemAction.downloadDoc(doc, context)
             }
             menuButton.setOnClickListener {
-                notifyDataSetChanged()
-                val menu = PopupMenu(context, it, Gravity.END).apply {
+                PopupMenu(context, it, Gravity.END).apply {
                     menuInflater.inflate(R.menu.item_menu, menu)
                     animate()
                     AppMenu.getMenuIcon(this)
+                    setOnMenuItemClickListener { menuItem ->
+                        AppMenu.popUpMenu(menuItem, context, current, item, doc)
+                        true
+                    }
                     show()
-                }
-                menu.setOnMenuItemClickListener { menuItem ->
-                    AppMenu.popUpMenu(menuItem, context, current, item, doc)
-                    true
                 }
             }
         }
