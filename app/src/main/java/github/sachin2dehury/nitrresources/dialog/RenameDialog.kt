@@ -38,6 +38,9 @@ class RenameDialog(
             saveButton.text = "Rename"
             renameHeader.text = "Rename File"
             spinnerPages.visibility = View.GONE
+            val file = AppLogic.pageSelector(index)[files.first()]!!
+            subjectName.setText(file.subjectName)
+            courseName.setText(file.courseName)
         }
         spinnerPages.apply {
             animate()
