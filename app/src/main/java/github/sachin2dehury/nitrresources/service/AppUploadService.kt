@@ -60,13 +60,13 @@ class AppUploadService : Service() {
         }
         return super.onStartCommand(intent, flags, startId)
     }
-//    App on Destroy
-//    override fun onTaskRemoved(rootIntent: Intent?) {
-//        val intent = Intent(this, AppUploadService::class.java).apply {
-//            putStringArrayListExtra("Files", files)
-//            putExtra("Index", item)
-//        }
-//        startService(intent)
-//        super.onTaskRemoved(rootIntent)
-//    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        val intent = Intent(this, AppUploadService::class.java).apply {
+            putStringArrayListExtra("Files", files)
+            putExtra("Index", item)
+        }
+        startService(intent)
+        super.onTaskRemoved(rootIntent)
+    }
 }

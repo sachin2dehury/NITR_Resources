@@ -40,6 +40,8 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
         }
         val adRequest = AdRequest.Builder().build()!!
         adView.loadAd(adRequest)
+
+        AppJobs.updateDocList(position, listView.adapter!!)
     }
 
     private fun jobValidator(throwable: Throwable?) = CoroutineScope(Dispatchers.Main).launch {
@@ -58,12 +60,6 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
         if (listView.adapter!!.itemCount == 0) {
             Toast.makeText(context, AppCore.noList.first(), Toast.LENGTH_LONG).show()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        AppJobs.updateDocList(position)
-        listView.adapter!!.notifyDataSetChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
