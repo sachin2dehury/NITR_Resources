@@ -42,6 +42,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             "ppt", "doc" -> R.drawable.ic_baseline_slideshow_24
             else -> R.drawable.ic_baseline_warning_24
         }
+        val isAuthor = doc.contributor == AppCore.firebaseAuth.currentUser!!.email!!
         holder.itemView.apply {
             image.setImageResource(img)
             name.text = doc.subjectName
@@ -51,7 +52,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             name.setLines(1)
             size.text = "${AppCore.format.format(doc.size)} MB"
             subject.text = doc.courseName
-            if (doc.contributor == AppCore.firebaseAuth.currentUser!!.email!!) {
+            if (isAuthor) {
                 isMine.visibility = View.VISIBLE
             }
             setOnClickListener {
@@ -66,6 +67,9 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                     setOnMenuItemClickListener { menuItem ->
                         AppMenu.popUpMenu(menuItem, context, current, item, doc)
                         true
+                    }
+                    if (isAuthor) {
+                        menu.removeItem(R.id.delete)
                     }
                     show()
                 }

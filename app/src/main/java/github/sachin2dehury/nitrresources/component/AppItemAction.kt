@@ -38,11 +38,9 @@ object AppItemAction {
         val list = AppLogic.pageSelector(item)
         val path =
             "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
-        if (list[docId]!!.contributor == AppCore.firebaseAuth.currentUser!!.email!!) {
-            AppCore.firebaseFireStore.collection("Trash").add(list[docId]!!).await()
-            AppCore.firebaseFireStore.collection(path).document(docId).delete().await()
-            list.remove(docId)
-        }
+        AppCore.firebaseFireStore.collection("Trash").add(list[docId]!!).await()
+        AppCore.firebaseFireStore.collection(path).document(docId).delete().await()
+        list.remove(docId)
     }
 
     fun openLink(link: String, context: Context) {
