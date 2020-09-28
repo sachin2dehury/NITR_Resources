@@ -68,7 +68,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                         AppMenu.popUpMenu(menuItem, context, current, item, doc)
                         true
                     }
-                    if (isAuthor) {
+                    if (!isAuthor) {
                         menu.removeItem(R.id.delete)
                     }
                     show()
