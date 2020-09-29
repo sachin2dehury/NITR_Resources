@@ -2,7 +2,10 @@ package github.sachin2dehury.nitrresources.fragment
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.preference.*
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppPreference
@@ -21,10 +24,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("Email")!!.apply {
             summary = email
         }
-        findPreference<EditTextPreference>("Password")!!.apply {
-            summary = "********"
-            text = password
-        }
+//        findPreference<EditTextPreference>("Password")!!.apply {
+//            summary = "********"
+//            text = password
+//        }
         findPreference<ListPreference>("Stream")!!.apply {
             summary = AppCore.currentStream
             entries = streamArray

@@ -3,6 +3,7 @@ package github.sachin2dehury.nitrresources.component
 import android.webkit.MimeTypeMap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
 import github.sachin2dehury.nitrresources.core.DocDetails
 import java.text.DecimalFormat
@@ -18,6 +19,7 @@ object AppCore {
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseFireStore = FirebaseFirestore.getInstance()
     val firebaseStorage = FirebaseStorage.getInstance().reference
+    lateinit var listener: ListenerRegistration
 
     val trash = mutableMapOf<String, DocDetails>()
     val notes = mutableMapOf<String, DocDetails>()

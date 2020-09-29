@@ -49,9 +49,11 @@ open class NavActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        navigationDrawer.menu.getItem(0).isChecked = true
 
         navigationDrawer.setNavigationItemSelectedListener { item ->
             AppMenu.navDrawerMenu(item, this, supportFragmentManager)
+            drawerLayout.closeDrawers()
             true
         }
 

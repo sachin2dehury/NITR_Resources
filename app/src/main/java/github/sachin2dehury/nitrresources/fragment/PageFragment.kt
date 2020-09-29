@@ -22,18 +22,26 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CoroutineScope(Dispatchers.IO).launch {
-            AppJobs.getList(position).invokeOnCompletion {
-                jobValidator(it)
-            }
-        }
         setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressBar.visibility = View.VISIBLE
+        if (AppCore.firebaseAuth.currentUser != null) {
+            progressBar.visibility = View.VISIBLE
+            CoroutineScope(Dispatchers.IO).launch {
+                AppJobs.getList(position).invokeOnCompletion {
+                    jobValidator(it)
+                }
+                AppJobs.updateDocList(position, listView.adapter!!)
+            }
+        } else {
+            val error = "Please Log in!"
+            errorText.visibility = View.VISIBLE
+            errorText.text = error
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+        }
         listView.apply {
             adapter = ListPageAdapter(position, parentFragmentManager)
             layoutManager = LinearLayoutManager(context)
@@ -41,18 +49,17 @@ class PageFragment(private val position: Int) : Fragment(R.layout.fragment_page)
         val adRequest = AdRequest.Builder().build()!!
         adView.loadAd(adRequest)
 
-        AppJobs.updateDocList(position, listView.adapter!!)
     }
 
     private fun jobValidator(throwable: Throwable?) = CoroutineScope(Dispatchers.Main).launch {
         progressBar.visibility = View.GONE
-        if (throwable != null) {
-            errorText.visibility = View.VISIBLE
-            errorText.text = throwable.toString()
-            Toast.makeText(context, throwable.toString(), Toast.LENGTH_SHORT).show()
-        } else {
-            isEmpty()
-            listView.adapter!!.notifyDataSetChanged()
+        when (throwable) {
+            null -> isEmpty()
+            else -> {
+                errorText.visibility = View.VISIBLE
+                errorText.text = throwable.toString()
+                Toast.makeText(context, throwable.toString(), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

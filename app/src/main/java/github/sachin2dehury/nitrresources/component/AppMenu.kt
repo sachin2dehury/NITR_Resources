@@ -3,6 +3,7 @@ package github.sachin2dehury.nitrresources.component
 import android.content.Context
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import github.sachin2dehury.nitrresources.R
@@ -36,10 +37,20 @@ object AppMenu {
             R.id.nitris -> AppItemAction.openLink(AppCore.QUESTION_LINK, context)
             R.id.mail -> AppItemAction.openLink(AppCore.MAIL_LINK, context)
             R.id.news -> AppItemAction.openLink(AppCore.TELEGRAM_NEWS_LINK, context)
-            R.id.home -> AppNav.changeFragment(
-                ListFragment(AppCore.STREAM_LIST),
-                fragmentManager
-            )
+            R.id.home -> {
+                if (AppCore.firebaseAuth.currentUser == null) {
+                    Toast.makeText(context, "Please Log in First!", Toast.LENGTH_LONG).show()
+                    val index = fragmentManager.backStackEntryCount - 1
+                    if (index >= 0 && fragmentManager.getBackStackEntryAt(index).javaClass != LoginFragment::javaClass) {
+                        AppNav.changeFragment(LoginFragment(), fragmentManager)
+                    }
+                } else {
+                    AppNav.changeFragment(
+                        ListFragment(AppCore.STREAM_LIST),
+                        fragmentManager
+                    )
+                }
+            }
         }
     }
 

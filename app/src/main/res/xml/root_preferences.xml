@@ -10,14 +10,14 @@
             app:key="Email"
             app:title="Email" />
 
-        <EditTextPreference
-            app:dialogIcon="@drawable/ic_baseline_edit_24"
-            app:dialogMessage="Password Should be at least 8 Character long."
-            app:dialogTitle="Change Password"
-            app:icon="@drawable/ic_baseline_edit_24"
-            app:key="Password"
-            app:positiveButtonText="Change"
-            app:title="Password" />
+        <!--        <EditTextPreference-->
+        <!--            app:dialogIcon="@drawable/ic_baseline_edit_24"-->
+        <!--            app:dialogMessage="Password Should be at least 8 Character long."-->
+        <!--            app:dialogTitle="Change Password"-->
+        <!--            app:icon="@drawable/ic_baseline_edit_24"-->
+        <!--            app:key="Password"-->
+        <!--            app:positiveButtonText="Change"-->
+        <!--            app:title="Password" />-->
 
     </PreferenceCategory>
 

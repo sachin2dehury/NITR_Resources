@@ -26,17 +26,18 @@ object AppJobs {
             val list = AppLogic.pageSelector(item)
             val path =
                 "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
-            AppCore.firebaseFireStore.collection(path).addSnapshotListener { querySnapshot, _ ->
-                for (change in querySnapshot!!.documentChanges) {
-                    val doc = (change.document.toObject(DocDetails::class.java))
-                    when (change.type) {
-                        DocumentChange.Type.ADDED -> list[change.document.id] = doc
-                        DocumentChange.Type.MODIFIED -> list[change.document.id] = doc
-                        DocumentChange.Type.REMOVED -> list.remove(change.document.id)
+            AppCore.listener =
+                AppCore.firebaseFireStore.collection(path).addSnapshotListener { querySnapshot, _ ->
+                    for (change in querySnapshot!!.documentChanges) {
+                        val doc = (change.document.toObject(DocDetails::class.java))
+                        when (change.type) {
+                            DocumentChange.Type.ADDED -> list[change.document.id] = doc
+                            DocumentChange.Type.MODIFIED -> list[change.document.id] = doc
+                            DocumentChange.Type.REMOVED -> list.remove(change.document.id)
+                        }
+                        adapter.notifyDataSetChanged()
                     }
-                    adapter.notifyDataSetChanged()
                 }
-            }
         }
 
     fun uploadDoc(files: ArrayList<String>, doc: DocDetails, item: Int) =
@@ -46,6 +47,9 @@ object AppJobs {
             val list = AppLogic.pageSelector(item)
             for (file in files) {
                 val uri = Uri.parse(file)!!
+//                for (i in 1..20) {
+//                    val docId = AppCore.firebaseFireStore.collection(path).add(doc).await()!!.id
+//                }
                 val docId = AppCore.firebaseFireStore.collection(path).add(doc).await()!!.id
                 val storeReference = AppCore.firebaseStorage.child("$path/$docId")
                 val docRef = AppCore.firebaseFireStore.collection(path).document(docId)

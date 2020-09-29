@@ -129,7 +129,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val user = UserDetails(email, password)
         AppCore.firebaseFireStore.collection("User").add(user)
         parentFragmentManager.popBackStack()
-        AppNav.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager)
+        AppNav.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager, false)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
