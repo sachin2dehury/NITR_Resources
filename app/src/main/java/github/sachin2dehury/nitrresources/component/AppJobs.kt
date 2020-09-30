@@ -47,9 +47,6 @@ object AppJobs {
             val list = AppLogic.pageSelector(item)
             for (file in files) {
                 val uri = Uri.parse(file)!!
-//                for (i in 1..20) {
-//                    val docId = AppCore.firebaseFireStore.collection(path).add(doc).await()!!.id
-//                }
                 val docId = AppCore.firebaseFireStore.collection(path).add(doc).await()!!.id
                 val storeReference = AppCore.firebaseStorage.child("$path/$docId")
                 val docRef = AppCore.firebaseFireStore.collection(path).document(docId)

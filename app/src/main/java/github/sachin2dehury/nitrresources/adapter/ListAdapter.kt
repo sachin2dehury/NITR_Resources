@@ -21,6 +21,7 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
     RecyclerView.Adapter<ListViewHolder>(), Filterable {
 
     private val list = AppLogic.listSelector(item)
+    private val map = AppLogic.mapSelector(item)
     private var listData = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -32,6 +33,8 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.itemView.apply {
             name.text = listData[position]
+            imageText.text = map[position]
+            imageText.visibility = View.VISIBLE
             if (item == AppCore.NO_LIST) {
                 subject.visibility = View.VISIBLE
                 size.visibility = View.VISIBLE

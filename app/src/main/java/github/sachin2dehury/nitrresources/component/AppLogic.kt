@@ -30,20 +30,31 @@ object AppLogic {
                 AppCore.streamYrs = AppCore.streamWiseYearList[position]
                 AppCore.currentStream = AppCore.streamList[position]
             }
-            AppCore.YEAR_LIST -> {
-                if (position == 0) {
-                    when (AppCore.currentStream) {
-                        AppCore.streamList[1] -> AppCore.currentBranch = "All"
-                        AppCore.streamList[2] -> AppCore.currentBranch = "All"
-                    }
-                }
-                AppCore.currentYear = AppCore.yearList[position]
-            }
+            AppCore.YEAR_LIST -> AppCore.currentYear = AppCore.yearList[position]
             AppCore.B_ARCH_LIST -> AppCore.currentBranch = AppCore.bArchList[position]
             AppCore.B_TECH_LIST -> AppCore.currentBranch = AppCore.bTechList[position]
             AppCore.M_TECH_LIST -> AppCore.currentBranch = AppCore.mTechList[position]
             AppCore.MSC_LIST -> AppCore.currentBranch = AppCore.mscList[position]
             AppCore.INT_MSC_LIST -> AppCore.currentBranch = AppCore.intMscList[position]
+        }
+        //        if (position == 0) {
+//            when (AppCore.currentStream) {
+//                AppCore.streamList[1] -> AppCore.currentBranch = "All"
+//                AppCore.streamList[2] -> AppCore.currentBranch = "All"
+//            }
+//        }
+    }
+
+    fun mapSelector(item: Int): List<String> {
+        return when (item) {
+            AppCore.STREAM_LIST -> AppCore.streamMap
+            AppCore.YEAR_LIST -> AppCore.yearMap
+            AppCore.B_ARCH_LIST -> AppCore.bArchMap
+            AppCore.B_TECH_LIST -> AppCore.bTechMap
+            AppCore.M_TECH_LIST -> AppCore.mTechMap
+            AppCore.MSC_LIST -> AppCore.mscMap
+            AppCore.INT_MSC_LIST -> AppCore.intMscMap
+            else -> AppCore.noList
         }
     }
 

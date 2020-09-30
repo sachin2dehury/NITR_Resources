@@ -60,10 +60,9 @@ object AppCore {
     val streamWiseYearList = listOf(5, 4, 3, 2, 2)
     val noList = listOf("No Data Available!")
     val pageList = listOf("Notes", "Books", "Slides", "Labs", "Assignments")
-    val streamList = listOf("B. Arch", "B. Tech", "Int. M, Sc (Only B. Sc)", "M. Sc", "M. Tech")
+    val streamList = listOf("B. Arch", "B. Tech", "Int. M. Sc (Only B. Sc)", "M. Sc", "M. Tech")
     val yearList = listOf("First Year", "Second Year", "Third Year", "Fourth Year", "Fifth Year")
     val bArchList = listOf("Architecture")
-    val bArchMap = listOf("AR")
     val bTechList = listOf(
         "Biomedical Engineering",
         "Biotechnology",
@@ -80,8 +79,19 @@ object AppCore {
         "Metallurgical and Materials Engineering",
         "Mining Engineering"
     )
-    val bTechMap = listOf(
-        "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN",
+    val intMscList = listOf(
+        "Chemistry",
+        "Life Science",
+        "Mathematics",
+        "Physics"
+    )
+    val mscList = listOf(
+        "Chemistry",
+        "Applied Geology",
+        "Atmospheric Sciences",
+        "Life Science",
+        "Mathematics",
+        "Physics"
     )
     val mTechList = listOf(
         "Biomedical Engineering",
@@ -124,6 +134,18 @@ object AppCore {
         "Steel Technology",
         "Mining Engineering"
     )
+    val streamMap = listOf("B. Arch", "B. Tech", "Int.\nM. Sc", "M. Sc", "M. Tech")
+    val yearMap = listOf("1st", "2nd", "3rd", "4th", "5th")
+    val bArchMap = listOf("AR")
+    val bTechMap = listOf(
+        "BM", "BT", "CE", "CH", "CR", "CS", "EC", "EI", "EE", "FP", "ID", "ME", "MM", "MN",
+    )
+    val intMscMap = listOf(
+        "CY", "LS", "MA", "PH"
+    )
+    val mscMap = listOf(
+        "CY", "ER", "ER", "LS", "MA", "PH"
+    )
     val mTechMap = listOf(
         "BM",
         "BT",
@@ -133,30 +155,11 @@ object AppCore {
         "CS", "CS", "CS", "CS",
         "EC", "EC", "EC", "EC", "EC", "EC", "EC",
         "EE", "EE", "EE", "EE", "EE", "EE",
+        "ER",
         "FP",
         "ID",
         "ME", "ME", "ME", "ME", "ME",
         "MM", "MM",
         "MN",
-    )
-    val mscList = listOf(
-        "Chemistry",
-        "Applied Geology",
-        "Atmospheric Sciences",
-        "Life Science",
-        "Mathematics",
-        "Physics"
-    )
-    val mscMap = listOf(
-        "CY", "ER", "ER", "LS", "MA", "PH"
-    )
-    val intMscList = listOf(
-        "Chemistry",
-        "Life Science",
-        "Mathematics",
-        "Physics"
-    )
-    val intMscMap = listOf(
-        "CY", "LS", "MA", "PH"
     )
 }
