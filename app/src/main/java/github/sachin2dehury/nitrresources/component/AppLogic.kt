@@ -37,12 +37,6 @@ object AppLogic {
             AppCore.MSC_LIST -> AppCore.currentBranch = AppCore.mscList[position]
             AppCore.INT_MSC_LIST -> AppCore.currentBranch = AppCore.intMscList[position]
         }
-        //        if (position == 0) {
-//            when (AppCore.currentStream) {
-//                AppCore.streamList[1] -> AppCore.currentBranch = "All"
-//                AppCore.streamList[2] -> AppCore.currentBranch = "All"
-//            }
-//        }
     }
 
     fun mapSelector(item: Int): List<String> {
@@ -67,6 +61,22 @@ object AppLogic {
             AppCore.LAB_LIST -> AppCore.lab
             else -> AppCore.trash
         }
+    }
+
+    fun pathSetter(item: Int): String {
+        var currentStream = AppCore.currentStream
+        var currentBranch = AppCore.currentBranch
+        when (AppCore.currentYear) {
+            AppCore.yearList[0] -> {
+                when (AppCore.currentStream) {
+                    AppCore.streamList[1], AppCore.streamList[2] -> {
+                        currentBranch = "All"
+                        currentStream = AppCore.streamList[1]
+                    }
+                }
+            }
+        }
+        return "${AppCore.COLLEGE}/${currentStream}/${AppCore.currentYear}/${currentBranch}/${AppCore.pageList[item]}"
     }
 
     fun clearList() {
