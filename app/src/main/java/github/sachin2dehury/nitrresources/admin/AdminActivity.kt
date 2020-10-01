@@ -5,13 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import github.sachin2dehury.nitrresources.R
 import github.sachin2dehury.nitrresources.component.AppCore
-import kotlinx.android.synthetic.main.activity_admin.*
 
 class AdminActivity : AppCompatActivity() {
-
-    init {
-        ParseJson(this).parseData()
-    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +15,6 @@ class AdminActivity : AppCompatActivity() {
 
         AppCore.firebaseAuth.signInWithEmailAndPassword("sachindehury2015@gmail.com", "bulbul2017")
 
-        runButton.setOnClickListener {
-
-        }
+        ParseJson(this).parseData()
     }
 }

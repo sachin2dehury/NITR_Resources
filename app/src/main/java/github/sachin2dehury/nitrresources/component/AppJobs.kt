@@ -11,8 +11,19 @@ import kotlinx.coroutines.tasks.await
 
 object AppJobs {
     fun getList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
+        getCommonList(item)
         val list = AppLogic.pageSelector(item)
         val path = AppLogic.pathSetter(item)
+        val documents = AppCore.firebaseFireStore.collection(path).get().await()!!.documents
+        for (document in documents) {
+            val doc = document.toObject(DocDetails::class.java)!!
+            list[document.id] = doc
+        }
+    }
+
+    private fun getCommonList(item: Int) = CoroutineScope(Dispatchers.IO).launch {
+        val list = AppLogic.pageSelector(item)
+        val path = AppLogic.commonPathSetter(item)
         val documents = AppCore.firebaseFireStore.collection(path).get().await()!!.documents
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
@@ -36,11 +47,37 @@ object AppJobs {
                         adapter.notifyDataSetChanged()
                     }
                 }
+            updateCommonDocList(item, adapter)
         }
 
-    fun uploadDoc(files: ArrayList<String>, doc: DocDetails, item: Int) =
+    private fun updateCommonDocList(
+        item: Int,
+        adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
+    ) =
         CoroutineScope(Dispatchers.IO).launch {
-            val path = AppLogic.pathSetter(item)
+            val list = AppLogic.pageSelector(item)
+            val path = AppLogic.commonPathSetter(item)
+            AppCore.commonListener =
+                AppCore.firebaseFireStore.collection(path).addSnapshotListener { querySnapshot, _ ->
+                    for (change in querySnapshot!!.documentChanges) {
+                        val doc = (change.document.toObject(DocDetails::class.java))
+                        when (change.type) {
+                            DocumentChange.Type.ADDED -> list[change.document.id] = doc
+                            DocumentChange.Type.MODIFIED -> list[change.document.id] = doc
+                            DocumentChange.Type.REMOVED -> list.remove(change.document.id)
+                        }
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+        }
+
+    fun uploadDoc(files: ArrayList<String>, doc: DocDetails, item: Int, common: Boolean) =
+        CoroutineScope(Dispatchers.IO).launch {
+            val path = if (common) {
+                AppLogic.commonPathSetter(item)
+            } else {
+                AppLogic.pathSetter(item)
+            }
             val list = AppLogic.pageSelector(item)
             for (file in files) {
                 val uri = Uri.parse(file)!!

@@ -21,6 +21,7 @@ class AppUploadService : Service() {
 
     private lateinit var files: ArrayList<String>
     private var item = 0
+    private var common = false
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -51,8 +52,10 @@ class AppUploadService : Service() {
             intent!!.apply {
                 files = getStringArrayListExtra("Files")!!
                 item = getIntExtra("Index", 0)
+                common = getBooleanExtra("isCommon", false)
+
             }
-            AppJobs.uploadDoc(files, RenameDialog.doc, item).invokeOnCompletion {
+            AppJobs.uploadDoc(files, RenameDialog.doc, item, common).invokeOnCompletion {
                 notificationManager.cancel(AppCore.REQUEST_CODE_UPLOAD_SERVICE)
             }
         }.invokeOnCompletion {

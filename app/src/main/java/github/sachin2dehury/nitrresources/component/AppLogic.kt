@@ -65,18 +65,20 @@ object AppLogic {
 
     fun pathSetter(item: Int): String {
         var currentStream = AppCore.currentStream
-        var currentBranch = AppCore.currentBranch
         when (AppCore.currentYear) {
             AppCore.yearList[0] -> {
                 when (AppCore.currentStream) {
                     AppCore.streamList[1], AppCore.streamList[2] -> {
-                        currentBranch = "All"
                         currentStream = AppCore.streamList[1]
                     }
                 }
             }
         }
-        return "${AppCore.COLLEGE}/${currentStream}/${AppCore.currentYear}/${currentBranch}/${AppCore.pageList[item]}"
+        return "${AppCore.COLLEGE}/${currentStream}/${AppCore.currentYear}/${AppCore.currentBranch}/${AppCore.pageList[item]}"
+    }
+
+    fun commonPathSetter(item: Int): String {
+        return "${AppCore.COLLEGE}/${AppCore.currentStream}/${AppCore.currentYear}/${AppCore.COMMON}/${AppCore.pageList[item]}"
     }
 
     fun clearList() {

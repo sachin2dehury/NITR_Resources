@@ -20,6 +20,7 @@ object AppCore {
     val firebaseFireStore = FirebaseFirestore.getInstance()
     val firebaseStorage = FirebaseStorage.getInstance().reference
     lateinit var listener: ListenerRegistration
+    lateinit var commonListener: ListenerRegistration
 
     val trash = mutableMapOf<String, DocDetails>()
     val notes = mutableMapOf<String, DocDetails>()
@@ -54,6 +55,7 @@ object AppCore {
     const val TELEGRAM_NEWS_LINK = "https://t.me/s/nitrkl"
     const val MB = 1024 * 1024
     const val ALL = "*/*"
+    const val COMMON = "All"
 
     val format = DecimalFormat("#.##")
 

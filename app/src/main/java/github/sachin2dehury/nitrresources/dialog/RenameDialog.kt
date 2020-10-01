@@ -64,6 +64,7 @@ class RenameDialog(
 
     private fun save() {
         val item = spinnerPages.selectedItemPosition
+        val common = isCommon.isChecked
         if (rename) {
             AppItemAction.renameDoc(files.first(), doc, index)
             Toast.makeText(context, "${doc.courseName} File being Renamed.", Toast.LENGTH_SHORT)
@@ -72,6 +73,7 @@ class RenameDialog(
             val intent = Intent(context, AppUploadService::class.java).apply {
                 putStringArrayListExtra("Files", files)
                 putExtra("Index", item)
+                putExtra("isCommon", common)
             }
             context.startService(intent)
             Toast.makeText(context, "${doc.courseName} File(s) being Uploaded.", Toast.LENGTH_SHORT)

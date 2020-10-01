@@ -18,10 +18,9 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val pageList = listOf("Notes", "Books", "Slides", "Labs", "Papers")
         viewPager.adapter = TabAdapter(this)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = pageList[position]
+            tab.text = AppCore.pageList[position]
         }.attach()
 
         uploadButton.setOnClickListener {

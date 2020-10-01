@@ -31,4 +31,5 @@
     <string name="devName">Sachin Dehury</string>
     <string name="developer">Developer</string>
     <string name="run">Run</string>
+    <string name="common_to_other_branches_too">Common to Other Branches too</string>
 </resources>

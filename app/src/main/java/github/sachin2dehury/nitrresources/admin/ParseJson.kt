@@ -20,10 +20,20 @@ class ParseJson(private val context: Context) {
     private val yearList =
         listOf("First Year", "Second Year", "Third Year", "Fourth Year", "Fifth Year")
 
-    private val course = "Physics Lab"
-    private val type = "Labs"
+
+    private val course = "Physics of Material"
+    private val type =
+        "Notes"
+
+    //        "Books"
+//    "Slides"
+//    "Labs"
+//        "Assignments"
+    private val branch =
+//        "All"
+        "Metallurgical and Materials Engineering"
     private val path =
-        "${AppCore.COLLEGE}/${streamList[1]}/${yearList[0]}/All/$type"
+        "${AppCore.COLLEGE}/${streamList[1]}/${yearList[1]}/$branch/$type"
 
     @SuppressLint("CheckResult")
     fun parseData() {
