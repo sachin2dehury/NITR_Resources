@@ -51,7 +51,7 @@ object AppJobs {
 
                 doc.url = storeReference.downloadUrl.await().toString()
                 storeReference.metadata.await().apply {
-                    doc.size = sizeBytes.toDouble() / AppCore.MB
+                    doc.size = sizeBytes.toDouble()
                     doc.time = updatedTimeMillis
                     doc.type = contentType.toString()
                 }

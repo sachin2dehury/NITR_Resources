@@ -76,6 +76,9 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
             }
 
             override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
+                if (item == AppCore.YEAR_LIST) {
+                    return
+                }
                 listData = filterResults!!.values as List<String>
                 notifyDataSetChanged()
             }

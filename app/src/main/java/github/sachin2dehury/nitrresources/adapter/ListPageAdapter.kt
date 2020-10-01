@@ -25,7 +25,6 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
 
     private val list = AppLogic.pageSelector(item)
     private var listData = list
-    private val keys = listData.keys
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -34,12 +33,12 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ListPageViewHolder, position: Int) {
-        val current = keys.elementAt(position)
-        val doc = list[current]!!
+        val current = listData.keys.elementAt(position)
+        val doc = listData[current]!!
         val img = when (AppCore.mime.getExtensionFromMimeType(doc.type)) {
             "pdf" -> R.drawable.ic_baseline_picture_as_pdf_24
             "jpg", "jpeg", "png" -> R.drawable.ic_baseline_image_24
-            "ppt", "doc" -> R.drawable.ic_baseline_slideshow_24
+            "ppt", "pptx", "doc", "docx" -> R.drawable.ic_baseline_slideshow_24
             else -> R.drawable.ic_baseline_warning_24
         }
         val isAuthor = doc.contributor == AppCore.firebaseAuth.currentUser!!.email!!
@@ -50,7 +49,8 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             size.visibility = View.VISIBLE
             menuButton.visibility = View.VISIBLE
             name.setLines(1)
-            size.text = "${AppCore.format.format(doc.size)} MB"
+            val fileSize = doc.size / AppCore.MB
+            size.text = "${AppCore.format.format(fileSize)} MB"
             subject.text = doc.courseName
             if (isAuthor) {
                 isMine.visibility = View.VISIBLE
@@ -91,7 +91,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                 } else {
                     list.filter {
                         it.value.courseName.toLowerCase().contains(search) ||
-                                it.value.courseName.toLowerCase().contains(search)
+                                it.value.subjectName.toLowerCase().contains(search)
                     }
                 }
                 return filterResults
