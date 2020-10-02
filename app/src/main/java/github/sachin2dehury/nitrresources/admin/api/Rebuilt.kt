@@ -1,4 +1,4 @@
-package github.sachin2dehury.nitrresources.admin
+package github.sachin2dehury.nitrresources.admin.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

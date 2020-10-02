@@ -55,6 +55,7 @@ object AppItemAction {
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val url = Uri.parse(doc.url)!!
         val request = DownloadManager.Request(url).apply {
+            addRequestHeader("Authorization", "MTE3Y3IwMTYwQG5pdHJrbC5hYy5pbjpCdWxidWxAMjAxNw==")
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE).apply {
                 setAllowedOverRoaming(false)

@@ -1,6 +1,6 @@
-package github.sachin2dehury.nitrresources.admin
+package github.sachin2dehury.nitrresources.admin.api
 
-import github.sachin2dehury.nitrresources.admin.Rebuilt.folder
+import github.sachin2dehury.nitrresources.admin.api.Rebuilt.folder
 import retrofit2.Call
 import retrofit2.http.GET
 

@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('E:\\Placements\\nitr resources.jks')
+            storePassword 'bulbul2017'
+            keyAlias 'bulbul2017'
+            keyPassword 'bulbul2017'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
 
@@ -12,16 +20,11 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 4
-        versionName "4.0"
+        versionName '4.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionNameSuffix 'Beta'
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,7 +43,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-auth-ktx:19.4.0'
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.0'
-    implementation 'com.google.firebase:firebase-firestore-ktx:21.6.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.7.0'
     implementation 'com.google.firebase:firebase-ads:19.4.0'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'com.google.android.gms:play-services-ads:19.4.0'

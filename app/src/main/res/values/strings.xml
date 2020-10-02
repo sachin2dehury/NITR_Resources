@@ -32,4 +32,5 @@
     <string name="developer">Developer</string>
     <string name="run">Run</string>
     <string name="common_to_other_branches_too">Common to Other Branches too</string>
+    <string name="preview">Preview</string>
 </resources>

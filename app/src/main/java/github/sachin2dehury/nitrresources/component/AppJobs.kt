@@ -18,6 +18,10 @@ object AppJobs {
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
             list[document.id] = doc
+            val docRef = AppCore.firebaseFireStore.collection(path).document(document.id)
+            AppCore.firebaseFireStore.runBatch { batch ->
+                batch.update(docRef, "url", doc.url.substringBefore("&Translate=false&tempauth"))
+            }
         }
     }
 
@@ -28,6 +32,10 @@ object AppJobs {
         for (document in documents) {
             val doc = document.toObject(DocDetails::class.java)!!
             list[document.id] = doc
+            val docRef = AppCore.firebaseFireStore.collection(path).document(document.id)
+            AppCore.firebaseFireStore.runBatch { batch ->
+                batch.update(docRef, "url", doc.url.substringBefore("&Translate=false&tempauth"))
+            }
         }
     }
 
