@@ -1,4 +1,4 @@
-package github.sachin2dehury.nitrresources.admin.api
+package github.sachin2dehury.nitrresources.admin.onedrive
 
 import com.squareup.moshi.Json
 

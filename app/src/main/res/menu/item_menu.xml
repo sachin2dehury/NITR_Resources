@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/preview"
-        android:icon="@drawable/ic_baseline_view_agenda_24"
-        android:title="@string/preview" />
+    <!--    <item-->
+    <!--        android:id="@+id/preview"-->
+    <!--        android:icon="@drawable/ic_baseline_view_agenda_24"-->
+    <!--        android:title="@string/preview" />-->
     <item
         android:id="@+id/download"
         android:icon="@drawable/ic_baseline_cloud_download_24"

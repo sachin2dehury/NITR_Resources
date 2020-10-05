@@ -15,6 +15,7 @@ object AppCore {
     var currentYear = "Trash"
 
     val mime = MimeTypeMap.getSingleton()!!
+    var remove = false
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseFireStore = FirebaseFirestore.getInstance()

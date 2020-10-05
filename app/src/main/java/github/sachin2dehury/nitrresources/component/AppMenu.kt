@@ -76,7 +76,7 @@ object AppMenu {
         doc: DocDetails
     ) {
         when (item.itemId) {
-            R.id.preview -> AppItemAction.openLink(doc.url, context)
+//            R.id.preview -> AppItemAction.preview(doc.url, context)
             R.id.rename -> RenameDialog(context, arrayListOf(current), true, index).show()
             R.id.delete -> ActionDialog(context, "Delete", current, index).show()
             R.id.download -> AppItemAction.downloadDoc(doc, context)

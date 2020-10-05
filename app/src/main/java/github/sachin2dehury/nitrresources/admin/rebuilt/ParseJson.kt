@@ -1,46 +1,39 @@
-package github.sachin2dehury.nitrresources.admin
+package github.sachin2dehury.nitrresources.admin.rebuilt
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
-import com.squareup.moshi.Moshi
-import github.sachin2dehury.nitrresources.admin.api.OneDriveItems
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.core.DocDetails
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import okhttp3.Response
 import java.util.*
 
-class ParseJson(private val context: Context) {
-    private val moshi = Moshi.Builder().build()!!
-    private val jsonAdapter = moshi.adapter(OneDriveItems::class.java)!!
+object ParseJson {
     private val streamList =
         listOf("B. Arch", "B. Tech", "Int. M, Sc (Only B. Sc)", "M. Sc", "M. Tech")
     private val yearList =
         listOf("First Year", "Second Year", "Third Year", "Fourth Year", "Fifth Year")
 
 
-    private val course = "Physics of Material"
-    private val type =
+    private const val course = "Physics of Material"
+    private const val type =
         "Notes"
 
-    //        "Books"
+    //    "Books"
 //    "Slides"
 //    "Labs"
-//        "Assignments"
-    private val branch =
-//        "All"
+//    "Assignments"
+    private const val branch =
+//      "All"
         "Metallurgical and Materials Engineering"
     private val path =
         "${AppCore.COLLEGE}/${streamList[1]}/${yearList[1]}/$branch/$type"
 
-    @SuppressLint("CheckResult")
-    fun parseData() {
-        val json = context.assets.open("data.json").bufferedReader().use { it.readText() }
-        val data = jsonAdapter.fromJson(json)
-        Log.w("Test", data.toString())
+    fun parseData(response: Response) {
+        val json = response.body
+        val data = Rebuilt.jsonAdapter.fromJsonValue(json)
         if (data != null) {
             val files = data.oneDriveFiles
             for (file in files) {
@@ -54,7 +47,6 @@ class ParseJson(private val context: Context) {
                     file.type.mime
                 )
                 CoroutineScope(Dispatchers.IO).launch {
-                    Log.w("Test", doc.toString())
                     AppCore.firebaseFireStore.collection(path).add(doc).await()!!
                 }.invokeOnCompletion {
                     Log.w(" Test Upload", "Done")

@@ -16,6 +16,7 @@ import github.sachin2dehury.nitrresources.fragment.ListFragment
 import github.sachin2dehury.nitrresources.fragment.TabFragment
 import github.sachin2dehury.nitrresources.viewholder.ListViewHolder
 import kotlinx.android.synthetic.main.list_item.view.*
+import kotlin.math.min
 
 class ListAdapter(private val item: Int, private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<ListViewHolder>(), Filterable {
@@ -33,7 +34,7 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.itemView.apply {
             name.text = listData[position]
-            imageText.text = map[position]
+            imageText.text = map[list.indexOf(listData[position])]
             imageText.visibility = View.VISIBLE
             if (item == AppCore.NO_LIST) {
                 subject.visibility = View.VISIBLE
@@ -55,7 +56,7 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
 
     override fun getItemCount(): Int {
         if (item == AppCore.YEAR_LIST) {
-            return AppCore.streamYrs
+            return min(AppCore.streamYrs, listData.size)
         }
         return listData.size
     }
@@ -76,9 +77,6 @@ class ListAdapter(private val item: Int, private val fragmentManager: FragmentMa
             }
 
             override fun publishResults(value: CharSequence?, filterResults: FilterResults?) {
-                if (item == AppCore.YEAR_LIST) {
-                    return
-                }
                 listData = filterResults!!.values as List<String>
                 notifyDataSetChanged()
             }

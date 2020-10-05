@@ -21,7 +21,7 @@ object AppPermission {
         ) {
             Toast.makeText(
                 activity, "Please allow Storage permission in App Settings.", Toast.LENGTH_LONG
-            ).show();
+            ).show()
         } else {
             ActivityCompat.requestPermissions(
                 activity,

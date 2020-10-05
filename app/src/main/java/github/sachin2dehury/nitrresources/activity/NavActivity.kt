@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.MobileAds
 import github.sachin2dehury.nitrresources.R
+import github.sachin2dehury.nitrresources.admin.auth.OneDriveAuth
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppMenu
 import github.sachin2dehury.nitrresources.component.AppNav
@@ -58,6 +59,8 @@ open class NavActivity : AppCompatActivity() {
         }
 
         MobileAds.initialize(this) {}
+
+        OneDriveAuth.startOneDriveService()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

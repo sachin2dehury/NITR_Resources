@@ -57,7 +57,7 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
             }
             setOnClickListener {
                 Toast.makeText(context, "Downloading ${doc.subjectName}", Toast.LENGTH_SHORT).show()
-                AppItemAction.openLink(doc.url, context)
+                AppItemAction.downloadDoc(doc, context)
             }
             menuButton.setOnClickListener {
                 PopupMenu(context, it, Gravity.END).apply {

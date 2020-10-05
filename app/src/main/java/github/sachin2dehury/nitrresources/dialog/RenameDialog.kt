@@ -37,6 +37,7 @@ class RenameDialog(
         if (rename) {
             saveButton.text = "Rename"
             renameHeader.text = "Rename File"
+            isCommon.visibility = View.GONE
             spinnerPages.visibility = View.GONE
             val file = AppLogic.pageSelector(index)[files.first()]!!
             subjectName.setText(file.subjectName)

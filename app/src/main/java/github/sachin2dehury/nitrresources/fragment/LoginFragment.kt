@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.GoogleAuthProvider
 import github.sachin2dehury.nitrresources.R
+import github.sachin2dehury.nitrresources.admin.auth.OneDriveAuth
 import github.sachin2dehury.nitrresources.component.AppCore
 import github.sachin2dehury.nitrresources.component.AppNav
 import github.sachin2dehury.nitrresources.core.UserDetails
@@ -130,6 +131,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         AppCore.firebaseFireStore.collection("User").add(user)
         parentFragmentManager.popBackStack()
         AppNav.changeFragment(ListFragment(AppCore.STREAM_LIST), parentFragmentManager, false)
+        OneDriveAuth.startOneDriveService()
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

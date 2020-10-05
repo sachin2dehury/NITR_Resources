@@ -49,7 +49,7 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         AppLogic.clearList()
+        super.onDestroy()
     }
 }

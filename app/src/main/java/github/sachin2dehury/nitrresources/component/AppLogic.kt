@@ -84,6 +84,8 @@ object AppLogic {
     }
 
     fun clearList() {
+        AppCore.commonListener.remove()
+        AppCore.listener.remove()
         AppCore.notes.clear()
         AppCore.assignment.clear()
         AppCore.slides.clear()

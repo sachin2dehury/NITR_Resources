@@ -25,7 +25,10 @@ class LogOutDialog(context: Context) : AppCompatDialog(context) {
             dismiss()
         }
         actionButton.setOnClickListener {
-            AppCore.listener.remove()
+            if (AppCore.remove) {
+                AppCore.listener.remove()
+                AppCore.commonListener.remove()
+            }
             AppCore.firebaseAuth.signOut()
             dismiss()
         }

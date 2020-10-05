@@ -1,10 +1,12 @@
 package github.sachin2dehury.nitrresources.component
 
+import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
+import github.sachin2dehury.nitrresources.activity.PreviewActivity
 import github.sachin2dehury.nitrresources.core.DocDetails
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,11 +53,19 @@ object AppItemAction {
         }
     }
 
+    fun preview(link: String, context: Context) {
+        val intent = Intent(context, PreviewActivity::class.java)
+        intent.putExtra("url", link)
+        context.startActivity(intent)
+    }
+
     fun downloadDoc(doc: DocDetails, context: Context) {
+        if (!AppPermission.checkPermission(context)) {
+            AppPermission.requestPermission(context as Activity)
+        }
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val url = Uri.parse(doc.url)!!
         val request = DownloadManager.Request(url).apply {
-            addRequestHeader("Authorization", "MTE3Y3IwMTYwQG5pdHJrbC5hYy5pbjpCdWxidWxAMjAxNw==")
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE).apply {
                 setAllowedOverRoaming(false)

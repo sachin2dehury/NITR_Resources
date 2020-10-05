@@ -32,7 +32,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             summary = AppCore.currentStream
             entries = streamArray
             entryValues = streamArray
-            setValueIndex(AppCore.streamList.indexOf(AppCore.currentStream))
+            if (AppCore.currentStream != "Trash") {
+                setValueIndex(AppCore.streamList.indexOf(AppCore.currentStream))
+                summary = "Not Set"
+            }
         }
     }
 
