@@ -2,6 +2,7 @@ package github.sachin2dehury.nitrresources.dialog
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatDialog
 import github.sachin2dehury.nitrresources.R
@@ -11,8 +12,8 @@ import kotlinx.android.synthetic.main.dialog_action.*
 class ActionDialog(
     context: Context,
     private val action: String,
-    private val docId: String,
-    private val item: Int
+    private val docId: String = "",
+    private val item: Int = 0
 ) : AppCompatDialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class ActionDialog(
             }
             else -> {
                 actionIcon.setImageResource(R.drawable.ic_baseline_warning_24)
+                actionButton.visibility = View.GONE
                 actionCancelButton.setOnClickListener {
                     dismiss()
                 }

@@ -49,6 +49,8 @@ class TabFragment : Fragment(R.layout.fragment_tab) {
     }
 
     override fun onDestroy() {
+        AppCore.listener.remove()
+        AppCore.commonListener.remove()
         AppLogic.clearList()
         super.onDestroy()
     }

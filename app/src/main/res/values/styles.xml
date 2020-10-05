@@ -1,14 +1,13 @@
 <resources>
 
-<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <!--        <item name="android:windowActivityTransitions">true</item>-->
-        <!--        <item name="android:textColor">@android:color/white</item>-->
+        <item name="colorAccent">@color/pink</item>
         <item name="android:buttonStyle">@style/AppTheme.Button</item>
-        <!--        <item name="android:windowBackground">@color/dark</item>-->
-        <!--        <item name="android:itemBackground">@color/lightDark</item>-->
+        <item name="android:windowBackground">@color/lightBlue</item>
+        <item name="android:itemBackground">@color/lightBlue</item>
+        <!--        <item name="android:textColor">@android:color/white</item>-->
         <!--        <item name="android:screenOrientation">locked</item>-->
         <!--        <item name="itemTextColor">@color/white</item>-->
         <!--        <item name="actionMenuTextColor">@color/white</item>-->

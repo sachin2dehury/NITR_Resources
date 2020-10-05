@@ -19,11 +19,12 @@
         android:id="@+id/personIcon"
         android:layout_width="96dp"
         android:layout_height="96dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/gradient"
         android:contentDescription="@string/person"
         android:src="@drawable/ic_baseline_account_circle_24"
-        app:layout_constraintBottom_toTopOf="@+id/userEmail"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:autofillHints="email"
         android:hint="@string/enter_email"
@@ -76,7 +77,7 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/personIcon" />
 
     <EditText
         android:id="@+id/userPassword"

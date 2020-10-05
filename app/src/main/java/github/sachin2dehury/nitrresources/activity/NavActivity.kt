@@ -60,7 +60,9 @@ open class NavActivity : AppCompatActivity() {
 
         MobileAds.initialize(this) {}
 
-        OneDriveAuth.startOneDriveService()
+        if (AppCore.firebaseAuth.currentUser != null) {
+            OneDriveAuth.startOneDriveService()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

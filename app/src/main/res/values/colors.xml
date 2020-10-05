@@ -10,4 +10,6 @@
     <color name="white">#FFFFFF</color>
     <color name="light">#f4ece6</color>
     <color name="lightBrown">#e6dace</color>
+    <color name="lightBlue">#21D2FE</color>
+    <color name="lightPurple">#A136FE</color>
 </resources>
