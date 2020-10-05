@@ -91,7 +91,8 @@ class ListPageAdapter(private val item: Int, private val fragmentManager: Fragme
                 } else {
                     list.filter {
                         it.value.courseName.toLowerCase().contains(search) ||
-                                it.value.subjectName.toLowerCase().contains(search)
+                                it.value.subjectName.toLowerCase().contains(search) ||
+                                it.value.url.toLowerCase().contains(search)
                     }
                 }
                 return filterResults

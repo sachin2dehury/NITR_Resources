@@ -17,10 +17,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setHasOptionsMenu(true)
 
         val email =
-            PreferenceManager.getDefaultSharedPreferences(context).getString("Email", "Trash")!!
+            PreferenceManager.getDefaultSharedPreferences(context).getString("Email", "Not Set")!!
         val streamArray = AppCore.streamList.toTypedArray()
-        val password =
-            PreferenceManager.getDefaultSharedPreferences(context).getString("Password", "Trash")!!
+//        val password =
+//            PreferenceManager.getDefaultSharedPreferences(context).getString("Password", "Trash")!!
         findPreference<Preference>("Email")!!.apply {
             summary = email
         }

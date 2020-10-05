@@ -3,10 +3,10 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/pink</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/AppTheme.Button</item>
-        <item name="android:windowBackground">@color/lightBlue</item>
-        <item name="android:itemBackground">@color/lightBlue</item>
+        <!--        <item name="android:windowBackground">@color/lightBlue</item>-->
+        <!--        <item name="android:itemBackground">@color/lightBlue</item>-->
         <!--        <item name="android:textColor">@android:color/white</item>-->
         <!--        <item name="android:screenOrientation">locked</item>-->
         <!--        <item name="itemTextColor">@color/white</item>-->
