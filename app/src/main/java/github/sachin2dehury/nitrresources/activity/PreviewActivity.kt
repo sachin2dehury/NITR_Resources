@@ -22,4 +22,12 @@ class PreviewActivity : AppCompatActivity() {
             loadUrl(url)
         }
     }
+
+//    private fun delete() = CoroutineScope(Dispatchers.IO).launch {
+//        val me = AppCore.firebaseFireStore.collection("User")
+//            .whereEqualTo("email", "sachindehury2015@gmail.com").get().await().documents
+//        for (i in me) {
+//            AppCore.firebaseFireStore.collection("User").document(i.id).delete()
+//        }
+//    }
 }

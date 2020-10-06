@@ -14,6 +14,13 @@ object OneDriveAuth {
 
     lateinit var admin: UserDetails
 
+//    private val credential = Credentials.basic("117cr0160@nitrkl.ac.in", "Bulbul@2017")
+//    val client = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
+//        val request = chain.request()
+//        val authRequest = request.newBuilder().header("Authorization", credential).build()
+//        chain.proceed(authRequest)
+//    })
+
     val client = OkHttpClient.Builder().authenticator { _, response ->
         val credential = Credentials.basic(admin.email, admin.password)
         response.request.newBuilder().header("Authorization", credential).build()

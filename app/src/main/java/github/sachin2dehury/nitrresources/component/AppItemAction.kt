@@ -62,23 +62,26 @@ object AppItemAction {
     fun downloadDoc(doc: DocDetails, context: Context) {
         if (!AppPermission.checkPermission(context)) {
             AppPermission.requestPermission(context as Activity)
-        }
-        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val url = Uri.parse(doc.url)!!
-        val request = DownloadManager.Request(url).apply {
-            setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE).apply {
-                setAllowedOverRoaming(false)
-                setDestinationInExternalPublicDir(
-                    Environment.DIRECTORY_DOWNLOADS,
-                    "${doc.subjectName}_${doc.courseName}" +
-                            ".${AppCore.mime.getExtensionFromMimeType(doc.type)}"
-                )
-                setTitle(doc.subjectName)
-                setMimeType(doc.type)
-                setDescription(doc.courseName)
+            downloadDoc(doc, context)
+        } else {
+            val downloadManager =
+                context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val url = Uri.parse(doc.url)!!
+            val request = DownloadManager.Request(url).apply {
+                setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE).apply {
+                    setAllowedOverRoaming(false)
+                    setDestinationInExternalPublicDir(
+                        Environment.DIRECTORY_DOWNLOADS,
+                        "${doc.subjectName}_${doc.courseName}" +
+                                ".${AppCore.mime.getExtensionFromMimeType(doc.type)}"
+                    )
+                    setTitle(doc.subjectName)
+                    setMimeType(doc.type)
+                    setDescription(doc.courseName)
+                }
             }
+            downloadManager.enqueue(request)
         }
-        downloadManager.enqueue(request)
     }
 }

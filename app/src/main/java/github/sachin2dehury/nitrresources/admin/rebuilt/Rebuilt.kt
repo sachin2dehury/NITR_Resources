@@ -11,7 +11,7 @@ import okhttp3.Response
 import java.io.IOException
 
 object Rebuilt {
-    const val folder = "01I5FU6DYGMCHXMS7XCJDZIB6D4VYZB2N7"
+    private const val folder = "01I5FU6DYGMCHXMS7XCJDZIB6D4VYZB2N7"
     val jsonAdapter = Moshi.Builder().build()!!.adapter(OneDriveItems::class.java)!!
 
     //    _api/v2.0/drives/b!vDRlySusokmSGtJUAcuokTU6XUQW9RJJrgK7xUmZyccMLdnFg8vWTIKMlobzeGGX/items/$folder/children
