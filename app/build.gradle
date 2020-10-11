@@ -4,14 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    signingConfigs {
-        config {
-            storeFile file('E:\\Placements\\nitr resources.jks')
-            storePassword 'bulbul2017'
-            keyAlias 'bulbul2017'
-            keyPassword 'bulbul2017'
-        }
-    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
 
