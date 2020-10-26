@@ -37,9 +37,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:19.4.0'
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.0'
     implementation 'com.google.firebase:firebase-firestore-ktx:21.7.1'
-    implementation 'com.google.firebase:firebase-ads:19.4.0'
+    implementation 'com.google.firebase:firebase-ads:19.5.0'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'com.google.android.gms:play-services-ads:19.4.0'
+    implementation 'com.google.android.gms:play-services-ads:19.5.0'
 
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
 
